@@ -80,6 +80,10 @@ ipcMain.handle("parserFile", async (_, file) => {
 
 //获取缓存大小
 ipcMain.handle("getCacheSize", async () => {
+  if (!existsSync(db)) {
+    return 0;
+  }
+
   let totalSize = 0;
 
   const files = await readdir(db);
