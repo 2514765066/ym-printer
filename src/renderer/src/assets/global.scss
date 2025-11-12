@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  outline: none;
+  user-select: none;
+  background-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+img {
+  object-fit: cover;
+  -webkit-user-drag: none;
+}
+
+html {
+  --bg-color: #191919;
+
+  --list-bg-color: #202020;
+
+  --hover-bg-color: rgba(255, 255, 255, 0.055);
+
+  --border-color: #2a2a2a;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.wh-screen {
+  @apply w-screen h-screen;
+}
+
+.wh-full {
+  @apply w-full h-full;
+}
+
+.ellipsis {
+  @apply whitespace-nowrap overflow-hidden text-ellipsis;
+}
+
+.rotate {
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.el-scrollbar__bar {
+  right: 4px !important;
+  bottom: 4px !important;
+}
+
+.el-drawer {
+  box-shadow: none !important;
+  border-right: 1px solid var(--border-color);
+
+  -webkit-app-region: no-drag;
+}
+
+.el-dialog {
+  box-shadow: none !important;
+
+  border-radius: 0.5rem !important;
+
+  border: 1px solid var(--border-color);
+}
+
+.el-message-box {
+  box-shadow: none !important;
+
+  border-radius: 0.5rem !important;
+
+  border: 1px solid var(--border-color) !important;
+}
+
+.el-notification {
+  --el-notification-width: 300px !important;
+}
