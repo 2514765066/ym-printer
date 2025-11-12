@@ -27,7 +27,7 @@
             class="text-main-darken text-xs"
             v-if="data.config.simplexRange"
           >
-            单打范围: {{ data.simplexRange[0] }}-{{ data.simplexRange.at(-1) }}
+            单打范围: {{ data.config.simplexRange }}
           </span>
 
           <span
@@ -38,7 +38,7 @@
           </span>
 
           <span class="text-main-darken text-xs" v-if="data.config.duplexRange">
-            双打范围: {{ data.duplexRange[0] }}-{{ data.duplexRange.at(-1) }}
+            双打范围: {{ data.config.duplexRange }}
           </span>
         </div>
       </div>
@@ -53,7 +53,6 @@ import ExtIcon from "@/components/icon/ext-icon.vue";
 import { ContextMenu } from "@/components/tooltip";
 import { MenuGrounp } from "@/components/tooltip/BaseMenu";
 import Icon from "@/components/icon/index.vue";
-import { getPrice, parserPange } from "@/utils/print";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { QueueItem, useQueueStore } from "@/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
@@ -195,19 +194,10 @@ const menu = computed(
 
 //计算价格
 const price = computed(() => {
-  const { simplexRange, duplexRange, simplexCount, count } = props.data.config;
-  const { pageCount } = props.data;
-
-  return getPrice({
-    simplexRange: parserPange(simplexRange, pageCount),
-    duplexRange: parserPange(duplexRange, pageCount),
-
-    simplexPrice: settingsStore.data.simplexPrice,
-    duplexPrice: settingsStore.data.duplexPrice,
-
-    simplexCount,
-    count,
-  });
+  return props.data.getPrice(
+    settingsStore.data.simplexPrice,
+    settingsStore.data.duplexPrice
+  );
 });
 </script>
 

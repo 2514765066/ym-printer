@@ -3,7 +3,7 @@
     <ElInput
       v-model="model"
       style="width: 100%"
-      placeholder="1或1-3 或 1- 或 -3 或 -"
+      placeholder="格式 1,1-,-10,-"
     />
   </ElFormItem>
 </template>

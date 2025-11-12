@@ -8,7 +8,7 @@ interface PrintTipOption {
 
 export const printTip = ({ onCancel, onConfirm }: PrintTipOption) => {
   const handle = ElNotification({
-    title: "提示",
+    title: "请翻页",
     position: "bottom-right",
     duration: 0,
     type: "info",

@@ -4,8 +4,6 @@ import { nanoid } from "nanoid";
 
 export class QueueItem {
   id: string;
-  pageCount: number;
-
   info: FileInfo;
 
   config: PrintConfig;
@@ -19,10 +17,8 @@ export class QueueItem {
 
     this.config = JSON.parse(JSON.stringify(option.config));
 
-    this.pageCount = option.pageCount;
-
-    this.duplexRange = parserPange(this.config.duplexRange, this.pageCount);
-    this.simplexRange = parserPange(this.config.simplexRange, this.pageCount);
+    this.duplexRange = parserPange(this.config.duplexRange);
+    this.simplexRange = parserPange(this.config.simplexRange);
   }
 
   //打印
@@ -67,13 +63,27 @@ export class QueueItem {
   public async printSimplex() {
     await this.print(this.simplexRange);
   }
+
+  //价格
+  public getPrice(simplexPrice: number, duplexPrice: number) {
+    let res = 0;
+
+    res += this.simplexRange.length * this.config.simplexCount * simplexPrice;
+
+    res += Math.floor(this.duplexRange.length / 2) * duplexPrice;
+
+    if (this.duplexRange.length % 2 != 0) {
+      res += simplexPrice;
+    }
+
+    return Number((res * this.config.count).toFixed(2));
+  }
 }
 
 //打印队列
 interface AddQueueOption {
   info: FileInfo;
   config: PrintConfig;
-  pageCount: number;
 }
 
 export const useQueueStore = defineStore("queue", () => {

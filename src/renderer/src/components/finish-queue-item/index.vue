@@ -17,7 +17,7 @@
             class="text-main-darken text-xs"
             v-if="data.config.simplexRange"
           >
-            单打范围: {{ data.simplexRange[0] }}-{{ data.simplexRange.at(-1) }}
+            单打范围: {{ data.config.simplexRange }}
           </span>
 
           <span
@@ -86,11 +86,10 @@ const menu: MenuGrounp[] = [
 //计算价格
 const price = computed(() => {
   const { simplexRange, duplexRange, simplexCount, count } = props.data.config;
-  const { pageCount } = props.data;
 
   return getPrice({
-    simplexRange: parserPange(simplexRange, pageCount),
-    duplexRange: parserPange(duplexRange, pageCount),
+    simplexRange: parserPange(simplexRange),
+    duplexRange: parserPange(duplexRange),
 
     simplexPrice: settingsStore.data.simplexPrice,
     duplexPrice: settingsStore.data.duplexPrice,

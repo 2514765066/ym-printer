@@ -29,7 +29,7 @@
         @click="submit"
         :disabled="disable"
       >
-        打印
+        添加
       </ElButton>
 
       <ElButton style="flex: 1" @click="close">取消</ElButton>
@@ -52,6 +52,7 @@ import { useQueueStore } from "@/stores/useQueueStore";
 import { usePdfStore } from "@/stores/usePdfStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import Remarks from "./remarks.vue";
+import { padRange } from "@/utils/print";
 
 const { printConfig } = storeToRefs(usePrintStore());
 const { reset } = usePrintStore();
@@ -80,9 +81,18 @@ const submit = async () => {
       return;
     }
 
+    printConfig.value.simplexRange = padRange(
+      printConfig.value.simplexRange,
+      pageCount.value
+    );
+
+    printConfig.value.duplexRange = padRange(
+      printConfig.value.duplexRange,
+      pageCount.value
+    );
+
     addQueue({
       info: selectedFile.value!,
-      pageCount: pageCount.value,
       config: printConfig.value,
     });
 

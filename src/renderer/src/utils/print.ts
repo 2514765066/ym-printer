@@ -1,59 +1,49 @@
+//补全范围
+export const padRange = (range: string, max: number) => {
+  if (!range) {
+    return "";
+  }
+
+  const parts = range.split(",").map(s => s.trim());
+
+  const result = parts.map(part => {
+    if (part.includes("-")) {
+      const [startStr, endStr] = part.split("-");
+
+      const start = startStr === "" ? 1 : startStr;
+
+      const end = endStr === "" ? max : endStr;
+
+      return `${start}-${end}`;
+    }
+
+    return part;
+  });
+
+  return result.join(",");
+};
+
 //解析范围
-export const parserPange = (range: string, max: number) => {
-  const result = new Set<number>();
+export const parserPange = (range: string) => {
+  const result: number[] = [];
+
+  if (!range) {
+    return result;
+  }
 
   const parts = range.split(",").map(s => s.trim());
 
   for (const part of parts) {
-    if (!part) continue;
-
     if (part.includes("-")) {
       const [startStr, endStr] = part.split("-");
 
-      const start = startStr === "" ? 1 : Number(startStr);
-
-      const end = endStr === "" ? max : Number(endStr);
-
-      for (let i = start; i <= end; i++) result.add(i);
+      for (let i = Number(startStr); i <= Number(endStr); i++) result.push(i);
     } else {
       const num = Number(part);
 
-      if (!isNaN(num)) result.add(num);
+      if (!isNaN(num)) result.push(num);
     }
   }
 
-  return [...result].sort((a, b) => a - b);
-};
-
-//计算价格
-
-interface GetPriceOption {
-  simplexRange: number[];
-  duplexRange: number[];
-  simplexPrice: number;
-  duplexPrice: number;
-  simplexCount: number;
-  count: number;
-}
-export const getPrice = (option: GetPriceOption) => {
-  const {
-    simplexRange,
-    duplexRange,
-    simplexPrice,
-    duplexPrice,
-    simplexCount,
-    count,
-  } = option;
-
-  let res = 0;
-
-  res += simplexRange.length * simplexPrice * simplexCount;
-
-  res += Math.floor(duplexRange.length / 2) * duplexPrice;
-
-  if (duplexRange.length % 2 != 0) {
-    res += simplexPrice;
-  }
-
-  return Number((res * count).toFixed(2));
+  return result;
 };

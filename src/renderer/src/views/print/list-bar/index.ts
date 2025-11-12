@@ -29,14 +29,11 @@ export const rules: FormRules<PrintConfig> = {
         return;
       }
 
-      //只是数字
-      if (/^([1-9]\d*)$/.test(value)) {
-        callback();
-        return;
-      }
-
-      //是范围
-      if (/^([1-9]\d*)?-([1-9]\d*)?$/.test(value)) {
+      if (
+        /^(([1-9]\d*)?-([1-9]\d*)?|([1-9]\d*))(,(([1-9]\d*)?-([1-9]\d*)?|([1-9]\d*)))*$/.test(
+          value
+        )
+      ) {
         callback();
         return;
       }
@@ -59,7 +56,11 @@ export const rules: FormRules<PrintConfig> = {
         return;
       }
 
-      if (/^([1-9]\d*)?-([1-9]\d*)?$/.test(value)) {
+      if (
+        /^(([1-9]\d*)?-([1-9]\d*)?|([1-9]\d*))(,(([1-9]\d*)?-([1-9]\d*)?|([1-9]\d*)))*$/.test(
+          value
+        )
+      ) {
         callback();
         return;
       }
