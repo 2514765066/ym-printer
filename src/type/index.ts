@@ -17,6 +17,12 @@ export type IpcEvent = {
   //清理缓存
   clearCache: () => void;
 
+  //检查更新
+  checkUpdata: () => boolean;
+
+  //更新进度
+  updateProgress: (percent: number) => boolean;
+
   //打印
   print: (config: {
     printer: string;

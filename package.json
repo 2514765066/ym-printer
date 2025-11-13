@@ -12,7 +12,8 @@
     "build": "npm run typecheck && electron-vite build",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
-    "build:win": "npm run build && electron-builder --win "
+    "build:win": "npm run build && electron-builder --win ",
+    "release": "node ./scripts/publish.cjs"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
@@ -53,6 +54,7 @@
     ]
   },
   "dependencies": {
-    "winax": "^3.6.2"
+    "winax": "^3.6.2",
+    "ym-publish": "^1.2.1"
   }
 }

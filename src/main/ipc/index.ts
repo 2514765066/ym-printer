@@ -7,6 +7,8 @@ import ptp from "pdf-to-printer";
 import { toPdf } from "@/service/word";
 import { existsSync } from "fs";
 import { FileInfo } from "@type";
+import { checkUpdate, downloadAndInstall } from "@/utils/update";
+import { BrowserWindow } from "electron";
 
 //获取打印机信息
 ipcMain.handle("getPrinter", async () => {
@@ -128,4 +130,19 @@ ipcMain.handle("printEmpty", async (_, printer: string) => {
     paperSize: "A4",
     pages: "1",
   });
+});
+
+//检查更新
+ipcMain.handle("checkUpdata", async e => {
+  const res = await checkUpdate();
+
+  if (!res) return false;
+
+  const win = BrowserWindow.fromWebContents(e.sender);
+
+  downloadAndInstall(res, percent => {
+    win?.webContents.send("updateProgress", percent);
+  });
+
+  return true;
 });

@@ -29,4 +29,5 @@ contextBridge.exposeInMainWorld("ipcRenderer", {
   send: ipcRenderer.send,
   on: ipcRenderer.on,
   invoke: ipcRenderer.invoke,
+  addListener: ipcRenderer.addListener,
 });

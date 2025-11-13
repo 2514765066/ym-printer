@@ -11,6 +11,9 @@ importers:
       winax:
         specifier: ^3.6.2
         version: 3.6.2
+      ym-publish:
+        specifier: ^1.2.1
+        version: 1.2.1
     devDependencies:
       '@electron-toolkit/tsconfig':
         specifier: ^2.0.0
@@ -2788,6 +2791,9 @@ packages:
 
   ym-electron.js@4.1.0:
     resolution: {integrity: sha512-DDgzd+TeRdQr57f+qXsAQX6u4uXbOBTE9lI7PtoPFT1wSh7ln7M4vjt6+A4Zryn6QGNjp/RI4rt5Oy79MriJmg==}
+
+  ym-publish@1.2.1:
+    resolution: {integrity: sha512-la95MCKKMqLjfozTcF2eq44L12Qqbav81RFYu032ijZATzI22uywzBoPM+P9SujTubiXGgvVC6q+8N1NubSF3A==}
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
@@ -5605,6 +5611,8 @@ snapshots:
       fd-slicer: 1.1.0
 
   ym-electron.js@4.1.0: {}
+
+  ym-publish@1.2.1: {}
 
   yocto-queue@0.1.0: {}
 

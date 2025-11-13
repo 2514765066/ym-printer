@@ -19,7 +19,7 @@ html {
 
   --list-bg-color: #202020;
 
-  --hover-bg-color: rgba(255, 255, 255, 0.055);
+  --hover-bg-color: rgba(255, 255, 255, 0.05);
 
   --border-color: #2a2a2a;
 }
@@ -86,4 +86,22 @@ html {
 
 .el-notification {
   --el-notification-width: 300px !important;
+}
+
+.el-button {
+  --el-fill-color-light: #282828 !important;
+}
+
+.ym-input-number {
+  .el-input__wrapper {
+    box-shadow: none !important;
+  }
+
+  .el-input-number__decrease {
+    border: none !important;
+  }
+
+  .el-input-number__increase {
+    border: none !important;
+  }
 }

@@ -19,6 +19,7 @@ import price from "@iconify/icons-fluent/currency-dollar-euro-20-regular";
 import theme from "@iconify/icons-fluent/dark-theme-20-regular";
 import info from "@iconify/icons-fluent/error-circle-20-regular";
 import mark from "@iconify/icons-fluent/bookmark-20-regular";
+import update from "@iconify/icons-fluent/arrow-circle-up-20-regular";
 import { Icon } from "@iconify/vue";
 
 export type IconName = keyof typeof iconPacks;
@@ -51,6 +52,7 @@ const iconPacks = {
   theme,
   info,
   mark,
+  update,
 };
 </script>
 
