@@ -5,7 +5,7 @@ import {
 } from "ym-electron.js";
 import { createMain } from "@/bw/manage";
 import "@/ipc/index";
-import { createWord, removeWord } from "./utils/print";
+import { createWord, exitWord } from "./service/word";
 import { app } from "electron";
 
 //禁止多开
@@ -22,6 +22,6 @@ onMounted(async () => {
   });
 
   app.on("before-quit", () => {
-    removeWord();
+    exitWord();
   });
 });

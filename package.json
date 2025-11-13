@@ -1,8 +1,8 @@
 {
   "name": "ym-printer",
   "version": "1.0.0",
-  "type": "module",
   "main": "./out/main/index.js",
+  "type": "module",
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
@@ -26,6 +26,8 @@
     "electron-store": "^11.0.2",
     "electron-vite": "^4.0.1",
     "element-plus": "^2.11.7",
+    "nanoid": "^5.1.6",
+    "pdf-to-printer": "^5.6.1",
     "pdfjs-dist": "^5.4.394",
     "pinia": "^2.1.7",
     "postcss": "^8.5.3",
@@ -51,7 +53,6 @@
     ]
   },
   "dependencies": {
-    "nanoid": "^5.1.6",
-    "pdf-to-printer": "^5.6.1"
+    "winax": "^3.6.2"
   }
 }

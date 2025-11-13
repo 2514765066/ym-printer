@@ -42,7 +42,6 @@
 import ExtIcon from "@/components/icon/ext-icon.vue";
 import { ContextMenu } from "@/components/tooltip";
 import { MenuGrounp } from "@/components/tooltip/BaseMenu";
-import { getPrice, parserPange } from "@/utils/print";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { QueueItem, useQueueStore } from "@/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
@@ -85,18 +84,10 @@ const menu: MenuGrounp[] = [
 
 //计算价格
 const price = computed(() => {
-  const { simplexRange, duplexRange, simplexCount, count } = props.data.config;
-
-  return getPrice({
-    simplexRange: parserPange(simplexRange),
-    duplexRange: parserPange(duplexRange),
-
-    simplexPrice: settingsStore.data.simplexPrice,
-    duplexPrice: settingsStore.data.duplexPrice,
-
-    simplexCount,
-    count,
-  });
+  return props.data.getPrice(
+    settingsStore.data.simplexPrice,
+    settingsStore.data.duplexPrice
+  );
 });
 </script>
 

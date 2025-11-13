@@ -42,6 +42,7 @@ import { useFileStore } from "@/stores/useFileStore";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 import { ElButton, ElInputNumber } from "element-plus";
 import { version } from "@/service/info";
+import eventEmitter from "@/hooks/eventEmitter";
 
 const { data } = storeToRefs(useSettingsStore());
 const { clear } = useFileStore();
@@ -73,6 +74,8 @@ const handleClear = async () => {
   clear();
 
   cacheSize.value = 0;
+
+  eventEmitter.emit("success:show", "已清除缓存");
 };
 
 onMounted(async () => {

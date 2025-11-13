@@ -8,12 +8,9 @@ importers:
 
   .:
     dependencies:
-      nanoid:
-        specifier: ^5.1.6
-        version: 5.1.6
-      pdf-to-printer:
-        specifier: ^5.6.1
-        version: 5.6.1
+      winax:
+        specifier: ^3.6.2
+        version: 3.6.2
     devDependencies:
       '@electron-toolkit/tsconfig':
         specifier: ^2.0.0
@@ -48,6 +45,12 @@ importers:
       element-plus:
         specifier: ^2.11.7
         version: 2.11.7(vue@3.5.23(typescript@5.9.3))
+      nanoid:
+        specifier: ^5.1.6
+        version: 5.1.6
+      pdf-to-printer:
+        specifier: ^5.6.1
+        version: 5.6.1
       pdfjs-dist:
         specifier: ^5.4.394
         version: 5.4.394
@@ -2741,6 +2744,11 @@ packages:
 
   wide-align@1.1.5:
     resolution: {integrity: sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==}
+
+  winax@3.6.2:
+    resolution: {integrity: sha512-KvNO9lBBW//F4k4kE3QzKWHyGchMswrwSC2TD/rS4BYLaypECPCRXQIyjmQHVteK7cBEqqdF288brwnig/67Ow==}
+    engines: {node: '>= 10.0.0'}
+    hasBin: true
 
   wrap-ansi@7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
@@ -5554,6 +5562,8 @@ snapshots:
   wide-align@1.1.5:
     dependencies:
       string-width: 4.2.3
+
+  winax@3.6.2: {}
 
   wrap-ansi@7.0.0:
     dependencies:

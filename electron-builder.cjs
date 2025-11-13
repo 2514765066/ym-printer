@@ -6,7 +6,7 @@ const { name } = require("./package.json");
 module.exports = {
   appId: `com.2514765066.${name}`,
   productName: name,
-  files: ["out", "resources"],
+  files: ["out", "resources/empty.pdf"],
   asar: false,
   electronLanguages: ["zh-CN"],
   directories: {
@@ -23,4 +23,6 @@ module.exports = {
     uninstallDisplayName: "${productName}",
     deleteAppDataOnUninstall: true,
   },
+
+  publish: [],
 };

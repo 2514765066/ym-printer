@@ -4,7 +4,7 @@ import { basename, extname, join } from "path";
 import { db, emptyPdyPath } from "@/service/path";
 import { copyFile, readFile, mkdir, readdir, stat, rm } from "fs/promises";
 import ptp from "pdf-to-printer";
-import { toPdf } from "@/utils/print";
+import { toPdf } from "@/service/word";
 import { existsSync } from "fs";
 import { FileInfo } from "@type";
 

@@ -1,10 +1,6 @@
 {
   "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
-  "include": [
-    "electron.vite.config.*",
-    "src/**/*",
-    "src/renderer/src/components/list-bar/side.vue"
-  ],
+  "include": ["electron.vite.config.*", "src/**/*"],
   "exclude": ["src/renderer"],
   "compilerOptions": {
     "composite": true,
