@@ -14,6 +14,10 @@ const open = () => {
 
 //退出word
 const exit = () => {
+  if (!word) {
+    return;
+  }
+
   word.Quit();
   word = null;
 };
