@@ -28,7 +28,6 @@
     "electron-vite": "^4.0.1",
     "element-plus": "^2.11.7",
     "nanoid": "^5.1.6",
-    "pdf-to-printer": "^5.6.1",
     "pdfjs-dist": "^5.4.394",
     "pinia": "^2.1.7",
     "postcss": "^8.5.3",
@@ -42,7 +41,8 @@
     "vue": "^3.5.21",
     "vue-router": "^4.4.5",
     "vue-tsc": "^3.0.7",
-    "ym-electron.js": "^4.1.0"
+    "ym-electron.js": "^4.1.0",
+    "ym-publish": "^1.2.1"
   },
   "volta": {
     "node": "22.21.1"
@@ -54,7 +54,7 @@
     ]
   },
   "dependencies": {
-    "winax": "^3.6.2",
-    "ym-publish": "^1.2.1"
+    "pdf-to-printer": "^5.6.1",
+    "winax": "^3.6.2"
   }
 }
