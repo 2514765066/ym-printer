@@ -92,9 +92,9 @@ const menu = computed(
 
               printTip({
                 onConfirm: async () => {
-                  await next();
+                  printing.value = true;
 
-                  printing.value = false;
+                  await next();
 
                   eventEmitter.emit("success:show", "打印完成");
                 },

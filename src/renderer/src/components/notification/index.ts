@@ -12,7 +12,7 @@ export const printTip = ({ onCancel, onConfirm }: PrintTipOption) => {
     position: "bottom-right",
     duration: 0,
     type: "info",
-    onClose: onCancel,
+    onClose: () => handle.close(),
     message: () =>
       h(PrintTipContent, {
         onCancel: async () => {
