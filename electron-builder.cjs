@@ -13,7 +13,7 @@ module.exports = {
   directories: {
     output: "dist",
   },
-  icon: "src/renderer/src/assets/icon.png",
+  icon: "build/icon.png",
 
   nsis: {
     differentialPackage: false,
