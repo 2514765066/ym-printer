@@ -1,8 +1,13 @@
-import { contextBridge, webUtils } from "electron";
+import { contextBridge, shell, webUtils } from "electron";
 import { ipcRenderer } from "../main/ipc/ipcRenderer";
 import { extname } from "path";
 
 const api = {
+  //打开网页
+  openUrl(url: string) {
+    shell.openExternal(url);
+  },
+
   getFilePath(files: File[]) {
     const res: string[] = [];
 
