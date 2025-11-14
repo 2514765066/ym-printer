@@ -5,6 +5,7 @@ const { name } = require("./package.json");
  */
 module.exports = {
   appId: `com.2514765066.${name}`,
+  artifactName: name,
   productName: name,
   files: ["out", "resources/empty.pdf"],
   asar: false,
