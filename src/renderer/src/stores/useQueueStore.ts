@@ -168,6 +168,12 @@ export const useQueueStore = defineStore("queue", () => {
     return;
   };
 
+  //清除队列
+  const clearQueue = () => {
+    printQueue.value.clear();
+    finishQueue.value.clear();
+  };
+
   return {
     printQueue,
     finishQueue,
@@ -177,5 +183,6 @@ export const useQueueStore = defineStore("queue", () => {
     startPrint,
     removeFinsihQueue,
     hasQueue,
+    clearQueue,
   };
 });

@@ -15,8 +15,10 @@ import Item from "@/components/setting-item/index.vue";
 import { ElButton } from "element-plus";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useFileStore } from "@/stores/useFileStore";
+import { useQueueStore } from "@/stores/useQueueStore";
 
-const { clear } = useFileStore();
+const fileStore = useFileStore();
+const clearQueue = useQueueStore();
 
 const cacheSize = ref(0);
 
@@ -42,7 +44,9 @@ const formatSize = (size: number) => {
 const handleClear = async () => {
   await ipcRenderer.invoke("clearCache");
 
-  clear();
+  fileStore.clear();
+
+  clearQueue.clearQueue();
 
   cacheSize.value = 0;
 
