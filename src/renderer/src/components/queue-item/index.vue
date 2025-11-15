@@ -72,129 +72,132 @@ const emits = defineEmits<{
 //是否正在打印
 const printing = ref(false);
 
-const menu = computed(
-  () =>
-    [
+const menu: MenuGrounp[] = [
+  {
+    title: "更多操作",
+    children: [
       {
-        title: "更多操作",
-        children: [
-          {
-            title: "开始打印",
-            icon: "play",
-            disable: printing.value,
-            async onSelect() {
+        title: "开始打印",
+        icon: "play",
+        disable: printing,
+        async onSelect() {
+          printing.value = true;
+
+          const next = await startPrint(props.data.id);
+
+          if (!printing.value) {
+            return;
+          }
+
+          if (!next) {
+            printing.value = false;
+
+            eventEmitter.emit("success:show", "打印完成");
+            return;
+          }
+
+          printTip({
+            onConfirm: async () => {
               printing.value = true;
 
-              const next = await startPrint(props.data.id);
+              await next();
 
-              if (!next) {
-                printing.value = false;
-
-                eventEmitter.emit("success:show", "打印完成");
-                return;
-              }
-
-              printTip({
-                onConfirm: async () => {
-                  printing.value = true;
-
-                  await next();
-
-                  eventEmitter.emit("success:show", "打印完成");
-                },
-                onCancel: () => {
-                  printing.value = false;
-                },
-              });
+              eventEmitter.emit("success:show", "打印完成");
             },
-          },
-          {
-            title: "取消打印",
-            icon: "remove",
-            hoverColor: "#f87171",
-            onSelect() {
-              removeQueue(props.data.id);
-
-              eventEmitter.emit("success:show", "已取消打印");
+            onCancel: () => {
+              printing.value = false;
             },
-          },
-        ],
+          });
+        },
       },
       {
-        children: [
-          {
-            title: "标记为完成打印",
-            icon: "mark",
-            onSelect() {
-              addFinishQueue(props.data);
-            },
-          },
-        ],
+        title: "取消打印",
+        icon: "remove",
+        hoverColor: "#f87171",
+        onSelect() {
+          printing.value = false;
+
+          removeQueue(props.data.id);
+
+          eventEmitter.emit("success:show", "已取消打印");
+        },
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        title: "标记为完成打印",
+        icon: "mark",
+        onSelect() {
+          addFinishQueue(props.data);
+        },
+      },
+    ],
+  },
+  {
+    children: [
+      {
+        hidden: props.data.duplexRange.length == 0,
+        title: "打印偶数页",
+        icon: "print",
+        sub: "#",
+        disable: printing,
+        async onSelect() {
+          printing.value = true;
+
+          await props.data.printEven();
+
+          printing.value = false;
+        },
       },
       {
-        children: [
-          {
-            hidden: props.data.duplexRange.length == 0,
-            title: "打印偶数页",
-            icon: "print",
-            sub: "#",
-            disable: printing.value,
-            async onSelect() {
-              printing.value = true;
+        hidden: props.data.duplexRange.length == 0,
+        title: "打印奇数页",
+        icon: "print",
+        sub: "#",
+        disable: printing,
+        async onSelect() {
+          printing.value = true;
 
-              await props.data.printEven();
+          await props.data.printOdd();
 
-              printing.value = false;
-            },
-          },
-          {
-            hidden: props.data.duplexRange.length == 0,
-            title: "打印奇数页",
-            icon: "print",
-            sub: "#",
-            disable: printing.value,
-            async onSelect() {
-              printing.value = true;
-
-              await props.data.printOdd();
-
-              printing.value = false;
-            },
-          },
-          {
-            hidden: props.data.simplexRange.length == 0,
-            title: "打印单页",
-            icon: "print",
-            sub: "#",
-            disable: printing.value,
-            async onSelect() {
-              printing.value = true;
-
-              await props.data.printSimplex();
-
-              printing.value = false;
-            },
-          },
-          {
-            hidden:
-              props.data.duplexRange.length == 0 ||
-              props.data.simplexRange.length == 0,
-            title: "打印奇数页和单页",
-            icon: "print",
-            sub: "#",
-            disable: printing.value,
-            async onSelect() {
-              printing.value = true;
-
-              await props.data.printOdd(true);
-
-              printing.value = false;
-            },
-          },
-        ],
+          printing.value = false;
+        },
       },
-    ] as MenuGrounp[]
-);
+      {
+        hidden: props.data.simplexRange.length == 0,
+        title: "打印单页",
+        icon: "print",
+        sub: "#",
+        disable: printing,
+        async onSelect() {
+          printing.value = true;
+
+          await props.data.printSimplex();
+
+          printing.value = false;
+        },
+      },
+      {
+        hidden:
+          props.data.duplexRange.length == 0 ||
+          props.data.simplexRange.length == 0,
+        title: "打印奇数页和单页",
+        icon: "print",
+        sub: "#",
+        disable: printing,
+        async onSelect() {
+          printing.value = true;
+
+          await props.data.printOdd(true);
+
+          printing.value = false;
+        },
+      },
+    ],
+  },
+];
 
 //计算价格
 const price = computed(() => {
