@@ -211,14 +211,20 @@ const menu: MenuGrounp[] = [
   },
 ];
 
-onMounted(() => {
-  eventEmitter.on("printFirst", () => {
-    if (!props.first) {
-      return;
-    }
+const handlePrintFirst = () => {
+  if (!props.first) {
+    return;
+  }
 
-    print();
-  });
+  print();
+};
+
+onMounted(() => {
+  eventEmitter.on("printFirst", handlePrintFirst);
+});
+
+onUnmounted(() => {
+  eventEmitter.off("printFirst", handlePrintFirst);
 });
 </script>
 
