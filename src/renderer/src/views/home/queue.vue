@@ -45,6 +45,8 @@ const handlePreview = (item: QueueItem) => {
     "print:show",
     config => {
       item.setConfig(config);
+
+      eventEmitter.emit("success:show", "已更新打印配置");
     },
     item.config,
     item.file

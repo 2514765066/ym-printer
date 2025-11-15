@@ -55,6 +55,8 @@ const handlePreview = (file: FileInfo) => {
       file,
       config,
     });
+
+    eventEmitter.emit("success:show", "已添加到队列");
   });
 };
 

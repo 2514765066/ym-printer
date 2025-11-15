@@ -15,13 +15,13 @@ export class QueueItem {
   constructor(id: string, option: AddQueueOption) {
     this.id = id;
 
-    this.file = JSON.parse(JSON.stringify(option.file));
+    this.file = toRaw(option.file);
 
     this.setConfig(option.config);
   }
 
   public setConfig(config: PrintConfig) {
-    this.config = JSON.parse(JSON.stringify(config));
+    this.config = toRaw(config);
 
     this.duplexRange = parserPange(this.config.duplexRange);
     this.simplexRange = parserPange(this.config.simplexRange);
@@ -29,13 +29,15 @@ export class QueueItem {
 
   //打印
   public async print(range: number[]) {
-    await ipcRenderer.invoke("print", {
+    const option = {
       md5: this.file.md5,
       printer: this.config.printer,
       orientation: this.config.orientation,
       count: this.config.count,
       range,
-    });
+    };
+
+    await ipcRenderer.invoke("print", JSON.parse(JSON.stringify(option)));
   }
 
   //打印空白页

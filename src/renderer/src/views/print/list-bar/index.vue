@@ -43,7 +43,6 @@ import DuplexRange from "./duplexRange.vue";
 import { ElButton, ElForm, ElScrollbar } from "element-plus";
 import { usePrintStore } from "@/stores/usePrintStore";
 import { rules } from "./index";
-import eventEmitter from "@/hooks/eventEmitter";
 import Remarks from "./remarks.vue";
 
 const emits = defineEmits<{
@@ -72,8 +71,6 @@ const submit = async () => {
     emits("submit");
 
     emits("close");
-
-    eventEmitter.emit("success:show", "已添加到队列");
   });
 };
 </script>
