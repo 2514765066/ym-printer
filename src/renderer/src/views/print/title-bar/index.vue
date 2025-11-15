@@ -1,16 +1,20 @@
 <template>
   <section class="title-bar flex items-center p-2 gap-2">
-    <ExtIcon :ext="selectedFile?.ext" size="14" class="h-6" />
+    <ExtIcon :ext="data.ext" size="14" class="h-6" />
 
-    <span class="text-main text-sm">{{ selectedFile?.name }}</span>
+    <span class="text-main text-sm"> {{ data.label }}</span>
   </section>
 </template>
 
 <script setup lang="ts">
-import { useFileStore } from "@/stores/useFileStore";
 import ExtIcon from "@/components/icon/ext-icon.vue";
 
-const { selectedFile } = storeToRefs(useFileStore());
+defineProps<{
+  data: {
+    label?: string;
+    ext?: string;
+  };
+}>();
 </script>
 
 <style scoped lang="scss">

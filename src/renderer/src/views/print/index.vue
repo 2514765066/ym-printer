@@ -10,7 +10,7 @@
     :modal="false"
   >
     <main class="print grid">
-      <TitleBar />
+      <TitleBar :data="info" />
 
       <ListBar @close="close" @submit="handleSubmit" />
 
@@ -32,12 +32,16 @@ import { usePrintStore } from "@/stores/usePrintStore";
 import { padRange } from "@/utils/print";
 import { usePdfStore } from "@/stores/usePdfStore";
 import { PrintConfig } from "@type";
+import { useFileStore } from "@/stores/useFileStore";
 
+const { selectedFile } = storeToRefs(useFileStore());
 const { set, reset } = usePrintStore();
 const { printConfig } = storeToRefs(usePrintStore());
 const { pageCount } = storeToRefs(usePdfStore());
 
 const visible = ref(false);
+
+const info = ref({});
 
 //回调
 let callback: (data: PrintConfig) => void;
@@ -55,18 +59,23 @@ const handleSubmit = () => {
   );
 
   callback(printConfig.value);
-
-  reset();
 };
 
 const close = () => {
+  reset();
+
   visible.value = false;
 };
 
-eventEmitter.on("print:show", (setData, data) => {
-  if (data) {
-    set(data);
+eventEmitter.on("print:show", (setData, config, file) => {
+  if (config) {
+    set(config);
   }
+
+  info.value = {
+    label: file ? config?.remarks || file.name : selectedFile.value?.name,
+    ext: file ? file.ext : selectedFile.value?.ext,
+  };
 
   callback = setData;
 

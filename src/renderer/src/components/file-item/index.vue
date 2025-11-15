@@ -60,7 +60,7 @@ const menu: MenuGrounp[] = [
     title: "更多操作",
     children: [
       {
-        title: "打印预览",
+        title: "打印配置",
         icon: "print",
         onSelect() {
           emits("preview");

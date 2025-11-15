@@ -12,11 +12,13 @@ const props = defineProps<{
   size?: string | number;
 }>();
 
-const info = extMap[props.ext || "doc"] as {
-  label: string;
-  color: string;
-  size: number;
-};
+const info = computed(() => {
+  return extMap[props.ext || "doc"] as {
+    label: string;
+    color: string;
+    size: number;
+  };
+});
 </script>
 
 <style scoped lang="scss">

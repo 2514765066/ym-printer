@@ -28,7 +28,8 @@ const handlePreview = (item: QueueItem) => {
     config => {
       item.setConfig(config);
     },
-    item.config
+    item.config,
+    item.file
   );
 };
 </script>

@@ -1,4 +1,4 @@
-import { PrintConfig } from "@type";
+import { FileInfo, PrintConfig } from "@type";
 
 // 定义事件到函数类型的映射
 type EventMap = {
@@ -7,7 +7,11 @@ type EventMap = {
   "tip:show": () => void;
   "tip:hide": () => void;
 
-  "print:show": (set: (data: PrintConfig) => void, data?: PrintConfig) => void;
+  "print:show": (
+    set: (data: PrintConfig) => void,
+    config?: PrintConfig,
+    file?: FileInfo
+  ) => void;
 };
 
 type EventNames = keyof EventMap;
