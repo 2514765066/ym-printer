@@ -1,9 +1,9 @@
 <template>
   <section class="nav-bar p-1.5 flex flex-col gap-1.5">
-    <Item label="主页" to="/index/home" icon="home" />
+    <Item label="主页" to="/home" icon="home" />
 
     <div class="mt-auto">
-      <Item label="设置" to="/index/settings" icon="settings" />
+      <Item label="设置" to="/settings" icon="settings" />
     </div>
   </section>
 </template>

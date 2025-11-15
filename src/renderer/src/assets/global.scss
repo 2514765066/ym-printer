@@ -105,3 +105,10 @@ html {
     border: none !important;
   }
 }
+
+.ym-drawer {
+  background-color: var(--bg-color) !important;
+  .el-drawer__body {
+    padding: 0 !important;
+  }
+}

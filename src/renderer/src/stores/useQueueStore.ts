@@ -4,18 +4,24 @@ import { nanoid } from "nanoid";
 
 export class QueueItem {
   id: string;
-  info: FileInfo;
 
-  config: PrintConfig;
+  file: FileInfo;
 
-  duplexRange: number[];
-  simplexRange: number[];
+  config!: PrintConfig;
+
+  duplexRange!: number[];
+  simplexRange!: number[];
 
   constructor(id: string, option: AddQueueOption) {
     this.id = id;
-    this.info = JSON.parse(JSON.stringify(option.info));
 
-    this.config = JSON.parse(JSON.stringify(option.config));
+    this.file = toRaw(option.file);
+
+    this.setConfig(option.config);
+  }
+
+  public setConfig(config: PrintConfig) {
+    this.config = toRaw(config);
 
     this.duplexRange = parserPange(this.config.duplexRange);
     this.simplexRange = parserPange(this.config.simplexRange);
@@ -24,7 +30,7 @@ export class QueueItem {
   //打印
   public async print(range: number[]) {
     await ipcRenderer.invoke("print", {
-      md5: this.info.md5,
+      md5: this.file.md5,
       printer: this.config.printer,
       orientation: this.config.orientation,
       count: this.config.count,
@@ -82,7 +88,7 @@ export class QueueItem {
 
 //打印队列
 interface AddQueueOption {
-  info: FileInfo;
+  file: FileInfo;
   config: PrintConfig;
 }
 
@@ -93,24 +99,28 @@ export const useQueueStore = defineStore("queue", () => {
   //完成队列
   const finishQueue = ref(new Map<string, QueueItem>());
 
+  //是否存在队列中
+  const hasQueue = (id: string) => {
+    const res = [...printQueue.value.values(), ...finishQueue.value.values()];
+
+    return res.some(item => item.file.id == id);
+  };
+
   //添加队列
   const addQueue = (option: AddQueueOption | QueueItem) => {
     if (option instanceof QueueItem) {
-      const item = markRaw(option);
-
-      printQueue.value.set(option.id, item);
+      printQueue.value.set(option.id, option);
       return;
     }
-
     const id = nanoid();
-    const item = markRaw(new QueueItem(id, option));
 
-    printQueue.value.set(id, item);
+    printQueue.value.set(id, new QueueItem(id, option));
   };
 
   //添加完成队列
   const addFinishQueue = (item: QueueItem) => {
-    finishQueue.value.set(item.id, markRaw(item));
+    finishQueue.value.set(item.id, item);
+
     removeQueue(item.id);
   };
 
@@ -166,5 +176,6 @@ export const useQueueStore = defineStore("queue", () => {
     removeQueue,
     startPrint,
     removeFinsihQueue,
+    hasQueue,
   };
 });

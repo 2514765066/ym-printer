@@ -1,6 +1,6 @@
 <template>
   <ContextMenu :data="menu">
-    <li class="p-2 flex items-center gap-2 rounded-md">
+    <li class="p-2 flex items-center gap-2 rounded-md" @click="emits('click')">
       <div class="h-8 flex-center aspect-square">
         <Icon
           icon="loading"
@@ -10,12 +10,12 @@
           v-if="printing"
         />
 
-        <ExtIcon class="h-full" :ext="data.info.ext" v-else />
+        <ExtIcon class="h-full" :ext="data.file.ext" v-else />
       </div>
 
       <div class="flex flex-col gap-0.5 overflow-hidden">
         <span class="text-sm text-main ellipsis">
-          {{ data.config.remarks || data.info.name }}
+          {{ data.config.remarks || data.file.name }}
         </span>
 
         <div class="flex gap-6">
@@ -63,6 +63,10 @@ const { removeQueue, startPrint, addFinishQueue } = useQueueStore();
 
 const props = defineProps<{
   data: QueueItem;
+}>();
+
+const emits = defineEmits<{
+  click: [];
 }>();
 
 //是否正在打印

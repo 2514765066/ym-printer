@@ -2,15 +2,17 @@
   <div class="app wh-screen grid">
     <TitleBar />
 
-    <RouterView v-slot="{ Component }">
-      <KeepAlive :include="['Print']">
-        <component :is="Component" />
-      </KeepAlive>
-    </RouterView>
+    <NavBar />
+
+    <RouterView />
   </div>
+
+  <Print />
 </template>
 
 <script setup lang="ts">
+import Print from "@/views/print/index.vue";
+import NavBar from "@/components/nav-bar/index.vue";
 import TitleBar from "@/components/title-bar/index.vue";
 import eventEmitter from "./hooks/eventEmitter";
 import { ElMessage } from "element-plus";
@@ -28,10 +30,11 @@ eventEmitter.on("success:show", (message: string) => {
 .app {
   background-color: var(--bg-color);
 
+  grid-template-columns: 50px calc(100vw - 50px);
   grid-template-rows: 44px calc(100vh - 44px);
 
   grid-template-areas:
-    "title-bar"
-    "content";
+    "title-bar title-bar"
+    "nav-bar content";
 }
 </style>

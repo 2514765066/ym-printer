@@ -16,6 +16,11 @@ export const usePrintStore = defineStore("print", () => {
   //打印配置
   const printConfig = ref<PrintConfig>(createConfig());
 
+  //设置配置
+  const set = (data: PrintConfig) => {
+    printConfig.value = data;
+  };
+
   //重置
   const reset = () => {
     printConfig.value = createConfig();
@@ -35,7 +40,8 @@ export const usePrintStore = defineStore("print", () => {
   init();
 
   return {
-    reset,
     printConfig,
+    reset,
+    set,
   };
 });

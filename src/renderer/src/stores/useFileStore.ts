@@ -4,16 +4,11 @@ export const useFileStore = defineStore("file", () => {
   //所有文件
   const data = ref<Map<string, FileInfo>>(new Map());
 
-  //选中的id = md5 + path
+  //选中的id
   const selectedID = ref("");
 
   //当前选中的文件
   const selectedFile = computed(() => data.value.get(selectedID.value));
-
-  //文件是否存在
-  const has = (id: string) => {
-    return data.value.has(id);
-  };
 
   //获取文件
   const get = (id: string) => {
@@ -41,13 +36,7 @@ export const useFileStore = defineStore("file", () => {
     const res = await ipcRenderer.invoke("getFilesInfo", paths);
 
     for (const item of res) {
-      const id = item.md5 + item.path;
-
-      if (has(id)) {
-        continue;
-      }
-
-      data.value.set(id, item);
+      data.value.set(item.id, item);
     }
   };
 

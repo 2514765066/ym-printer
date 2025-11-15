@@ -1,13 +1,15 @@
 <template>
-  <section class="title-bar flex items-center pl-2 gap-2">
-    <Icon icon="print" size="20" />
+  <section class="title-bar flex items-center pl-1.5 gap-2">
+    <div class="w-9 h-9 flex-center">
+      <img src="@/assets/icon.png" width="20" />
+    </div>
+
     <span class="text-main text-sm">{{ name }}</span>
   </section>
 </template>
 
 <script setup lang="ts">
 import { name } from "@/service/info";
-import Icon from "../icon/index.vue";
 </script>
 
 <style scoped lang="scss">

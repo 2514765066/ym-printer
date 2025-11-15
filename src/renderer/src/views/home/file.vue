@@ -15,7 +15,11 @@
         v-for="item in data.values()"
         :key="item.id"
         :data="item"
+        :active="selectedID == item.id"
+        :printed="selectedID != item.id && hasQueue(item.id)"
         @click="handlePreview(item)"
+        @remove="remove(item.id)"
+        @preview="handlePreview(item)"
       />
     </ElScrollbar>
   </main>
@@ -29,10 +33,12 @@ import Item from "@/components/file-item/index.vue";
 import { ElScrollbar } from "element-plus";
 import { FileInfo } from "@type";
 import Empty from "@/components/empty.vue";
+import { useQueueStore } from "@/stores/useQueueStore";
+import eventEmitter from "@/hooks/eventEmitter";
 
-const { data } = storeToRefs(useFileStore());
-const { select, add } = useFileStore();
-const router = useRouter();
+const { data, selectedID } = storeToRefs(useFileStore());
+const { select, add, remove } = useFileStore();
+const { hasQueue, addQueue } = useQueueStore();
 
 const isDraggingOver = ref(false);
 
@@ -42,10 +48,15 @@ const handleChange = (value: boolean) => {
 };
 
 //处理预览
-const handlePreview = (item: FileInfo) => {
-  select(item.id);
+const handlePreview = (file: FileInfo) => {
+  select(file.id);
 
-  router.push("/print");
+  eventEmitter.emit("print:show", config => {
+    addQueue({
+      file,
+      config,
+    });
+  });
 };
 
 //拖拽结束

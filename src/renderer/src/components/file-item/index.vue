@@ -2,9 +2,13 @@
   <ContextMenu :data="menu">
     <li
       class="p-2 flex items-center gap-2 rounded-md"
-      :class="{ active: selectedID == data.id }"
+      :class="{
+        active,
+        printed,
+        'pointer-events-none': loading,
+      }"
       :title="`${data.name}\r\n${data.path}`"
-      @click="handleClick"
+      @click="emits('click')"
     >
       <div class="h-8 flex-center aspect-square">
         <Icon
@@ -37,18 +41,18 @@ import Icon from "@/components/icon/index.vue";
 import { FileInfo } from "@type";
 import ContextMenu from "@/components/tooltip/ContextMenu.vue";
 import { MenuGrounp } from "@/components/tooltip/BaseMenu";
-import { useFileStore } from "@/stores/useFileStore";
 import eventEmitter from "@/hooks/eventEmitter";
-
-const { remove } = useFileStore();
-const { selectedID } = storeToRefs(useFileStore());
 
 const props = defineProps<{
   data: FileInfo;
+  printed?: boolean;
+  active?: boolean;
 }>();
 
 const emits = defineEmits<{
   click: [];
+  remove: [];
+  preview: [];
 }>();
 
 const menu: MenuGrounp[] = [
@@ -56,11 +60,18 @@ const menu: MenuGrounp[] = [
     title: "更多操作",
     children: [
       {
+        title: "打印预览",
+        icon: "print",
+        onSelect() {
+          emits("preview");
+        },
+      },
+      {
         title: "删除文件",
         icon: "remove",
         hoverColor: "#f87171 ",
         onSelect() {
-          remove(props.data.id);
+          emits("remove");
 
           eventEmitter.emit("success:show", "已删除文件");
         },
@@ -70,14 +81,6 @@ const menu: MenuGrounp[] = [
 ];
 
 const loading = ref(true);
-
-const handleClick = () => {
-  if (loading.value) {
-    return;
-  }
-
-  emits("click");
-};
 
 onMounted(async () => {
   await ipcRenderer.invoke(
@@ -100,5 +103,9 @@ li {
 
 .active {
   background-color: var(--hover-bg-color);
+}
+
+.printed {
+  opacity: 0.5;
 }
 </style>

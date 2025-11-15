@@ -9,6 +9,7 @@ import { existsSync } from "fs";
 import { FileInfo } from "@type";
 import { checkUpdate, downloadAndInstall } from "@/utils/update";
 import { BrowserWindow } from "electron";
+import { nanoid } from "nanoid";
 
 //获取打印机信息
 ipcMain.handle("getPrinter", async () => {
@@ -41,7 +42,7 @@ ipcMain.handle("getFilesInfo", async (_, paths) => {
       ext,
       md5,
       path,
-      id: md5 + path,
+      id: nanoid(),
     });
   }
 

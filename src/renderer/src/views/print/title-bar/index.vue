@@ -1,6 +1,6 @@
 <template>
-  <section class="title-bar flex items-center pl-2 gap-2">
-    <Icon icon="print" size="20" />
+  <section class="title-bar flex items-center p-2 gap-2">
+    <ExtIcon :ext="selectedFile?.ext" size="14" class="h-6" />
 
     <span class="text-main text-sm">{{ selectedFile?.name }}</span>
   </section>
@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { useFileStore } from "@/stores/useFileStore";
-import Icon from "@/components/icon/index.vue";
+import ExtIcon from "@/components/icon/ext-icon.vue";
 
 const { selectedFile } = storeToRefs(useFileStore());
 </script>

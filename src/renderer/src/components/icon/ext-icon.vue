@@ -7,11 +7,12 @@
 <script setup lang="ts">
 import { extMap } from "./index";
 
-const { ext } = defineProps<{
-  ext: string;
+const props = defineProps<{
+  ext?: string;
+  size?: string | number;
 }>();
 
-const info = extMap[ext] as {
+const info = extMap[props.ext || "doc"] as {
   label: string;
   color: string;
   size: number;
@@ -23,7 +24,7 @@ div {
   background-color: v-bind("info.color");
 
   > span {
-    font-size: calc(v-bind("info.size") * 1px);
+    font-size: calc(v-bind("props.size || info.size") * 1px);
   }
 }
 </style>

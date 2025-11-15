@@ -1,9 +1,5 @@
 <template>
-  <section class="list-bar flex flex-col">
-    <header class="mb-6 px-4 pt-4">
-      <span class="text-main">打印配置</span>
-    </header>
-
+  <section class="list-bar pt-4 flex flex-col">
     <ElScrollbar view-class="px-4">
       <ElForm ref="ruleFormRef" :model="printConfig" :rules="rules">
         <Printer v-model="printConfig.printer" />
@@ -32,7 +28,7 @@
         添加
       </ElButton>
 
-      <ElButton style="flex: 1" @click="close">取消</ElButton>
+      <ElButton style="flex: 1" @click="emits('close')">取消</ElButton>
     </footer>
   </section>
 </template>
@@ -46,30 +42,22 @@ import SimplexRange from "./simplexRange.vue";
 import DuplexRange from "./duplexRange.vue";
 import { ElButton, ElForm, ElScrollbar } from "element-plus";
 import { usePrintStore } from "@/stores/usePrintStore";
-import { useFileStore } from "@/stores/useFileStore";
 import { rules } from "./index";
-import { useQueueStore } from "@/stores/useQueueStore";
-import { usePdfStore } from "@/stores/usePdfStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import Remarks from "./remarks.vue";
-import { padRange } from "@/utils/print";
+
+const emits = defineEmits<{
+  close: [];
+  submit: [];
+}>();
 
 const { printConfig } = storeToRefs(usePrintStore());
-const { reset } = usePrintStore();
-const { addQueue } = useQueueStore();
-const { selectedFile } = storeToRefs(useFileStore());
-const { pageCount } = storeToRefs(usePdfStore());
-const router = useRouter();
 
 const ruleFormRef = useTemplateRef("ruleFormRef");
 
 const disable = computed(
   () => !(printConfig.value.duplexRange || printConfig.value.simplexRange)
 );
-
-const close = () => {
-  router.push("/index");
-};
 
 const submit = async () => {
   if (!ruleFormRef.value) {
@@ -81,24 +69,9 @@ const submit = async () => {
       return;
     }
 
-    printConfig.value.simplexRange = padRange(
-      printConfig.value.simplexRange,
-      pageCount.value
-    );
+    emits("submit");
 
-    printConfig.value.duplexRange = padRange(
-      printConfig.value.duplexRange,
-      pageCount.value
-    );
-
-    addQueue({
-      info: selectedFile.value!,
-      config: printConfig.value,
-    });
-
-    close();
-
-    reset();
+    emits("close");
 
     eventEmitter.emit("success:show", "已添加到队列");
   });
