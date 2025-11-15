@@ -21,6 +21,7 @@ import info from "@iconify/icons-fluent/error-circle-20-regular";
 import mark from "@iconify/icons-fluent/bookmark-20-regular";
 import update from "@iconify/icons-fluent/arrow-circle-up-20-regular";
 import globe from "@iconify/icons-fluent/globe-20-regular";
+import selectOff from "@iconify/icons-fluent/select-all-off-20-regular";
 import { Icon } from "@iconify/vue";
 
 export type IconName = keyof typeof iconPacks;
@@ -55,6 +56,7 @@ const iconPacks = {
   mark,
   update,
   globe,
+  selectOff,
 };
 </script>
 

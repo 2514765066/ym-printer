@@ -1,6 +1,10 @@
 <template>
   <ContextMenu :data="menu">
-    <li class="p-2 flex items-center gap-2 rounded-md">
+    <li
+      class="p-2 flex items-center gap-2 rounded-md"
+      :class="{ active }"
+      @click="emits('click')"
+    >
       <ExtIcon class="h-8" :ext="data.file.ext" />
 
       <div class="flex flex-col gap-0.5 overflow-hidden">
@@ -51,6 +55,11 @@ const { removeFinsihQueue, addQueue } = useQueueStore();
 
 const props = defineProps<{
   data: QueueItem;
+  active?: boolean;
+}>();
+
+const emits = defineEmits<{
+  click: [];
 }>();
 
 const menu: MenuGrounp[] = [
@@ -69,13 +78,13 @@ const menu: MenuGrounp[] = [
         },
       },
       {
-        title: "删除当前任务",
+        title: "删除记录",
         icon: "remove",
         hoverColor: "#f87171",
         onSelect() {
           removeFinsihQueue(props.data.id);
 
-          eventEmitter.emit("success:show", "已删除任务");
+          eventEmitter.emit("success:show", "已删除记录");
         },
       },
     ],
@@ -95,8 +104,12 @@ const price = computed(() => {
 li {
   transition: background-color 0.1s;
 
-  &:hover {
+  &:not(.active):hover {
     background-color: var(--hover-bg-color);
   }
+}
+
+.active {
+  background-color: var(--active-bg-color);
 }
 </style>
