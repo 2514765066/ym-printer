@@ -3,6 +3,16 @@ const { Object } = require("winax");
 
 let word = null;
 
+//退出word
+const exit = () => {
+  if (word === null) {
+    return;
+  }
+
+  word.Quit();
+  word = null;
+};
+
 //开启word
 const open = () => {
   word = new Object("Word.Application");
@@ -12,25 +22,23 @@ const open = () => {
   word.DisplayAlerts = 0;
 };
 
-//退出word
-const exit = () => {
-  if (!word) {
-    return;
-  }
-
-  word.Quit();
-  word = null;
-};
-
 //保存为pdf
 const save = (md5, inputPath, outputPath) => {
-  const doc = word.Documents.Open(inputPath, false, true, false);
+  try {
+    const doc = word.Documents.Open(inputPath, false, true, false);
 
-  doc.ExportAsFixedFormat(outputPath, 17);
+    doc.ExportAsFixedFormat(outputPath, 17);
 
-  parentPort.postMessage(md5);
+    parentPort.postMessage(md5);
 
-  doc.Close(false);
+    doc.Close(false);
+  } catch (e) {
+    console.error("worker报错", e);
+
+    open();
+
+    save(md5, inputPath, outputPath);
+  }
 };
 
 const actionMap = {
