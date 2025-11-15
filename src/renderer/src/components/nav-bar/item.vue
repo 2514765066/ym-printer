@@ -1,5 +1,5 @@
 <template>
-  <ElTooltip :content="label" placement="right" :hide-after="0">
+  <Tip :label="label" placement="right">
     <RouterLink
       class="item w-full flex-center aspect-square rounded-md"
       :class="{ active }"
@@ -11,11 +11,11 @@
         :color="active ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)'"
       />
     </RouterLink>
-  </ElTooltip>
+  </Tip>
 </template>
 
 <script setup lang="ts">
-import { ElTooltip } from "element-plus";
+import { Tip } from "@/components/tooltip";
 import Icon, { IconName } from "@/components/icon/index.vue";
 
 const { to } = defineProps<{

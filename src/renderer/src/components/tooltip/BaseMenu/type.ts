@@ -1,4 +1,5 @@
 import { IconName } from "@/components/icon/index.vue";
+import type { Ref } from "vue";
 
 export type MenuGrounp = {
   title?: string;
@@ -13,6 +14,6 @@ export type MenuItem = {
   sub?: string;
   hidden?: boolean;
   hoverColor?: string;
-  disable?: boolean;
+  disable?: Ref<boolean> | boolean;
   onSelect?: (data: MenuItem) => void;
 };

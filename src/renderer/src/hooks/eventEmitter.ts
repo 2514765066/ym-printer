@@ -12,6 +12,8 @@ type EventMap = {
     config?: PrintConfig,
     file?: FileInfo
   ) => void;
+
+  "printFirst": () => void;
 };
 
 type EventNames = keyof EventMap;

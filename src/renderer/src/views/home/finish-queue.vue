@@ -1,24 +1,26 @@
 <template>
-  <Empty label="完成队列" icon="queue" v-if="finishQueue.size == 0" />
+  <main class="finish-queue">
+    <Empty label="完成队列" icon="queue" v-if="finishQueue.size == 0" />
 
-  <main class="finish-queue flex flex-col" v-else>
-    <section class="tool-bar px-4 py-2 flex items-center gap-2">
-      <span class="text-sub text-sm">全选</span>
+    <div class="flex- flex-col" v-else>
+      <section class="tool-bar px-4 py-2 flex items-center gap-2">
+        <span class="text-sub text-sm">全选</span>
 
-      <ElCheckbox @change="handleSelectAll" :indeterminate="indeterminate" />
+        <ElCheckbox @change="handleSelectAll" :indeterminate="indeterminate" />
 
-      <span class="ml-auto text-sub text-sm">总价: {{ price }} 元</span>
-    </section>
+        <span class="ml-auto text-sub text-sm">总价: {{ price }} 元</span>
+      </section>
 
-    <ElScrollbar view-class="p-2 flex flex-col gap-1">
-      <Item
-        v-for="item in finishQueue.values()"
-        :key="item.id"
-        :data="item"
-        :active="selectedList.has(item.id)"
-        @click="addList(item)"
-      />
-    </ElScrollbar>
+      <ElScrollbar view-class="p-2 flex flex-col gap-1">
+        <Item
+          v-for="item in finishQueue.values()"
+          :key="item.id"
+          :data="item"
+          :active="selectedList.has(item.id)"
+          @click="addList(item)"
+        />
+      </ElScrollbar>
+    </div>
   </main>
 </template>
 
@@ -88,14 +90,6 @@ const handleSelectAll = (val: CheckboxValueType) => {
 
   .tool-bar {
     border-bottom: 1px solid var(--border-color);
-  }
-}
-
-button {
-  transition: background-color 0.1s;
-
-  &:hover {
-    background-color: var(--hover-bg-color);
   }
 }
 </style>

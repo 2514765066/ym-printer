@@ -2,7 +2,7 @@
   <section
     v-if="!data.hidden"
     class="menu-item flex items-center rounded-md cursor-pointer px-3 gap-1"
-    :class="{ hover: data.hoverColor, disable: data.disable }"
+    :class="{ hover: data.hoverColor, disable }"
     @click="handleClick"
   >
     <div class="flex-center mr-1.5" v-if="data.icon">
@@ -36,6 +36,14 @@ const props = defineProps<{
 const emits = defineEmits<{
   click: [];
 }>();
+
+const disable = computed(() => {
+  if (isRef(props.data.disable)) {
+    return props.data.disable.value;
+  }
+
+  return props.data.disable;
+});
 
 const handleClick = () => {
   emits("click");

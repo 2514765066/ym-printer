@@ -15,13 +15,13 @@ export class QueueItem {
   constructor(id: string, option: AddQueueOption) {
     this.id = id;
 
-    this.file = toRaw(option.file);
+    this.file = JSON.parse(JSON.stringify(option.file));
 
     this.setConfig(option.config);
   }
 
   public setConfig(config: PrintConfig) {
-    this.config = toRaw(config);
+    this.config = JSON.parse(JSON.stringify(config));
 
     this.duplexRange = parserPange(this.config.duplexRange);
     this.simplexRange = parserPange(this.config.simplexRange);

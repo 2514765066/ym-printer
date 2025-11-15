@@ -63,6 +63,7 @@ const { removeQueue, startPrint, addFinishQueue } = useQueueStore();
 
 const props = defineProps<{
   data: QueueItem;
+  first?: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -72,6 +73,45 @@ const emits = defineEmits<{
 //是否正在打印
 const printing = ref(false);
 
+//计算价格
+const price = computed(() => {
+  return props.data.getPrice(
+    settingsStore.data.simplexPrice,
+    settingsStore.data.duplexPrice
+  );
+});
+
+//开始打印
+const print = async () => {
+  printing.value = true;
+
+  const next = await startPrint(props.data.id);
+
+  if (!printing.value) {
+    return;
+  }
+
+  if (!next) {
+    printing.value = false;
+
+    eventEmitter.emit("success:show", "打印完成");
+    return;
+  }
+
+  printTip({
+    onConfirm: async () => {
+      printing.value = true;
+
+      await next();
+
+      eventEmitter.emit("success:show", "打印完成");
+    },
+    onCancel: () => {
+      printing.value = false;
+    },
+  });
+};
+
 const menu: MenuGrounp[] = [
   {
     title: "更多操作",
@@ -80,35 +120,7 @@ const menu: MenuGrounp[] = [
         title: "开始打印",
         icon: "play",
         disable: printing,
-        async onSelect() {
-          printing.value = true;
-
-          const next = await startPrint(props.data.id);
-
-          if (!printing.value) {
-            return;
-          }
-
-          if (!next) {
-            printing.value = false;
-
-            eventEmitter.emit("success:show", "打印完成");
-            return;
-          }
-
-          printTip({
-            onConfirm: async () => {
-              printing.value = true;
-
-              await next();
-
-              eventEmitter.emit("success:show", "打印完成");
-            },
-            onCancel: () => {
-              printing.value = false;
-            },
-          });
-        },
+        onSelect: print,
       },
       {
         title: "取消打印",
@@ -199,12 +211,14 @@ const menu: MenuGrounp[] = [
   },
 ];
 
-//计算价格
-const price = computed(() => {
-  return props.data.getPrice(
-    settingsStore.data.simplexPrice,
-    settingsStore.data.duplexPrice
-  );
+onMounted(() => {
+  eventEmitter.on("printFirst", () => {
+    if (!props.first) {
+      return;
+    }
+
+    print();
+  });
 });
 </script>
 
