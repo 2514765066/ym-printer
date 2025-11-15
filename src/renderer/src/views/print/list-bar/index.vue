@@ -28,7 +28,7 @@
         添加
       </ElButton>
 
-      <ElButton style="flex: 1" @click="emits('close')">取消</ElButton>
+      <ElButton text bg style="flex: 1" @click="emits('close')">取消</ElButton>
     </footer>
   </section>
 </template>
