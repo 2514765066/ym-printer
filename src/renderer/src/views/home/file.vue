@@ -15,8 +15,7 @@
         v-for="item in data.values()"
         :key="item.id"
         :data="item"
-        :active="selectedID == item.id"
-        :printed="selectedID != item.id && hasQueue(item.id)"
+        :printed="hasQueue(item.id)"
         @click="handlePreview(item)"
         @remove="remove(item.id)"
         @preview="handlePreview(item)"
@@ -36,7 +35,7 @@ import Empty from "@/components/empty.vue";
 import { useQueueStore } from "@/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
 
-const { data, selectedID } = storeToRefs(useFileStore());
+const { data } = storeToRefs(useFileStore());
 const { select, add, remove } = useFileStore();
 const { hasQueue, addQueue } = useQueueStore();
 

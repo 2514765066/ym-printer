@@ -3,7 +3,6 @@
     <li
       class="p-2 flex items-center gap-2 rounded-md"
       :class="{
-        active,
         printed,
         'pointer-events-none': loading,
       }"
@@ -46,7 +45,6 @@ import eventEmitter from "@/hooks/eventEmitter";
 const props = defineProps<{
   data: FileInfo;
   printed?: boolean;
-  active?: boolean;
 }>();
 
 const emits = defineEmits<{
@@ -101,11 +99,9 @@ li {
   }
 }
 
-.active {
-  background-color: var(--hover-bg-color);
-}
-
 .printed {
-  opacity: 0.5;
+  * {
+    opacity: 0.6;
+  }
 }
 </style>
