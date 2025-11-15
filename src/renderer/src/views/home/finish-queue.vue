@@ -6,7 +6,11 @@
       <section class="tool-bar px-4 py-2 flex items-center gap-2">
         <span class="text-sub text-sm">全选</span>
 
-        <ElCheckbox @change="handleSelectAll" :indeterminate="indeterminate" />
+        <ElCheckbox
+          v-model="check"
+          @change="handleSelectAll"
+          :indeterminate="indeterminate"
+        />
 
         <span class="ml-auto text-sub text-sm">总价: {{ price }} 元</span>
       </section>
@@ -36,6 +40,8 @@ const { finishQueue } = storeToRefs(useQueueStore());
 
 const selectedList = ref(new Map<string, number>());
 
+const check = ref(false);
+
 //总价格
 const price = computed(() => {
   let res = 0;
@@ -53,13 +59,17 @@ const indeterminate = computed(() => {
     return false;
   }
 
-  return selectedList.value.size != finishQueue.value.size;
+  return selectedList.value.size < finishQueue.value.size;
 });
 
 //添加到选中列表
 const addList = (item: QueueItem) => {
   if (selectedList.value.has(item.id)) {
     selectedList.value.delete(item.id);
+
+    if (selectedList.value.size == 0) {
+      check.value = false;
+    }
     return;
   }
 
@@ -69,6 +79,11 @@ const addList = (item: QueueItem) => {
   );
 
   selectedList.value.set(item.id, price);
+
+  if (selectedList.value.size == finishQueue.value.size) {
+    check.value = true;
+    return;
+  }
 };
 
 //全选
