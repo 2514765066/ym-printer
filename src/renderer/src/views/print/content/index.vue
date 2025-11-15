@@ -1,8 +1,6 @@
 <template>
-  <ElScrollbar class="content">
-    <div class="w-fit mx-auto">
-      <PdfView />
-    </div>
+  <ElScrollbar ref="scrollbar" class="content">
+    <PdfView @update="scrollTop" />
   </ElScrollbar>
 </template>
 
@@ -13,6 +11,14 @@ import { usePdfStore } from "@/stores/usePdfStore";
 
 const { addScale, subScale } = usePdfStore();
 
+const scrollbarRef = useTemplateRef("scrollbar");
+
+//滚动到顶部
+const scrollTop = () => {
+  scrollbarRef.value?.scrollTo(0, 0);
+};
+
+//处理鼠标滚轮
 const handleWheel = (e: WheelEvent) => {
   if (!e.ctrlKey) {
     return;

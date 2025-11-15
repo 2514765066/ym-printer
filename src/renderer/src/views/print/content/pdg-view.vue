@@ -1,11 +1,11 @@
 <template>
-  <main>
+  <main class="w-fit mx-auto">
     <section class="w-fit grid gap-2" ref="container">
       <div
         class="relative"
         :class="{ dark: data.pdfTheme == 'dark' }"
-        v-for="(item, index) in pageCount"
-        :key="index"
+        v-for="item in pageCount"
+        :key="item"
       >
         <canvas ref="canvas"></canvas>
 
@@ -17,12 +17,16 @@
 
 <script setup lang="ts">
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
-import pdfjsWorker from "@/assets/pdf.worker.min.mjs?url";
+import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import { usePdfStore } from "@/stores/usePdfStore";
 import { useFileStore } from "@/stores/useFileStore";
 import { useSettingsStore } from "@/stores/useSettingsStore";
 
 GlobalWorkerOptions.workerSrc = pdfjsWorker;
+
+const emits = defineEmits<{
+  update: [];
+}>();
 
 const { scale, pageCount } = storeToRefs(usePdfStore());
 const { data } = storeToRefs(useSettingsStore());
@@ -43,8 +47,10 @@ const canvas = shallowRef<HTMLCanvasElement[]>([]);
 
 onMounted(() => {
   watch(
-    () => selectedFile.value!.md5,
+    () => selectedFile.value?.md5,
     async val => {
+      if (!val) return;
+
       const buffer = await ipcRenderer.invoke("getPdg", val);
 
       const pdf = await getDocument({ data: buffer }).promise;
@@ -52,6 +58,8 @@ onMounted(() => {
       pageCount.value = pdf.numPages;
 
       await nextTick();
+
+      emits("update");
 
       for (let i = 1; i <= pdf.numPages; i++) {
         const page = await pdf.getPage(i);
