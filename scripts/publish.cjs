@@ -4,8 +4,7 @@ const {
   getLatest,
 } = require("ym-publish");
 const { version, name } = require("../package.json");
-const { join, basename } = require("path");
-const crypto = require("crypto");
+const { join } = require("path");
 const fs = require("fs");
 
 const { GITEE_TOKEN, GH_TOKEN } = process.env;
