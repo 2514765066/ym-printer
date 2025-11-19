@@ -5,12 +5,16 @@ let word = null;
 
 //退出word
 const exit = () => {
-  if (word === null) {
-    return;
-  }
+  try {
+    if (word === null) {
+      return;
+    }
 
-  word.Quit();
-  word = null;
+    word.Quit();
+    word = null;
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 //开启word
