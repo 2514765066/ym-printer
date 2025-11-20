@@ -6,12 +6,11 @@
 
 <script setup lang="ts">
 import Item from "@/components/setting-item/index.vue";
-import { version } from "@/service/info";
 import { ElButton } from "element-plus";
 
 const handleClick = () => {
   api.openUrl(
-    `https://github.com/2514765066/ym-printer/releases/tag/v${version}`
+    `https://gitee.com/yxingyus/ym-printer/blob/main/release-note.md`
   );
 };
 </script>
