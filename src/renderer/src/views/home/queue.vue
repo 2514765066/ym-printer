@@ -37,10 +37,14 @@ import Item from "@/components/queue-item/index.vue";
 import { ElScrollbar } from "element-plus";
 import { QueueItem, useQueueStore } from "@/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
+import { useFileStore } from "@/stores/useFileStore";
 
 const { printQueue } = storeToRefs(useQueueStore());
+const { select } = useFileStore();
 
 const handlePreview = (item: QueueItem) => {
+  select(item.file.id);
+
   eventEmitter.emit(
     "print:show",
     config => {
