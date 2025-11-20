@@ -3,7 +3,7 @@
     <Empty label="完成队列" icon="queue" v-if="finishQueue.size == 0" />
 
     <div class="flex- flex-col" v-else>
-      <section class="tool-bar px-4 py-2 flex items-center gap-2">
+      <header class="tool-bar h-12 px-4 flex items-center gap-2">
         <span class="text-sub text-sm">全选</span>
 
         <ElCheckbox
@@ -13,9 +13,12 @@
         />
 
         <span class="ml-auto text-sub text-sm">总价: {{ price }} 元</span>
-      </section>
+      </header>
 
-      <ElScrollbar view-class="p-2 flex flex-col gap-1">
+      <ElScrollbar
+        height="calc((100vh - 44px) / 2 - 48px)"
+        view-class="p-2 flex flex-col gap-1"
+      >
         <Item
           v-for="item in finishQueue.values()"
           :key="item.id"

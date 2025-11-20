@@ -3,7 +3,7 @@
     <Empty label="打印队列" icon="queue" v-if="printQueue.size == 0" />
 
     <div class="flex- flex-col" v-else>
-      <section class="tool-bar px-4 py-2 flex items-center gap-2">
+      <header class="tool-bar h-12 px-4 flex items-center gap-2">
         <span class="text-sub text-sm">队列数量: {{ printQueue.size }}</span>
 
         <Tip label="开始打印第一个">
@@ -14,9 +14,12 @@
             <Icon icon="play" size="20" />
           </button>
         </Tip>
-      </section>
+      </header>
 
-      <ElScrollbar view-class="p-2 flex flex-col gap-1">
+      <ElScrollbar
+        height="calc((100vh - 44px) / 2 - 48px)"
+        view-class="p-2 flex flex-col gap-1"
+      >
         <Item
           v-for="(item, index) in printQueue.values()"
           :key="item.id"
