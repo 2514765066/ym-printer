@@ -1,8 +1,7 @@
 {
   "name": "ym-printer",
-  "version": "1.2.3",
+  "version": "2.0.0",
   "main": "./out/main/index.js",
-  "type": "module",
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
@@ -22,12 +21,15 @@
     "@types/node": "^22.18.6",
     "@vitejs/plugin-vue": "^6.0.1",
     "autoprefixer": "^10.4.21",
+    "dayjs": "^1.11.19",
     "electron": "38.6.0",
     "electron-builder": "^25.1.8",
     "electron-store": "^11.0.2",
     "electron-vite": "^4.0.1",
     "element-plus": "^2.11.7",
     "nanoid": "^5.1.6",
+    "pdf-lib": "^1.17.1",
+    "pdf-to-printer": "^5.6.1",
     "pdfjs-dist": "^5.4.394",
     "pinia": "^2.1.7",
     "postcss": "^8.5.3",
@@ -41,8 +43,9 @@
     "vue": "^3.5.21",
     "vue-router": "^4.4.5",
     "vue-tsc": "^3.0.7",
+    "winax": "^3.6.2",
     "ym-electron.js": "^4.1.0",
-    "ym-publish": "^1.2.1"
+    "ym-publish": "^1.3.0"
   },
   "volta": {
     "node": "22.21.1"
@@ -52,9 +55,5 @@
       "electron",
       "esbuild"
     ]
-  },
-  "dependencies": {
-    "pdf-to-printer": "^5.6.1",
-    "winax": "^3.6.2"
   }
 }

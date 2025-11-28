@@ -7,13 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      pdf-to-printer:
-        specifier: ^5.6.1
-        version: 5.6.1
-      winax:
-        specifier: ^3.6.2
-        version: 3.6.2
     devDependencies:
       '@electron-toolkit/tsconfig':
         specifier: ^2.0.0
@@ -33,6 +26,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.19
       electron:
         specifier: 38.6.0
         version: 38.6.0
@@ -51,6 +47,12 @@ importers:
       nanoid:
         specifier: ^5.1.6
         version: 5.1.6
+      pdf-lib:
+        specifier: ^1.17.1
+        version: 1.17.1
+      pdf-to-printer:
+        specifier: ^5.6.1
+        version: 5.6.1
       pdfjs-dist:
         specifier: ^5.4.394
         version: 5.4.394
@@ -90,12 +92,15 @@ importers:
       vue-tsc:
         specifier: ^3.0.7
         version: 3.1.3(typescript@5.9.3)
+      winax:
+        specifier: ^3.6.2
+        version: 3.6.2
       ym-electron.js:
         specifier: ^4.1.0
         version: 4.1.0
       ym-publish:
-        specifier: ^1.2.1
-        version: 1.2.1
+        specifier: ^1.3.0
+        version: 1.3.0
 
 packages:
 
@@ -623,6 +628,12 @@ packages:
   '@parcel/watcher@2.5.1':
     resolution: {integrity: sha512-dfUnCxiN9H4ap84DvD2ubjw+3vUNpstxa0TneY/Paat8a3R4uQZDLSvWjmznAY/DoahqTHl9V46HF/Zs3F29pg==}
     engines: {node: '>= 10.0.0'}
+
+  '@pdf-lib/standard-fonts@1.0.0':
+    resolution: {integrity: sha512-hU30BK9IUN/su0Mn9VdlVKsWBS6GyhVfqjwl1FjZN4TxP6cCw0jP2w7V3Hf5uX7M0AZJ16vey9yE0ny7Sa59ZA==}
+
+  '@pdf-lib/upng@1.0.1':
+    resolution: {integrity: sha512-dQK2FUMQtowVP00mtIksrlZhdFXQZPC+taih1q4CvPZ5vqdxR/LKBaFg0oAfzd1GlHZXXSPdQfzQnt+ViGvEIQ==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2128,6 +2139,9 @@ packages:
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
 
+  pako@1.0.11:
+    resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
+
   path-browserify@1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
 
@@ -2148,6 +2162,9 @@ packages:
 
   pathe@2.0.3:
     resolution: {integrity: sha512-WUjGcAqP1gQacoQe+OBJsFA7Ld4DyXuUIjZ5cc75cLHvJ7dtNsTugphxIADwspS+AraAUePCKrSVtPLFj/F88w==}
+
+  pdf-lib@1.17.1:
+    resolution: {integrity: sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==}
 
   pdf-to-printer@5.6.1:
     resolution: {integrity: sha512-VlwOPVv8LmCGVnJKnPZaCqUSB0wm/eTmdrsXqHG2lpkIbwnlsBXIVIAipQgdsubIssbJAutyN5yOCB1CnYcMVw==}
@@ -2577,6 +2594,9 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
+  tslib@1.14.1:
+    resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+
   type-fest@0.13.1:
     resolution: {integrity: sha512-34R7HTnG0XIJcBSn5XhDd7nNFPRcXYRZrBB2O2jdKqYODldSzBAqzsWoZYYvduky73toYS/ESqxPvkDf/F0XMg==}
     engines: {node: '>=10'}
@@ -2792,8 +2812,8 @@ packages:
   ym-electron.js@4.1.0:
     resolution: {integrity: sha512-DDgzd+TeRdQr57f+qXsAQX6u4uXbOBTE9lI7PtoPFT1wSh7ln7M4vjt6+A4Zryn6QGNjp/RI4rt5Oy79MriJmg==}
 
-  ym-publish@1.2.1:
-    resolution: {integrity: sha512-la95MCKKMqLjfozTcF2eq44L12Qqbav81RFYu032ijZATzI22uywzBoPM+P9SujTubiXGgvVC6q+8N1NubSF3A==}
+  ym-publish@1.3.0:
+    resolution: {integrity: sha512-tL9EjL51wKHCFPbc20m8d6yzYEdGB8bYSaUahOuSHy+rYMUqzJGklaIppcPppTjQ6iBpsg00BnUoioYXSUn1tA==}
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
@@ -3279,6 +3299,14 @@ snapshots:
       '@parcel/watcher-win32-ia32': 2.5.1
       '@parcel/watcher-win32-x64': 2.5.1
     optional: true
+
+  '@pdf-lib/standard-fonts@1.0.0':
+    dependencies:
+      pako: 1.0.11
+
+  '@pdf-lib/upng@1.0.1':
+    dependencies:
+      pako: 1.0.11
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -4944,6 +4972,8 @@ snapshots:
 
   package-json-from-dist@1.0.1: {}
 
+  pako@1.0.11: {}
+
   path-browserify@1.0.1: {}
 
   path-is-absolute@1.0.1: {}
@@ -4958,6 +4988,13 @@ snapshots:
       minipass: 7.1.2
 
   pathe@2.0.3: {}
+
+  pdf-lib@1.17.1:
+    dependencies:
+      '@pdf-lib/standard-fonts': 1.0.0
+      '@pdf-lib/upng': 1.0.1
+      pako: 1.0.11
+      tslib: 1.14.1
 
   pdf-to-printer@5.6.1: {}
 
@@ -5416,6 +5453,8 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
+  tslib@1.14.1: {}
+
   type-fest@0.13.1:
     optional: true
 
@@ -5612,7 +5651,7 @@ snapshots:
 
   ym-electron.js@4.1.0: {}
 
-  ym-publish@1.2.1: {}
+  ym-publish@1.3.0: {}
 
   yocto-queue@0.1.0: {}
 
