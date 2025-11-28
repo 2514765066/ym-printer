@@ -1,6 +1,13 @@
 //ipc事件配置
 export type IpcEvent = {
-  getFilesInfo: (paths: string[]) => FileInfo[];
+  //打印
+  log: (data: any) => void;
+
+  //获取文件信息
+  getFilesInfo: (paths: string[]) => void;
+
+  //文件信息获取完成
+  finishFilesInfo: (files: FileInfo[]) => void;
 
   //获取打印机信息
   getPrinter: () => Printer[];
@@ -9,7 +16,7 @@ export type IpcEvent = {
   parserFile: (file: FileInfo) => void;
 
   //获取pdf
-  getPdg: (md5: string) => Buffer<ArrayBuffer>;
+  getPdf: (md5: string) => Buffer<ArrayBuffer>;
 
   //获取缓存大小
   getCacheSize: () => number;
@@ -17,24 +24,49 @@ export type IpcEvent = {
   //清理缓存
   clearCache: () => void;
 
-  //检查更新
-  checkUpdata: () => boolean;
-
   //更新进度
   updateProgress: (percent: number) => boolean;
 
   //打印
-  print: (config: {
-    printer: string;
-    orientation: "portrait" | "landscape";
-    count: number;
-    md5: string;
-    range: number[];
-  }) => void;
+  print: (config: PrintOption) => void;
 
-  //打印空白页
-  printEmpty: (printer: string) => void;
+  //打开打印窗口
+  openPrint: (option: OpenPrint) => void;
+
+  //完成打印
+  finishPrint: (option: FinishPrintOption) => void;
+
+  //关闭窗口
+  close: () => void;
+
+  //检查更新
+  checkUpdata: () => false | string;
+
+  //下载并安装
+  downloadAndInstall: () => void;
 };
+
+//打印配置
+interface PrintOption {
+  md5: string;
+  printer: string;
+  count: number;
+  orientation: "portrait" | "landscape";
+  range: number[];
+}
+
+//打开打印的配置
+interface OpenPrint {
+  file: FileInfo;
+  config?: PrintConfig;
+}
+
+//完成打印的配置
+interface FinishPrintOption {
+  file: FileInfo;
+  config: PrintConfig;
+  range: number[];
+}
 
 //打印机信息
 export type Printer = {
@@ -44,6 +76,8 @@ export type Printer = {
 
 //文件信息
 export type FileInfo = {
+  id: string;
+
   //文件名
   name: string;
 
@@ -55,30 +89,28 @@ export type FileInfo = {
 
   //拓展名
   ext: string;
-
-  id: string;
 };
 
 //打印配置
 export type PrintConfig = {
+  //备注
+  remark: string;
+
   //打印机id
   printer: string;
-
-  //打印方向
-  orientation: "portrait" | "landscape";
 
   //打印数量
   count: number;
 
-  //打印备注
-  remarks: string;
+  //范围
+  range: string;
 
-  //单打范围
-  simplexRange: string;
+  //方向
+  orientation: "portrait" | "landscape";
+};
 
-  //单面打印数量
-  simplexCount: number;
-
-  //双打范围
-  duplexRange: string;
+//队列项
+export type QueueItem = FinishPrintOption & {
+  //文件id
+  id: string;
 };

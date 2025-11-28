@@ -1,4 +1,4 @@
-import type { Api } from "./index";
+import type { Api } from "./manager";
 import type { IpcRenderer } from "../main/ipc/ipcRenderer";
 
 declare global {

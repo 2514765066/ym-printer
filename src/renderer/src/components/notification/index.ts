@@ -1,12 +1,9 @@
 import { ElNotification } from "element-plus";
 import PrintTipContent from "./print-tip-content.vue";
 
-interface PrintTipOption {
-  onCancel?: () => void | Promise<void>;
-  onConfirm?: () => void | Promise<void>;
-}
+export const printDialog = () => {
+  const { promise, resolve } = Promise.withResolvers<boolean>();
 
-export const printTip = ({ onCancel, onConfirm }: PrintTipOption) => {
   const handle = ElNotification({
     title: "请翻页",
     position: "bottom-right",
@@ -18,15 +15,15 @@ export const printTip = ({ onCancel, onConfirm }: PrintTipOption) => {
         onCancel: async () => {
           handle.close();
 
-          onCancel && (await onCancel());
+          resolve(false);
         },
         onConfirm: async () => {
           handle.close();
 
-          onConfirm && (await onConfirm());
+          resolve(true);
         },
       }),
   });
 
-  return () => handle.close();
+  return promise;
 };

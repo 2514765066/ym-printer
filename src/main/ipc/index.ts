@@ -1,15 +1,16 @@
-import { getMd5 } from "@/utils/md5";
 import { ipcMain } from "./ipcMain";
-import { basename, extname, join } from "path";
-import { db, emptyPdyPath } from "@/service/path";
-import { copyFile, readFile, mkdir, readdir, stat, rm } from "fs/promises";
+import { join } from "path";
+import { db, resources } from "@/service/path";
+import { copyFile, mkdir, readdir, stat, rm, readFile } from "fs/promises";
 import ptp from "pdf-to-printer";
-import { toPdf } from "@/service/word";
+import { insertEmptyPage, toPdf } from "@/service/doc";
 import { existsSync } from "fs";
 import { FileInfo } from "@type";
 import { checkUpdate, downloadAndInstall } from "@/utils/update";
-import { BrowserWindow } from "electron";
-import { nanoid } from "nanoid";
+import { BrowserWindow, dialog } from "electron";
+import { createPrint } from "../bw/print";
+import { browserWindows } from "@/bw";
+import { getFileInfo } from "@/utils/file";
 
 //获取打印机信息
 ipcMain.handle("getPrinter", async () => {
@@ -24,33 +25,22 @@ ipcMain.handle("getPrinter", async () => {
 });
 
 //获取文件信息
-ipcMain.handle("getFilesInfo", async (_, paths) => {
+ipcMain.on("getFilesInfo", async (e, paths) => {
   const res: FileInfo[] = [];
 
   for (const path of paths) {
-    //名称
-    const name = basename(path);
+    const file = await getFileInfo(path);
 
-    //后缀
-    const ext = extname(path).slice(1);
-
-    //md5
-    const md5 = await getMd5(path);
-
-    res.push({
-      name,
-      ext,
-      md5,
-      path,
-      id: nanoid(),
-    });
+    res.push(file);
   }
 
-  return res;
+  const win = BrowserWindow.fromWebContents(e.sender);
+
+  win?.webContents.send("finishFilesInfo", res);
 });
 
 //读取pdf
-ipcMain.handle("getPdg", async (_, md5: string) => {
+ipcMain.handle("getPdf", async (_, md5: string) => {
   const path = join(db, `${md5}.pdf`);
 
   return await readFile(path);
@@ -76,9 +66,13 @@ ipcMain.handle("parserFile", async (_, file) => {
     await copyFile(path, pdfPath);
   } else {
     console.time(md5);
-    await toPdf(md5, path, pdfPath);
+
+    await toPdf(path, pdfPath, md5);
+
     console.timeEnd(md5);
   }
+
+  await insertEmptyPage(pdfPath);
 });
 
 //获取缓存大小
@@ -109,41 +103,73 @@ ipcMain.handle("clearCache", async () => {
 
 //打印
 ipcMain.handle("print", async (_, config) => {
-  const { printer, orientation, count, md5, range } = config;
+  const { printer, count, md5, range, orientation } = config;
 
   const path = join(db, `${md5}.pdf`);
 
+  //必须加1因为第一页为空白页
+  const pages = range.map(item => item + 1).join(",");
+
   await ptp.print(path, {
+    sumatraPdfPath: join(resources, "SumatraPDF-3.5.2-32.exe"),
     printer,
     orientation,
     copies: count,
     paperSize: "A4",
-    pages: range.join(","),
+    pages,
   });
 });
 
-//打印空白页
-ipcMain.handle("printEmpty", async (_, printer: string) => {
-  await ptp.print(emptyPdyPath, {
-    printer,
-    orientation: "portrait",
-    copies: 1,
-    paperSize: "A4",
-    pages: "1",
-  });
+//打开打印窗口
+ipcMain.handle("openPrint", async (_, option) => {
+  const { file } = option;
+
+  const res = await createPrint(file.id);
+
+  res?.webContents.send("openPrint", option);
+});
+
+//完成打印
+ipcMain.handle("finishPrint", async (_, option) => {
+  const win = browserWindows.get("manager")!;
+
+  win.webContents.send("finishPrint", option);
 });
 
 //检查更新
-ipcMain.handle("checkUpdata", async e => {
+ipcMain.handle("checkUpdata", async () => {
   const res = await checkUpdate();
 
-  if (!res) return false;
+  if (res == false) {
+    return false;
+  }
 
-  const win = BrowserWindow.fromWebContents(e.sender);
+  return res.version;
+});
 
-  downloadAndInstall(res, percent => {
-    win?.webContents.send("updateProgress", percent);
+//下载并安装
+ipcMain.handle("downloadAndInstall", async e => {
+  const win = BrowserWindow.fromWebContents(e.sender)!;
+
+  const install = await downloadAndInstall(percent => {
+    win.webContents.send("updateProgress", percent);
   });
 
-  return true;
+  const { response } = await dialog.showMessageBox(win, {
+    type: "info",
+    title: "安装更新",
+    message: "更新下载完成是否安装?",
+    buttons: ["yes", "cancel"],
+  });
+
+  if (response == 0) {
+    install();
+  }
+});
+
+//关闭窗口
+ipcMain.handle("close", e => {
+  const win = BrowserWindow.fromWebContents(e.sender);
+
+  win?.close();
 });

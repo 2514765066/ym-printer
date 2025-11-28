@@ -67,19 +67,19 @@ html {
   bottom: 4px !important;
 }
 
-.el-drawer {
-  box-shadow: none !important;
-  border-right: 1px solid var(--border-color);
-
-  -webkit-app-region: no-drag;
-}
-
 .el-notification {
   --el-notification-width: 300px !important;
 }
 
 .el-button {
   --el-fill-color-light: #282828 !important;
+}
+
+.el-message-box {
+  --el-messagebox-border-radius: 10px !important;
+  box-shadow: 0 1px 10px 0 rgba(#000, 0.5) !important;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color) !important;
 }
 
 .ym-input-number {
@@ -96,9 +96,38 @@ html {
   }
 }
 
-.ym-drawer {
-  background-color: var(--bg-color) !important;
-  .el-drawer__body {
-    padding: 0 !important;
+.ym-select {
+  .el-select__wrapper {
+    box-shadow: none !important;
+
+    background-color: #282828 !important;
+
+    &:hover {
+      background-color: #303030 !important;
+    }
+  }
+}
+
+.el-select__popper {
+  --el-popper-border-radius: 8px !important;
+  border: none !important;
+
+  background-color: var(--list-bg-color) !important;
+
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 14px 28px -6px,
+    rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
+    rgba(255, 255, 255, 0.094) 0px 0px 0px 1px !important;
+
+  .el-select-dropdown__list {
+    padding: 4px !important;
+
+    .el-select-dropdown__item {
+      padding: 0 12px !important;
+      border-radius: 6px !important;
+    }
+  }
+
+  .el-popper__arrow {
+    display: none;
   }
 }

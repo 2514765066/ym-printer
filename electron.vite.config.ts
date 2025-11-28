@@ -19,7 +19,14 @@ export default defineConfig({
     },
   },
   preload: {
-    plugins: [externalizeDepsPlugin()],
+    build: {
+      rollupOptions: {
+        input: {
+          manager: resolve(__dirname, "src/preload/manager.ts"),
+          print: resolve(__dirname, "src/preload/print.ts"),
+        },
+      },
+    },
   },
   renderer: {
     define: {
@@ -33,6 +40,8 @@ export default defineConfig({
       alias: {
         "@": resolve("src/renderer/src"),
         "@type": resolve("src/type/index"),
+        "@manager": resolve("src/renderer/src/browser-window/manager"),
+        "@print": resolve("src/renderer/src/browser-window/print"),
       },
     },
 
