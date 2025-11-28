@@ -31,7 +31,7 @@ module.exports = {
 
   fileAssociations: [
     {
-      ext: ["doc", "docx", "pdf"],
+      ext: ["doc", "docx", "pdf", "wps"],
       name: "ym-printer",
       role: "Shell",
     },

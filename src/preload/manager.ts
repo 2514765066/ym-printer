@@ -16,7 +16,7 @@ const api = {
 
       const ext = extname(path).slice(1);
 
-      if (!["docx", "doc", "pdf"].includes(ext)) {
+      if (!["docx", "doc", "pdf", "wps"].includes(ext)) {
         continue;
       }
 
