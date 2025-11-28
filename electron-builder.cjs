@@ -29,5 +29,13 @@ module.exports = {
     deleteAppDataOnUninstall: true,
   },
 
+  fileAssociations: [
+    {
+      ext: ["doc", "docx", "pdf"],
+      name: "ym-printer",
+      role: "Shell",
+    },
+  ],
+
   generateUpdatesFilesForAllChannels: false,
 };
