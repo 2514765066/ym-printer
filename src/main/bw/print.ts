@@ -6,7 +6,7 @@ import Store from "electron-store";
 
 const store = new Store();
 
-const lastSize = store.get("print-window-size", {
+let lastSize = store.get("print-window-size", {
   width: 1024,
   height: 768,
 }) as Electron.Size;
@@ -20,6 +20,8 @@ export const createPrint = async (id: string) => {
 
     return;
   }
+
+  console.log(lastSize);
 
   const bw = new BrowserWindow({
     show: false,
@@ -45,7 +47,15 @@ export const createPrint = async (id: string) => {
 
   bw.on("resized", () => {
     const [width, height] = bw.getSize();
-    store.set("print-window-size", { width, height });
+
+    const option = {
+      width,
+      height,
+    };
+
+    lastSize = option;
+
+    store.set("print-window-size", option);
   });
 
   bw.on("closed", () => {
