@@ -1,6 +1,6 @@
 {
   "name": "ym-printer",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "main": "./out/main/index.js",
   "scripts": {
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
@@ -28,8 +28,6 @@
     "electron-vite": "^4.0.1",
     "element-plus": "^2.11.7",
     "nanoid": "^5.1.6",
-    "pdf-lib": "^1.17.1",
-    "pdf-to-printer": "^5.6.1",
     "pdfjs-dist": "^5.4.394",
     "pinia": "^2.1.7",
     "postcss": "^8.5.3",
