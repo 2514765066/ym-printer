@@ -1,9 +1,8 @@
 import { ipcMain } from "./ipcMain";
 import { join } from "path";
-import { db, resources } from "@/service/path";
+import { cachePath, printerPath } from "@/service/path";
 import { copyFile, mkdir, readdir, stat, rm, readFile } from "fs/promises";
-import ptp from "pdf-to-printer";
-import { insertEmptyPage, toPdf } from "@/service/doc";
+import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
 import { FileInfo } from "@type";
 import { checkUpdate, downloadAndInstall } from "@/utils/update";
@@ -11,17 +10,31 @@ import { BrowserWindow, dialog } from "electron";
 import { createPrint } from "../bw/print";
 import { browserWindows } from "@/bw";
 import { getFileInfo } from "@/utils/file";
+import { exec, execFile } from "child_process";
 
 //获取打印机信息
-ipcMain.handle("getPrinter", async () => {
-  const printers = await ptp.getPrinters();
+ipcMain.handle("getPrinters", () => {
+  const { promise, resolve, reject } = Promise.withResolvers<string[]>();
 
-  return printers
-    .map(item => ({
-      name: item.name,
-      id: item.deviceId,
-    }))
-    .reverse();
+  exec(
+    'powershell "Get-Printer | Select -ExpandProperty Name"',
+    (err, stdout) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+
+      const printers = stdout
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean)
+        .reverse();
+
+      resolve(printers);
+    }
+  );
+
+  return promise;
 });
 
 //获取文件信息
@@ -41,7 +54,7 @@ ipcMain.on("getFilesInfo", async (e, paths) => {
 
 //读取pdf
 ipcMain.handle("getPdf", async (_, md5: string) => {
-  const path = join(db, `${md5}.pdf`);
+  const path = join(cachePath, `${md5}.pdf`);
 
   return await readFile(path);
 });
@@ -50,12 +63,12 @@ ipcMain.handle("getPdf", async (_, md5: string) => {
 ipcMain.handle("parserFile", async (_, file) => {
   const { md5, ext, path } = file;
 
-  if (!existsSync(db)) {
-    await mkdir(db, { recursive: true });
+  if (!existsSync(cachePath)) {
+    await mkdir(cachePath, { recursive: true });
   }
 
   //存储位置
-  const pdfPath = join(db, `${md5}.pdf`);
+  const pdfPath = join(cachePath, `${md5}.pdf`);
 
   if (existsSync(pdfPath)) {
     return;
@@ -71,22 +84,20 @@ ipcMain.handle("parserFile", async (_, file) => {
 
     console.timeEnd(md5);
   }
-
-  await insertEmptyPage(pdfPath);
 });
 
 //获取缓存大小
 ipcMain.handle("getCacheSize", async () => {
-  if (!existsSync(db)) {
+  if (!existsSync(cachePath)) {
     return 0;
   }
 
   let totalSize = 0;
 
-  const files = await readdir(db);
+  const files = await readdir(cachePath);
 
   for (const file of files) {
-    const path = join(db, file);
+    const path = join(cachePath, file);
 
     const stats = await stat(path);
 
@@ -98,26 +109,22 @@ ipcMain.handle("getCacheSize", async () => {
 
 //清理缓存
 ipcMain.handle("clearCache", async () => {
-  await rm(db, { recursive: true });
+  await rm(cachePath, { recursive: true });
 });
 
 //打印
 ipcMain.handle("print", async (_, config) => {
   const { printer, count, md5, range, orientation } = config;
 
-  const path = join(db, `${md5}.pdf`);
+  const path = join(cachePath, `${md5}.pdf`);
 
-  //必须加1因为第一页为空白页
-  const pages = range.map(item => item + 1).join(",");
-
-  await ptp.print(path, {
-    sumatraPdfPath: join(resources, "SumatraPDF-3.5.2-32.exe"),
-    printer,
-    orientation,
-    copies: count,
-    paperSize: "A4",
-    pages,
-  });
+  execFile(printerPath, [
+    `--file=${path}`,
+    `--printer=${printer}`,
+    `--range=${range.join(",")}`,
+    `--orientation=${orientation}`,
+    `--count=${count}`,
+  ]);
 });
 
 //打开打印窗口

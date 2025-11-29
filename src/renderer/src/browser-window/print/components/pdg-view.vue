@@ -43,9 +43,9 @@ const render = async (md5: string) => {
 
   const pdf = await getDocument({ data: buffer }).promise;
 
-  pageCount.value = pdf.numPages - 1;
+  pageCount.value = pdf.numPages;
 
-  for (let i = 2; i <= pdf.numPages; i++) {
+  for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
 
     const viewport = page.getViewport({ scale: dpi });
@@ -66,7 +66,7 @@ const render = async (md5: string) => {
     ctx.fillStyle = "rgba(0,0,0,0.5)";
 
     ctx.textBaseline = "top";
-    ctx.fillText(String(i - 1), 16, 16);
+    ctx.fillText(String(i), 16, 16);
 
     container.value.appendChild(el);
   }

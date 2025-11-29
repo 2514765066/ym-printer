@@ -7,11 +7,7 @@ module.exports = {
   appId: `com.2514765066.${name}`,
   artifactName: name,
   productName: name,
-  files: [
-    "out",
-    "resources/SumatraPDF-3.5.2-32.exe",
-    "resources/SumatraPDF-settings.txt",
-  ],
+  files: ["out", "resources/pdfium.dll", "resources/printer.exe"],
   asar: false,
   electronLanguages: ["zh-CN"],
   directories: {

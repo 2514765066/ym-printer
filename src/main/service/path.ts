@@ -5,10 +5,10 @@ import { join } from "path";
 export const resources = join(__dirname, "../../resources");
 
 //缓存路径
-export const db = join(resources, "cache");
+export const cachePath = join(resources, "cache");
+
+//打印程序路径
+export const printerPath = join(resources, "printer.exe");
 
 //下载更新目录
 export const update = join(app.getPath("userData"), "update");
-
-//日志
-export const log = join(resources, "log.txt");

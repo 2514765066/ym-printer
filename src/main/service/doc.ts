@@ -1,6 +1,4 @@
 import workerPath from "./worker?nodeWorker";
-import { readFile, writeFile } from "node:fs/promises";
-import { PDFDocument } from "pdf-lib";
 
 const worker = workerPath({
   workerData: "worker",
@@ -48,17 +46,4 @@ export const toPdf = async (
   });
 
   return promise;
-};
-
-//给pdf第一页插入空白页
-export const insertEmptyPage = async (path: string) => {
-  const file = await readFile(path);
-
-  const pdf = await PDFDocument.load(file);
-
-  pdf.insertPage(0);
-
-  const out = await pdf.save();
-
-  await writeFile(path, out);
 };

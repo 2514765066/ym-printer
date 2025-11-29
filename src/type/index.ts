@@ -1,16 +1,13 @@
 //ipc事件配置
 export type IpcEvent = {
-  //打印
-  log: (data: any) => void;
+  //获取打印机信息
+  getPrinters: () => string[];
 
   //获取文件信息
   getFilesInfo: (paths: string[]) => void;
 
   //文件信息获取完成
   finishFilesInfo: (files: FileInfo[]) => void;
-
-  //获取打印机信息
-  getPrinter: () => Printer[];
 
   //解析文件
   parserFile: (file: FileInfo) => void;
@@ -67,12 +64,6 @@ interface FinishPrintOption {
   config: PrintConfig;
   range: number[];
 }
-
-//打印机信息
-export type Printer = {
-  name: string;
-  id: string;
-};
 
 //文件信息
 export type FileInfo = {
