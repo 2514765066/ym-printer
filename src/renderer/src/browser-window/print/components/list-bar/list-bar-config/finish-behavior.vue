@@ -1,6 +1,6 @@
 <template>
   <ElFormItem label="打印完成后行为" label-position="top">
-    <ElSelect v-model="model" placeholder="请选择打印机">
+    <ElSelect v-model="finishBehavior" placeholder="请选择打印机">
       <ElOption
         v-for="item in data"
         :key="item.value"
@@ -13,6 +13,9 @@
 
 <script setup lang="ts">
 import { ElSelect, ElOption, ElFormItem } from "element-plus";
+import { useConfigStore } from "@print/stores/useConfigStore";
+
+const { finishBehavior } = storeToRefs(useConfigStore());
 
 const data = [
   {
@@ -28,8 +31,6 @@ const data = [
     value: "not",
   },
 ];
-
-const model = defineModel<string>();
 </script>
 
 <style scoped lang="scss"></style>

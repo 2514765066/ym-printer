@@ -1,7 +1,7 @@
 <template>
   <ElFormItem label="备注" label-position="top">
     <ElInput
-      v-model="model"
+      v-model="config.remark"
       style="width: 100%"
       placeholder="当前打印任务的备注"
     />
@@ -10,8 +10,9 @@
 
 <script setup lang="ts">
 import { ElInput, ElFormItem } from "element-plus";
+import { useConfigStore } from "@print/stores/useConfigStore";
 
-const model = defineModel<string>();
+const { config } = storeToRefs(useConfigStore());
 </script>
 
 <style scoped lang="scss"></style>

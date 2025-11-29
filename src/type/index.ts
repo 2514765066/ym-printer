@@ -99,14 +99,17 @@ export type PrintConfig = {
   //打印机id
   printer: string;
 
+  //方向
+  orientation: "portrait" | "landscape";
+
   //打印数量
   count: number;
 
+  //模式
+  mode: "simplex" | "duplex" | "mix";
+
   //范围
   range: string;
-
-  //方向
-  orientation: "portrait" | "landscape";
 };
 
 //队列项

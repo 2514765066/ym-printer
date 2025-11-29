@@ -21,8 +21,6 @@ export const createPrint = async (id: string) => {
     return;
   }
 
-  console.log(lastSize);
-
   const bw = new BrowserWindow({
     show: false,
     width: lastSize.width,

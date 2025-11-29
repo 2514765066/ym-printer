@@ -46,9 +46,5 @@ const visible = defineModel({
   padding: unset !important;
   border: unset !important;
   overflow: unset !important;
-
-  box-shadow: rgba(0, 0, 0, 0.2) 0px 14px 28px -6px,
-    rgba(0, 0, 0, 0.12) 0px 2px 4px -1px,
-    rgba(255, 255, 255, 0.094) 0px 0px 0px 1px;
 }
 </style>

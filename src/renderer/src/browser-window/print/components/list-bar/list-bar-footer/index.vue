@@ -14,9 +14,8 @@
         <ElButton
           style="width: 32px; height: 32px"
           type="primary"
-          :icon="ArrowUp"
+          :icon="More"
           :loading="printing"
-          @click="handleMore"
         />
       </Menu>
     </ElButtonGroup>
@@ -25,17 +24,15 @@
 
 <script setup lang="ts">
 import { ElButton, ElButtonGroup } from "element-plus";
-import { ArrowUp } from "@element-plus/icons-vue";
+import { More } from "@element-plus/icons-vue";
 import { MenuGroup, Menu } from "@/components/menu";
 import { printDialog } from "@/components/notification";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useConfigStore } from "@print/stores/useConfigStore";
-import { useRange, padRange } from "@print/hooks/useRange";
-import { useViewStore } from "@print/stores/useViewStore";
+import { useRange } from "@print/hooks/useRange";
 import { validate } from "../index";
 import { printFinishKey } from "@print/keys";
 
-const { pageCount } = storeToRefs(useViewStore());
 const { config } = storeToRefs(useConfigStore());
 const { printEven, printOdd, isSimplex } = useConfigStore();
 const { range, parser } = useRange();
@@ -47,9 +44,7 @@ const printing = ref(false);
 
 //解析范围
 const parserRange = () => {
-  const formatRange = padRange(config.value.range, pageCount.value);
-
-  parser(formatRange);
+  parser(config.value.range, config.value.mode);
 };
 
 const usePrint = (cb: () => void | Promise<void>) => {
@@ -62,19 +57,16 @@ const usePrint = (cb: () => void | Promise<void>) => {
 
     printing.value = true;
 
+    parserRange();
+
     await cb();
 
     printing.value = false;
   };
 };
 
-//更多
-const handleMore = usePrint(parserRange);
-
 //开始打印
 const handlePrint = usePrint(async () => {
-  parserRange();
-
   //全是单页
   if (isSimplex(range.value)) {
     await printOdd(range.value);

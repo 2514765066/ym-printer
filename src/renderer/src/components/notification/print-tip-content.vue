@@ -7,7 +7,7 @@
         继续
       </ElButton>
 
-      <ElButton class="flex-1" @click="emits('cancel')">取消</ElButton>
+      <ElButton class="flex-1" text bg @click="emits('cancel')">取消</ElButton>
     </div>
   </div>
 </template>

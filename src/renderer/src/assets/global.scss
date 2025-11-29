@@ -131,3 +131,12 @@ html {
     display: none;
   }
 }
+
+.el-radio {
+  .el-radio__inner {
+    &::after {
+      width: 7px;
+      height: 7px;
+    }
+  }
+}

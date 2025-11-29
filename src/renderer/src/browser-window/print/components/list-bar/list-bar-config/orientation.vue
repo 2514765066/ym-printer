@@ -1,6 +1,6 @@
 <template>
   <ElFormItem label="方向" label-position="top">
-    <ElSelect v-model="model">
+    <ElSelect v-model="config.orientation">
       <ElOption
         v-for="item in data"
         :key="item.value"
@@ -13,6 +13,9 @@
 
 <script setup lang="ts">
 import { ElSelect, ElOption, ElFormItem } from "element-plus";
+import { useConfigStore } from "@print/stores/useConfigStore";
+
+const { config } = storeToRefs(useConfigStore());
 
 const data = [
   {
@@ -24,8 +27,6 @@ const data = [
     value: "landscape",
   },
 ];
-
-const model = defineModel<"portrait" | "landscape">();
 </script>
 
 <style scoped lang="scss"></style>

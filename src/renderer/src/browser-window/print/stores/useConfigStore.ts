@@ -10,9 +10,10 @@ export const useConfigStore = defineStore("print-config", () => {
   const config = ref<PrintConfig>({
     remark: "",
     printer: localStorage.getItem("printer") || "",
-    count: 1,
-    range: "",
     orientation: "portrait",
+    count: 1,
+    mode: "mix",
+    range: "",
   });
 
   //设置配置
