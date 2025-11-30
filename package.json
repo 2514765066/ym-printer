@@ -13,7 +13,7 @@
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win ",
-    "release": "node ./scripts/publish.cjs"
+    "release": "node ./scripts/publish.mjs"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
