@@ -114,17 +114,34 @@ ipcMain.handle("clearCache", async () => {
 
 //打印
 ipcMain.handle("print", async (_, config) => {
+  const { promise, resolve, reject } = Promise.withResolvers<boolean>();
+
   const { printer, count, md5, range, orientation } = config;
 
   const path = join(cachePath, `${md5}.pdf`);
 
-  execFile(printerPath, [
-    `--file=${path}`,
-    `--printer=${printer}`,
-    `--range=${range.join(",")}`,
-    `--orientation=${orientation}`,
-    `--count=${count}`,
-  ]);
+  console.time("print");
+  execFile(
+    printerPath,
+    [
+      `--file=${path}`,
+      `--printer=${printer}`,
+      `--range=${range.join(",")}`,
+      `--orientation=${orientation}`,
+      `--count=${count}`,
+    ],
+    e => {
+      if (e && e.code != 3221225477) {
+        reject(false);
+        return;
+      }
+
+      resolve(true);
+      console.timeEnd();
+    }
+  );
+
+  return promise;
 });
 
 //打开打印窗口

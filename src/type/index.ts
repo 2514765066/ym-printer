@@ -25,7 +25,7 @@ export type IpcEvent = {
   updateProgress: (percent: number) => boolean;
 
   //打印
-  print: (config: PrintOption) => void;
+  print: (config: PrintOption) => boolean;
 
   //打开打印窗口
   openPrint: (option: OpenPrint) => void;
