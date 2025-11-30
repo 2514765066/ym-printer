@@ -16,6 +16,7 @@
           type="primary"
           :icon="More"
           :loading="printing"
+          @click="parserRange"
         />
       </Menu>
     </ElButtonGroup>
@@ -57,16 +58,20 @@ const usePrint = (cb: () => void | Promise<void>) => {
 
     printing.value = true;
 
-    parserRange();
-
-    await cb();
-
-    printing.value = false;
+    try {
+      await cb();
+    } catch {
+      eventEmitter.emit("error:show", "打印失败");
+    } finally {
+      printing.value = false;
+    }
   };
 };
 
 //开始打印
 const handlePrint = usePrint(async () => {
+  parserRange();
+
   //全是单页
   if (isSimplex(range.value)) {
     await printOdd(range.value);
@@ -98,6 +103,19 @@ const handlePrint = usePrint(async () => {
 const menu: MenuGroup[] = [
   {
     label: "更多操作",
+    children: [
+      {
+        label: "标记为打印完成",
+        icon: "queue",
+        onSelect() {
+          printFinish(range.value);
+
+          eventEmitter.emit("success:show", "添加完成");
+        },
+      },
+    ],
+  },
+  {
     children: [
       {
         hidden: () => isSimplex(range.value),
