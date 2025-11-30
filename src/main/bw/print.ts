@@ -37,7 +37,7 @@ export const createPrint = async (id: string) => {
     },
 
     webPreferences: {
-      preload: join(__dirname, "../preload/print.js"),
+      preload: join(__dirname, "../preload/print.mjs"),
       sandbox: false,
       // devTools: isDev(),
     },

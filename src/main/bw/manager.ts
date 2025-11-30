@@ -28,7 +28,7 @@ export const createMain = async () => {
     },
 
     webPreferences: {
-      preload: join(__dirname, "../preload/manager.js"),
+      preload: join(__dirname, "../preload/manager.mjs"),
       sandbox: false,
       // devTools: isDev(),
     },

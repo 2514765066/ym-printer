@@ -1,11 +1,8 @@
-const {
-  useGiteeReleases,
-  useGithubReleases,
-  getLatest,
-} = require("ym-publish");
-const { version, name } = require("../package.json");
-const { join } = require("path");
-const fs = require("fs");
+import { useGiteeReleases, useGithubReleases, getLatest } from "ym-publish";
+import { version, name } from "../package.json";
+import { join } from "path";
+import { readFileSync } from "fs";
+import { cwd } from "process";
 
 const { GITEE_TOKEN, GH_TOKEN } = process.env;
 
@@ -23,9 +20,9 @@ const githubRelease = useGithubReleases({
 
 //获取更新内容
 const getDoc = version => {
-  const url = join(__dirname, "../release-note.md");
+  const url = join(cwd(), "../release-note.md");
 
-  const doc = fs.readFileSync(url).toString();
+  const doc = readFileSync(url).toString();
 
   const reg = new RegExp(`## ${version}([\\s\\S]*?)##`);
 
@@ -37,7 +34,7 @@ const getDoc = version => {
 const main = async () => {
   const body = getDoc(version);
 
-  const filePath = join(__dirname, `../dist/${name}-${version}.exe`);
+  const filePath = join(cwd(), `../dist/${name}-${version}.exe`);
 
   const latestFile = getLatest({
     path: filePath,
