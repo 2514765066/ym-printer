@@ -12,3 +12,6 @@ export const printerPath = join(resources, "printer.exe");
 
 //下载更新目录
 export const update = join(app.getPath("userData"), "update");
+
+//更新文件
+export const updatePath = join(update, "ym-video-update.exe");

@@ -4,7 +4,7 @@
     icon="file"
     sub="缓存在软件中的文档（注意: 这会清空所有目录中所有文件）"
   >
-    <ElButton @click="handleClear" text bg>
+    <ElButton style="width: 150px" @click="handleClear" text bg>
       清除缓存: {{ formatSize(cacheSize) }}
     </ElButton>
   </Item>

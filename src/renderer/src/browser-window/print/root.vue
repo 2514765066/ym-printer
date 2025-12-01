@@ -20,7 +20,7 @@ import Content from "@print/components/content/index.vue";
 import { useConfigStore } from "@print/stores/useConfigStore";
 import { useFileStore } from "@print/stores/useFileStore";
 import { printFinishKey } from "./keys";
-import confim from "@/service/confim";
+import confirm from "@/service/confirm";
 
 const fileStore = useFileStore();
 const configStore = useConfigStore();
@@ -49,10 +49,10 @@ provide(printFinishKey, async (range: number[]) => {
       break;
 
     default:
-      const res = await confim({
+      const res = await confirm({
         type: "info",
         title: "打印完成",
-        message: "打印完成是否退出",
+        content: "打印完成是否退出",
       });
 
       if (!res) {

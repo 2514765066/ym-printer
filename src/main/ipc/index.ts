@@ -1,16 +1,17 @@
 import { ipcMain } from "./ipcMain";
 import { join } from "path";
-import { cachePath, printerPath } from "@/service/path";
+import { cachePath, printerPath, update, updatePath } from "@/service/path";
 import { copyFile, mkdir, readdir, stat, rm, readFile } from "fs/promises";
 import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
 import { FileInfo } from "@type";
-import { checkUpdate, downloadAndInstall } from "@/utils/update";
-import { BrowserWindow, dialog } from "electron";
+import { BrowserWindow } from "electron";
 import { createPrint } from "../bw/print";
 import { browserWindows } from "@/bw";
 import { getFileInfo } from "@/utils/file";
 import { exec, execFile } from "child_process";
+import { checkUpdate, downloadUpdate, installUpdate } from "ym-publish";
+import { getMd5 } from "@/utils/md5";
 
 //获取打印机信息
 ipcMain.handle("getPrinters", () => {
@@ -160,35 +161,56 @@ ipcMain.handle("finishPrint", async (_, option) => {
   win.webContents.send("finishPrint", option);
 });
 
+let checkUpdateInfo = {
+  md5: "",
+  version: "",
+  url: "",
+};
+
 //检查更新
-ipcMain.handle("checkUpdata", async () => {
-  const res = await checkUpdate();
+ipcMain.handle("checkUpdata", async (_, url) => {
+  const res = await checkUpdate(url, __APP_VERSION__);
 
   if (res == false) {
     return false;
   }
 
+  checkUpdateInfo = res;
+
   return res.version;
 });
 
 //下载并安装
-ipcMain.handle("downloadAndInstall", async e => {
+ipcMain.handle("downloadUpdate", async e => {
   const win = BrowserWindow.fromWebContents(e.sender)!;
 
-  const install = await downloadAndInstall(percent => {
-    win.webContents.send("updateProgress", percent);
-  });
-
-  const { response } = await dialog.showMessageBox(win, {
-    type: "info",
-    title: "安装更新",
-    message: "更新下载完成是否安装?",
-    buttons: ["yes", "cancel"],
-  });
-
-  if (response == 0) {
-    install();
+  //不存在更新文件夹就创建
+  if (!existsSync(update)) {
+    await mkdir(update, { recursive: true });
   }
+
+  //如果下载完成就安装
+  const md5 = await getMd5(updatePath);
+
+  if (md5 == checkUpdateInfo.md5) {
+    return true;
+  }
+
+  //下载
+  try {
+    await downloadUpdate(checkUpdateInfo.url, updatePath, percent => {
+      win.webContents.send("updateProgress", Math.floor(percent));
+    });
+  } catch {
+    return false;
+  }
+
+  return true;
+});
+
+//安装
+ipcMain.handle("installUpdate", () => {
+  installUpdate(updatePath);
 });
 
 //关闭窗口

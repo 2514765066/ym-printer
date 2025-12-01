@@ -37,10 +37,13 @@ export type IpcEvent = {
   close: () => void;
 
   //检查更新
-  checkUpdata: () => false | string;
+  checkUpdata: (url: string) => false | string;
 
-  //下载并安装
-  downloadAndInstall: () => void;
+  //下载
+  downloadUpdate: () => boolean;
+
+  //安装
+  installUpdate: () => void;
 };
 
 //打印配置

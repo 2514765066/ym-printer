@@ -2,7 +2,7 @@ import { ElMessageBox, MessageType } from "element-plus";
 
 interface Option {
   title: string;
-  message: string;
+  content: string;
   type?: MessageType;
   confirmButtonText?: string;
   cancelButtonText?: string;
@@ -10,7 +10,7 @@ interface Option {
 
 export default async (option: Option) => {
   try {
-    await ElMessageBox.confirm(option.message, {
+    await ElMessageBox.confirm(option.content, {
       confirmButtonText: "确定",
       cancelButtonText: "取消",
       closeOnClickModal: false,

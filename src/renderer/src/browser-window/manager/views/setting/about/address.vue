@@ -5,11 +5,14 @@
 </template>
 
 <script setup lang="ts">
+import { useConfigStore } from "@manager/stores/useConfigStore";
 import Item from "@manager/views/setting/setting-item.vue";
 import { ElButton } from "element-plus";
 
+const { config } = storeToRefs(useConfigStore());
+
 const handleClick = () => {
-  api.openUrl("https://gitee.com/yxingyus/ym-printer");
+  api.openUrl(config.value.selectedRepo.url);
 };
 </script>
 
