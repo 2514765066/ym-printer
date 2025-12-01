@@ -44,7 +44,7 @@ const emits = defineEmits<{
 
 //计算价格
 const price = computed(() => {
-  return getPrice(props.data.range);
+  return getPrice(props.data.range, props.data.config.count);
 });
 
 //处理右键事件

@@ -70,7 +70,7 @@ const price = computed(() => {
       continue;
     }
 
-    res += getPrice(item.range) * 100;
+    res += getPrice(item.range, item.config.count) * 100;
   }
 
   return res / 100;

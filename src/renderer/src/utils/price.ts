@@ -1,12 +1,12 @@
-import { useSettingsStore } from "@manager/stores/useSettingsStore";
+import { useConfigStore } from "@manager/stores/useConfigStore";
 
 //获取价格
-export const getPrice = (range: number[]) => {
-  const settingsStore = useSettingsStore();
+export const getPrice = (range: number[], count: number) => {
+  const settingsStore = useConfigStore();
 
-  const simplexPrice = settingsStore.data.simplexPrice * 100;
+  const simplexPrice = settingsStore.config.simplexPrice * 100;
 
-  const duplexPrice = settingsStore.data.duplexPrice * 100;
+  const duplexPrice = settingsStore.config.duplexPrice * 100;
 
   let result = 0;
 
@@ -14,5 +14,5 @@ export const getPrice = (range: number[]) => {
     result += range[i] == 0 ? simplexPrice : duplexPrice;
   }
 
-  return result / 100;
+  return (result * count) / 100;
 };
