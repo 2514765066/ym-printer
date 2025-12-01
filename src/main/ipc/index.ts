@@ -210,7 +210,7 @@ ipcMain.handle("downloadUpdate", async e => {
 
 //安装
 ipcMain.handle("installUpdate", () => {
-  installUpdate(updatePath);
+  installUpdate(updatePath, true);
 });
 
 //关闭窗口
