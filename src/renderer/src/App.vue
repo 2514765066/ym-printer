@@ -2,9 +2,11 @@
   <RouterView />
 
   <Dialog />
+  <LoadingGlobal />
 </template>
 
 <script setup lang="ts">
+import LoadingGlobal from "@/components/loading/loading-global.vue";
 import Dialog from "@/components/dialog/index.vue";
 import eventEmitter from "@/hooks/eventEmitter";
 import { ElMessage } from "element-plus";

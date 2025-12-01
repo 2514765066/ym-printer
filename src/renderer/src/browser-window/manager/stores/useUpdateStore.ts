@@ -2,6 +2,7 @@ import { useConfigStore } from "@manager/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import { confirm } from "@/components/dialog";
 import { getDayDiff } from "@/utils/time";
+import { global } from "@/components/loading";
 
 type Status =
   | "init"
@@ -72,6 +73,8 @@ export const useUpdateStore = defineStore("update", () => {
       }
 
       save();
+
+      global();
 
       await ipcRenderer.invoke("installUpdate");
     } catch {
