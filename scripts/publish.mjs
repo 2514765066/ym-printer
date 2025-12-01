@@ -1,8 +1,13 @@
-import { useGiteeReleases, useGithubReleases, getLatest } from "ym-publish";
-import { version, name } from "../package.json";
+import { useGiteeReleases, useGithubReleases } from "ym-publish";
 import { join } from "path";
 import { readFileSync } from "fs";
-import { cwd } from "process";
+import { createRequire } from "module";
+
+const __dirname = import.meta.dirname;
+
+const require = createRequire(import.meta.url);
+
+const { version, name } = require("../package.json");
 
 const { GITEE_TOKEN, GH_TOKEN } = process.env;
 
@@ -20,7 +25,7 @@ const githubRelease = useGithubReleases({
 
 //获取更新内容
 const getDoc = version => {
-  const url = join(cwd(), "../release-note.md");
+  const url = join(__dirname, "../release-note.md");
 
   const doc = readFileSync(url).toString();
 
@@ -34,23 +39,18 @@ const getDoc = version => {
 const main = async () => {
   const body = getDoc(version);
 
-  const filePath = join(cwd(), `../dist/${name}-${version}.exe`);
-
-  const latestFile = getLatest({
-    path: filePath,
-    version,
-  });
+  const updatePackPath = join(__dirname, `../dist/${name}-${version}.exe`);
 
   await giteeRelease({
     version,
     body,
-    filepaths: [latestFile, filePath],
+    updatePack: updatePackPath,
   });
 
   await githubRelease({
     version,
     body,
-    filepaths: [latestFile, filePath],
+    updatePack: updatePackPath,
   });
 };
 
