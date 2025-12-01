@@ -1,8 +1,11 @@
 <template>
   <RouterView />
+
+  <Dialog />
 </template>
 
 <script setup lang="ts">
+import Dialog from "@/components/dialog/index.vue";
 import eventEmitter from "@/hooks/eventEmitter";
 import { ElMessage } from "element-plus";
 

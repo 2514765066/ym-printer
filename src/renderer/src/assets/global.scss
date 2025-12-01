@@ -140,3 +140,10 @@ html {
     }
   }
 }
+
+.el-dialog {
+  --el-dialog-border-radius: 10px !important;
+  box-shadow: 0 1px 10px 0 rgba(#000, 0.5) !important;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-color) !important;
+}

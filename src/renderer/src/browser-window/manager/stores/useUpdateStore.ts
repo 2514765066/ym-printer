@@ -1,6 +1,6 @@
 import { useConfigStore } from "@manager/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
-import confirm from "@/service/confirm";
+import { confirm } from "@/components/dialog";
 import { getDayDiff } from "@/utils/time";
 
 type Status =
@@ -23,8 +23,6 @@ export const useUpdateStore = defineStore("update", () => {
 
   //检查更新
   const checkUpdate = async () => {
-    console.log(configStore.config.selectedRepo.updateUrl);
-
     try {
       status.value = "checking";
 
