@@ -6,12 +6,12 @@
       <img src="@/assets/icon.png" width="20" />
     </div>
 
-    <span class="text-main text-sm">{{ name }}</span>
+    <span class="text-main text-sm">{{ appName }}</span>
   </section>
 </template>
 
 <script setup lang="ts">
-import { name } from "@/service/info";
+import { appName } from "@/service/info";
 </script>
 
 <style scoped lang="scss">

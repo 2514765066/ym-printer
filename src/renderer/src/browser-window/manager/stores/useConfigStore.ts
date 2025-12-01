@@ -1,3 +1,5 @@
+import { appName } from "@/service/info";
+
 export const useConfigStore = defineStore("manager-config", () => {
   const config = ref({
     //单面价格
@@ -9,9 +11,8 @@ export const useConfigStore = defineStore("manager-config", () => {
     //仓库
     selectedRepo: {
       label: "Gitee",
-      url: "https://gitee.com/yxingyus/ym-video-app",
-      updateUrl:
-        "https://gitee.com/api/v5/repos/yxingyus/ym-printer/releases/latest",
+      url: `https://gitee.com/yxingyus/${appName}`,
+      updateUrl: `https://gitee.com/api/v5/repos/yxingyus/${appName}/releases/latest`,
     },
   });
 

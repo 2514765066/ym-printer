@@ -20,28 +20,25 @@
 import Item from "@manager/views/setting/setting-item.vue";
 import { ElOption, ElSelect } from "element-plus";
 import { useConfigStore } from "@manager/stores/useConfigStore";
+import { appName } from "@/service/info";
 
 const { config } = storeToRefs(useConfigStore());
 const { setRepo } = useConfigStore();
 
-const repos = new Map([
+const repos = new Map(
   [
-    "Gitee",
     {
       label: "Gitee",
-      url: `https://gitee.com/yxingyus/${__APP_NAME__}`,
-      updateUrl: `https://gitee.com/api/v5/repos/yxingyus/${__APP_NAME__}/releases/latest`,
+      url: `https://gitee.com/yxingyus/${appName}`,
+      updateUrl: `https://gitee.com/api/v5/repos/yxingyus/${appName}/releases/latest`,
     },
-  ],
-  [
-    "GitHub",
     {
       label: "GitHub",
-      url: `https://github.com/2514765066/${__APP_NAME__}`,
-      updateUrl: `https://api.github.com/repos/2514765066/${__APP_NAME__}/releases/latest`,
+      url: `https://github.com/2514765066/${appName}`,
+      updateUrl: `https://api.github.com/repos/2514765066/${appName}/releases/latest`,
     },
-  ],
-]);
+  ].map(item => [item.label, item])
+);
 
 const select = ref(config.value.selectedRepo.label);
 

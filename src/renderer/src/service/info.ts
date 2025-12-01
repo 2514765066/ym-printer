@@ -1,3 +1,3 @@
-export const version = __APP_VERSION__;
+export const appVersion = __APP_VERSION__;
 
-export const name = __APP_NAME__;
+export const appName = __APP_NAME__;
