@@ -11,6 +11,10 @@
 <script setup lang="ts">
 import NavBar from "@manager/components/nav-bar/index.vue";
 import TitleBar from "@manager/components/title-bar/index.vue";
+import { useUpdateStore } from "./stores/useUpdateStore";
+
+//修复进入必须进入设置界面才会检查更新的bug
+useUpdateStore();
 </script>
 
 <style lang="scss">
