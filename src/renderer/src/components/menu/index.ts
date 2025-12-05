@@ -1,7 +1,6 @@
 import { IconName } from "../icon/index.vue";
 import Menu from "./tooltip-menu.vue";
 import ContextMenu from "./context-menu.vue";
-import type { Ref } from "vue";
 
 export type MenuProps = {
   data: MenuGroup[];
@@ -20,8 +19,8 @@ export type MenuItem = {
   icon?: IconName;
   sub?: string;
   hoverColor?: string;
-  hidden?: (data?: any) => Ref<boolean> | boolean;
-  disable?: (data?: any) => Ref<boolean> | boolean;
+  hidden?: ((data?: any) => boolean) | boolean;
+  disable?: ((data?: any) => boolean) | boolean;
   onSelect?: (data?: any) => void;
 };
 
