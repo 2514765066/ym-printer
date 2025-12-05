@@ -20,6 +20,7 @@ import theme from "@iconify/icons-fluent/dark-theme-20-regular";
 import info from "@iconify/icons-fluent/error-circle-20-regular";
 import update from "@iconify/icons-fluent/arrow-circle-up-20-regular";
 import globe from "@iconify/icons-fluent/globe-20-regular";
+import check from "@iconify/icons-fluent/checkmark-20-filled";
 import { Icon } from "@iconify/vue";
 
 export type IconName = keyof typeof iconPacks;
@@ -36,6 +37,7 @@ withDefaults(
 );
 
 const iconPacks = {
+  check,
   loading,
   print,
   add,

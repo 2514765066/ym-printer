@@ -1,6 +1,6 @@
 type Status = "allCheck" | "hasCheck" | "noneCheck";
 
-export const useCheckedList = <T extends any>(list: Ref<Map<string, T>>) => {
+export default <T extends any>(list: Ref<Map<string, T>>) => {
   const checkAll = ref(false);
 
   //选中的内容

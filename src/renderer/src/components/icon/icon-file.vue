@@ -12,14 +12,14 @@ import { extMap } from "./index";
 const props = withDefaults(
   defineProps<{
     ext?: string;
-    size?: number;
+    size?: number | string;
   }>(),
   {
     size: 32,
   }
 );
 
-const ratio = computed(() => props.size / 32);
+const ratio = computed(() => Number(props.size) / 32);
 
 const info = computed(
   () => extMap[(props.ext as keyof typeof extMap) || "pdf"]

@@ -1,7 +1,10 @@
 <template>
   <section
     class="h-8 px-3 flex items-center gap-2 rounded-md cursor-pointer hover:bg-hover"
-    :class="{ hover: data.hoverColor, disable }"
+    :class="{
+      hover: data.hoverColor,
+      disable,
+    }"
     @click="handleClick"
     v-if="!hidden"
   >
@@ -11,8 +14,8 @@
       {{ data.label }}
     </span>
 
-    <span class="ml-auto text-xs text-main-darken ellipsis">
-      {{ data.sub }}
+    <span class="ml-auto text-xs text-sub ellipsis">
+      {{ sub }}
     </span>
   </section>
 </template>
@@ -20,6 +23,7 @@
 <script setup lang="ts">
 import Icon from "@/components/icon/index.vue";
 import { MenuItem } from "./index";
+import { getValue } from "./utils/value";
 
 const { data } = defineProps<{
   data: MenuItem;
@@ -31,24 +35,16 @@ const close = inject<() => void>("close")!;
 //自定义数据
 const customData = inject<Ref<any>>("customData")!;
 
+const sub = computed(() => {
+  return getValue(data.sub, customData.value);
+});
+
 const hidden = computed(() => {
-  const value = data.hidden && data.hidden(customData.value);
-
-  if (isRef(value)) {
-    return value.value;
-  }
-
-  return value;
+  return getValue(data.hidden, customData.value);
 });
 
 const disable = computed(() => {
-  const value = data.disable && data.disable(customData.value);
-
-  if (isRef(value)) {
-    return value.value;
-  }
-
-  return value;
+  return getValue(data.disable, customData.value);
 });
 
 const handleClick = () => {

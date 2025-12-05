@@ -1,9 +1,17 @@
 import eventEmitter from "@/hooks/eventEmitter";
 import { FileInfo } from "@type";
+import { useQueueStore } from "./useQueueStore";
 
 export const useFileStore = defineStore("manager-file", () => {
+  const { queue } = storeToRefs(useQueueStore());
+
   //所有文件
   const files = ref<Map<string, FileInfo>>(new Map());
+
+  //打印完成文件的id
+  const finishFilesID = computed(() => {
+    return new Set(Array.from(queue.value.values()).map(item => item.file.id));
+  });
 
   //获取文件
   const getFile = (id: string) => {
@@ -31,6 +39,11 @@ export const useFileStore = defineStore("manager-file", () => {
     files.value.clear();
   };
 
+  //是否完成
+  const isFinish = (id: string) => {
+    return finishFilesID.value.has(id);
+  };
+
   //文件获取完成
   ipcRenderer.on("finishFilesInfo", (_, data) => {
     for (const item of data) {
@@ -49,5 +62,6 @@ export const useFileStore = defineStore("manager-file", () => {
     clearFile,
     getFile,
     removeFile,
+    isFinish,
   };
 });

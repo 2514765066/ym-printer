@@ -2,14 +2,14 @@
   <section
     class="title-bar flex items-center px-2 gap-2 border-b border-border"
   >
-    <ExtIcon :ext="file.ext" :size="24" />
+    <FileIcon :ext="file.ext" size="24" />
 
     <span class="text-main text-sm"> {{ config.remark || file.name }}</span>
   </section>
 </template>
 
 <script setup lang="ts">
-import ExtIcon from "@/components/icon/ext-icon.vue";
+import FileIcon from "@/components/icon/icon-file.vue";
 import { useFileStore } from "@print/stores/useFileStore";
 import { useConfigStore } from "@print/stores/useConfigStore";
 

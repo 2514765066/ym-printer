@@ -2,23 +2,26 @@
   <li
     class="p-2 flex items-center gap-2 rounded-md"
     :class="{
-      printed,
+      active,
       'pointer-events-none': loading,
     }"
     :title="`${data.name}\r\n${data.path}`"
-    @click="emits('click')"
+    @click="onSingleClick"
+    @dblclick="onDoubleClick"
     @contextmenu="handleContextMenu"
   >
     <div class="h-8 flex-center aspect-square">
       <Icon
         icon="loading"
         class="rotate"
-        size="28"
+        size="32"
         color="rgba(255,255,255,0.6)"
         v-if="loading"
       />
 
-      <ExtIcon class="h-full" :ext="data.ext" v-else />
+      <Icon icon="check" size="24" color="0CBC4D" v-else-if="printed" />
+
+      <FileIcon class="h-full" :ext="data.ext" v-else />
     </div>
 
     <div class="flex flex-col gap-0.5 overflow-hidden">
@@ -34,18 +37,25 @@
 </template>
 
 <script setup lang="ts">
-import ExtIcon from "@/components/icon/ext-icon.vue";
+import FileIcon from "@/components/icon/icon-file.vue";
 import Icon from "@/components/icon/index.vue";
-
 import { FileInfo } from "@type";
+import useClick from "@manager/hooks/useClick";
+
+const { onDoubleClick, onSingleClick } = useClick({
+  click: () => emits("click"),
+  dblclick: () => emits("dblclick"),
+});
 
 const props = defineProps<{
   data: FileInfo;
   printed?: boolean;
+  active?: boolean;
 }>();
 
 const emits = defineEmits<{
   click: [];
+  dblclick: [];
   contextmenu: [e: MouseEvent, data: FileInfo];
 }>();
 
@@ -67,14 +77,12 @@ onMounted(async () => {
 li {
   transition: background-color 0.1s;
 
-  &:hover {
+  &:not(.active):hover {
     background-color: var(--hover-bg-color);
   }
 }
 
-.printed {
-  * {
-    opacity: 0.6;
-  }
+.active {
+  background-color: var(--active-bg-color);
 }
 </style>

@@ -2,8 +2,8 @@
   <main class="finish-queue">
     <Empty label="完成队列" icon="queue" v-if="queue.size == 0" />
 
-    <div class="flex- flex-col" v-else>
-      <header class="h-12 px-4 flex items-center gap-2 border-b border-border">
+    <div class="flex flex-col" v-else>
+      <header class="h-11 px-4 flex items-center gap-2 border-b border-border">
         <span class="text-sub text-sm">全选</span>
 
         <ElCheckbox
@@ -16,7 +16,7 @@
       </header>
 
       <ElScrollbar
-        height="calc(100vh - 44px - 48px)"
+        height="calc(100vh - 44px - 44px)"
         view-class="p-2 flex flex-col gap-1"
       >
         <Item
@@ -25,6 +25,7 @@
           :data="item"
           :active="hasCheck(item.id)"
           @click="toggleCheck(item.id)"
+          @dblclick="handlePreview(item)"
           @contextmenu="contextMenuRef?.open"
         />
       </ElScrollbar>
@@ -41,7 +42,7 @@ import Empty from "@/components/empty.vue";
 import { ContextMenu, MenuGroup } from "@/components/menu";
 import { useQueueStore } from "@manager/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
-import { useCheckedList } from "@manager/hooks/useCheck";
+import useChecked from "@manager/hooks/useCheck";
 import { getPrice } from "@/utils/price";
 import { QueueItem } from "@type";
 
@@ -55,7 +56,7 @@ const {
   hasCheck,
   toggleAllCheck,
   cancelCheck,
-} = useCheckedList(queue);
+} = useChecked(queue);
 
 const contextMenuRef = useTemplateRef("menu");
 
@@ -76,6 +77,13 @@ const price = computed(() => {
   return res / 100;
 });
 
+const handlePreview = (data: QueueItem) => {
+  ipcRenderer.invoke("openPrint", {
+    file: toRaw(data.file),
+    config: toRaw(data.config),
+  });
+};
+
 const contextMenu: MenuGroup[] = [
   {
     label: "更多操作",
@@ -83,12 +91,7 @@ const contextMenu: MenuGroup[] = [
       {
         label: "打印预览",
         icon: "print",
-        onSelect(data: QueueItem) {
-          ipcRenderer.invoke("openPrint", {
-            file: toRaw(data.file),
-            config: toRaw(data.config),
-          });
-        },
+        onSelect: handlePreview,
       },
     ],
   },
@@ -109,10 +112,10 @@ const contextMenu: MenuGroup[] = [
         },
       },
       {
-        hidden: (data: QueueItem) => !hasCheck(data.id),
         label: "删除所有选中任务",
         icon: "remove",
         hoverColor: "#f87171",
+        hidden: (data: QueueItem) => !hasCheck(data.id),
         onSelect() {
           for (const id of checked.value.keys()) {
             cancelCheck(id);

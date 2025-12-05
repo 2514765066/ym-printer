@@ -16,6 +16,7 @@ export default {
         list: "#202020",
         hover: "rgba(255, 255, 255, 0.05)",
         border: "#2a2a2a",
+        check: "#0CBC4D",
       },
     },
   },

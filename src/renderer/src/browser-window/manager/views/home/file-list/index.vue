@@ -1,5 +1,5 @@
 <template>
-  <ul
+  <main
     class="file relative border-r border-border"
     v-drag="{
       onDrop: handleDrop,
@@ -10,40 +10,65 @@
 
     <Empty label="文档文件" icon="file" v-if="files.size == 0" />
 
-    <ElScrollbar
-      height="calc(100vh - 44px)"
-      view-class="p-2 flex flex-col gap-1"
-      v-else
-    >
-      <Item
-        v-for="item in files.values()"
-        :key="item.id"
-        :data="item"
-        :printed="hasQueue(item.id)"
-        @click="handlePrint(item)"
-        @contextmenu="contextMenuRef?.open"
-      />
-    </ElScrollbar>
+    <div class="flex flex-col" v-else>
+      <header class="h-11 px-4 flex items-center gap-2 border-b border-border">
+        <span class="text-sub text-sm">全选</span>
+
+        <ElCheckbox
+          v-model="checkAll"
+          :indeterminate="status == 'hasCheck'"
+          @change="toggleAllCheck"
+        />
+
+        <span class="ml-auto text-sub text-sm">
+          选中: {{ checked.size }} 个
+        </span>
+      </header>
+
+      <ElScrollbar
+        height="calc(100vh - 44px - 44px)"
+        view-class="p-2 flex flex-col gap-1"
+      >
+        <Item
+          v-for="item in files.values()"
+          :key="item.id"
+          :data="item"
+          :printed="isFinish(item.id)"
+          :active="hasCheck(item.id)"
+          @click="toggleCheck(item.id)"
+          @dblclick="handlePrint(item)"
+          @contextmenu="contextMenuRef?.open"
+        />
+      </ElScrollbar>
+    </div>
 
     <ContextMenu :data="contextMenu" ref="menu" />
-  </ul>
+  </main>
 </template>
 
 <script setup lang="ts">
 import { ContextMenu, MenuGroup } from "@/components/menu";
 import Item from "./file-list-item.vue";
-import { ElScrollbar } from "element-plus";
+import { ElScrollbar, ElCheckbox } from "element-plus";
 import Tip from "@/components/drag-tip.vue";
 import Empty from "@/components/empty.vue";
 import vDrag from "@manager/hooks/useDrag";
-import { useQueueStore } from "@manager/stores/useQueueStore";
 import { useFileStore } from "@manager/stores/useFileStore";
 import { FileInfo } from "@type";
 import eventEmitter from "@/hooks/eventEmitter";
+import useChecked from "@manager/hooks/useCheck";
 
 const { files } = storeToRefs(useFileStore());
-const { addFile, removeFile } = useFileStore();
-const { hasQueue } = useQueueStore();
+const { addFile, removeFile, isFinish } = useFileStore();
+const {
+  checkAll,
+  status,
+  checked,
+  toggleCheck,
+  hasCheck,
+  toggleAllCheck,
+  cancelCheck,
+} = useChecked(files);
 
 const contextMenuRef = useTemplateRef("menu");
 
@@ -84,13 +109,31 @@ const contextMenu: MenuGroup[] = [
   {
     children: [
       {
-        label: "删除文件",
+        label: "删除当前文件",
         icon: "remove",
         hoverColor: "#f87171",
         onSelect(data: FileInfo) {
+          if (hasCheck(data.id)) {
+            cancelCheck(data.id);
+          }
+
           removeFile(data.id);
 
           eventEmitter.emit("success:show", "已删除文件");
+        },
+      },
+      {
+        label: "删除所有选中文件",
+        icon: "remove",
+        hoverColor: "#f87171",
+        hidden: (data: FileInfo) => !hasCheck(data.id),
+        onSelect() {
+          for (const id of checked.value.keys()) {
+            cancelCheck(id);
+            removeFile(id);
+          }
+
+          eventEmitter.emit("success:show", "已删除任务");
         },
       },
     ],

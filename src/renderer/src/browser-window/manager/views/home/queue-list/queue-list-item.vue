@@ -2,10 +2,11 @@
   <li
     class="p-2 flex items-center gap-2 rounded-md"
     :class="{ active }"
-    @click="emits('click')"
+    @click="onSingleClick"
+    @dblclick="onDoubleClick"
     @contextmenu="handleContextMenu"
   >
-    <ExtIcon :ext="data.file.ext" />
+    <FileIcon :ext="data.file.ext" />
 
     <div class="flex flex-col gap-0.5 overflow-hidden">
       <span class="text-sm text-main">
@@ -28,9 +29,15 @@
 </template>
 
 <script setup lang="ts">
-import ExtIcon from "@/components/icon/ext-icon.vue";
+import FileIcon from "@/components/icon/icon-file.vue";
 import { QueueItem } from "@type";
 import { getPrice } from "@/utils/price";
+import useClick from "@manager/hooks/useClick";
+
+const { onDoubleClick, onSingleClick } = useClick({
+  click: () => emits("click"),
+  dblclick: () => emits("dblclick"),
+});
 
 const props = defineProps<{
   data: QueueItem;
@@ -39,6 +46,7 @@ const props = defineProps<{
 
 const emits = defineEmits<{
   click: [];
+  dblclick: [];
   contextmenu: [e: MouseEvent, data: QueueItem];
 }>();
 
