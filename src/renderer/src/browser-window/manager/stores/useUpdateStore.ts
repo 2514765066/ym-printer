@@ -25,6 +25,31 @@ export const useUpdateStore = defineStore("update", () => {
   //检查更新
   const checkUpdate = async () => {
     try {
+      const installUpdate = async () => {
+        //安装
+        const installResult = await confirm({
+          title: "安装更新",
+          content: "更新下载完成是否安装",
+        });
+
+        //不安装
+        if (!installResult) {
+          return;
+        }
+
+        save();
+
+        global();
+
+        await ipcRenderer.invoke("installUpdate");
+      };
+
+      //如果下载完成就直接安装
+      if (status.value == "downloaded") {
+        installUpdate();
+        return;
+      }
+
       status.value = "checking";
 
       const res = await ipcRenderer.invoke(
@@ -60,23 +85,7 @@ export const useUpdateStore = defineStore("update", () => {
 
       status.value = "downloaded";
 
-      //安装
-      const installResult = await confirm({
-        title: "安装更新",
-        content: "更新下载完成是否安装",
-      });
-
-      //不安装
-      if (!installResult) {
-        status.value = "init";
-        return;
-      }
-
-      save();
-
-      global();
-
-      await ipcRenderer.invoke("installUpdate");
+      installUpdate();
     } catch {
       eventEmitter.emit("error:show", "出错了,请重试");
       status.value = "init";

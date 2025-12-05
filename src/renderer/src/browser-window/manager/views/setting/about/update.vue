@@ -1,6 +1,11 @@
 <template>
   <Item label="检查更新" icon="update" sub="检查是否有版本更新">
-    <ElButton @click="checkUpdate" text bg v-if="status == 'init'">
+    <ElButton
+      @click="checkUpdate"
+      text
+      bg
+      v-if="status == 'init' || status == 'downloaded'"
+    >
       检查更新
     </ElButton>
 
@@ -23,7 +28,6 @@ const map = {
   "update-available": () => "发现更新",
   "update-not-available": () => "已是最新版",
   downloading: () => `下载中: ${downloadProgress.value}%`,
-  downloaded: () => "下载完成",
 };
 
 const tip = computed(() => {
