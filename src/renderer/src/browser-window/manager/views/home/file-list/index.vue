@@ -10,7 +10,11 @@
 
     <Empty label="文档文件" icon="file" v-if="files.size == 0" />
 
-    <ElScrollbar view-class="p-2 flex flex-col gap-1" v-else>
+    <ElScrollbar
+      height="calc(100vh - 44px)"
+      view-class="p-2 flex flex-col gap-1"
+      v-else
+    >
       <Item
         v-for="item in files.values()"
         :key="item.id"
