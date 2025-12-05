@@ -3,6 +3,7 @@
     <ElInputNumber
       v-model="config.count"
       :min="1"
+      :max="999"
       :value-on-clear="0"
       style="width: 100%"
     />
