@@ -45,7 +45,7 @@ const printing = ref(false);
 
 //解析范围
 const parserRange = () => {
-  parser(config.value.range, config.value.mode);
+  parser(config.value.range || "-", config.value.mode);
 };
 
 const usePrint = (cb: () => void | Promise<void>) => {
@@ -71,6 +71,8 @@ const usePrint = (cb: () => void | Promise<void>) => {
 //开始打印
 const handlePrint = usePrint(async () => {
   parserRange();
+
+  console.log(range.value);
 
   //全是单页
   if (isSimplex(range.value)) {
@@ -107,21 +109,21 @@ const menu: MenuGroup[] = [
       {
         label: "标记为打印完成",
         icon: "queue",
-        onSelect() {
+        onSelect: usePrint(() => {
           printFinish(range.value);
 
           eventEmitter.emit("success:show", "添加完成");
-        },
+        }),
       },
     ],
   },
   {
     children: [
       {
-        hidden: () => isSimplex(range.value),
         label: "打印偶数页",
         icon: "print",
         sub: "#",
+        hidden: () => isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printEven(range.value);
 
@@ -129,10 +131,10 @@ const menu: MenuGroup[] = [
         }),
       },
       {
-        hidden: () => isSimplex(range.value),
         label: "打印奇数页",
         icon: "print",
         sub: "#",
+        hidden: () => isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printOdd(range.value);
 
@@ -140,10 +142,10 @@ const menu: MenuGroup[] = [
         }),
       },
       {
-        hidden: () => !isSimplex(range.value),
         label: "打印单页",
         icon: "print",
         sub: "#",
+        hidden: () => !isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printOdd(range.value);
 

@@ -26,7 +26,6 @@ const { config } = storeToRefs(useConfigStore());
 const { pageCount } = storeToRefs(useViewStore());
 
 const rule: FormItemRule = {
-  required: true,
   trigger: "change",
   validator(_, value: string, callback) {
     //如果没加载出来就不验证
@@ -35,7 +34,7 @@ const rule: FormItemRule = {
     }
 
     if (value === "") {
-      callback("请输入范围");
+      callback();
       return;
     }
 
