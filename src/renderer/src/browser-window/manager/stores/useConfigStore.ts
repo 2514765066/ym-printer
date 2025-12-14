@@ -1,48 +1,62 @@
-import { appName } from "@/service/info";
+import { appName } from "@/services/info";
 
-export const useConfigStore = defineStore("manager-config", () => {
-  const config = ref({
+//创建配置
+const createConfig = () => {
+  return {
     //单面价格
     simplexPrice: 0.2,
 
     //双面价格
     duplexPrice: 0.25,
 
-    //仓库
+    //自动更新
+    autoUpdate: true,
+
+    //选中的仓库
     selectedRepo: {
       label: "Gitee",
       url: `https://gitee.com/yxingyus/${appName}`,
       updateUrl: `https://gitee.com/api/v5/repos/yxingyus/${appName}/releases/latest`,
     },
-  });
+  };
+};
 
-  //设置仓库
-  const setRepo = (value: typeof config.value.selectedRepo) => {
-    config.value.selectedRepo = value;
+//初始化配置
+const initConfig = () => {
+  try {
+    return JSON.parse(localStorage.getItem("settings") ?? "");
+  } catch {
+    return createConfig();
+  }
+};
+
+export const useConfigStore = defineStore("manager-config", () => {
+  const config = ref(initConfig());
+
+  //切换自动更新
+  const toggleAutoUpdate = () => {
+    config.value.autoUpdate = !config.value.autoUpdate;
   };
 
-  const init = () => {
-    const res = localStorage.getItem("settings");
+  //重置
+  const resetConfig = () => {
+    config.value = createConfig();
+  };
 
-    if (res) {
-      config.value = JSON.parse(res);
+  //自动保存配置
+  watch(
+    config,
+    val => {
+      localStorage.setItem("settings", JSON.stringify(val));
+    },
+    {
+      deep: true,
     }
-
-    watch(
-      config,
-      val => {
-        localStorage.setItem("settings", JSON.stringify(val));
-      },
-      {
-        deep: true,
-      }
-    );
-  };
-
-  init();
+  );
 
   return {
     config,
-    setRepo,
+    toggleAutoUpdate,
+    resetConfig,
   };
 });

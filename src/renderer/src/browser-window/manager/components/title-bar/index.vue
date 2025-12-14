@@ -3,7 +3,7 @@
     class="title-bar flex items-center pl-1.5 gap-2 border-b border-border"
   >
     <div class="w-9 h-9 flex-center">
-      <img src="@/assets/icon.png" width="20" />
+      <img src="@/assets/images/icon.png" width="20" />
     </div>
 
     <span class="text-main text-sm">{{ appName }}</span>
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import { appName } from "@/service/info";
+import { appName } from "@/services/info";
 </script>
 
 <style scoped lang="scss">

@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ContextMenu, MenuGroup } from "@/components/menu";
+import { ContextMenu, MenuGroup } from "@/components/ui/menu";
 import Item from "./file-list-item.vue";
 import { ElScrollbar, ElCheckbox } from "element-plus";
 import Tip from "@/components/drag-tip.vue";

@@ -7,16 +7,21 @@ export default {
   theme: {
     extend: {
       colors: {
-        bg: "#191919",
-        primary: "rgb(35, 131, 226)",
-        main: "rgba(255,255,255,0.8)",
-        "main-darken": "rgba(255,255,255,0.3)",
-        sub: "rgba(255,255,255,0.6)",
-
-        list: "#202020",
-        hover: "rgba(255, 255, 255, 0.05)",
-        border: "#2a2a2a",
         check: "#0CBC4D",
+
+        "222": "#222",
+        "333": "#333",
+        "444": "#444",
+
+        primary: "#0169cc",
+        bg: "#191919",
+        list: "#202020",
+        border: "#2a2a2a",
+        hover: "rgba(255, 255, 255, 0.05)",
+
+        main: "rgba(255,255,255,0.8)",
+        sub: "#888",
+        "main-darken": "rgba(255,255,255,0.3)",
       },
     },
   },

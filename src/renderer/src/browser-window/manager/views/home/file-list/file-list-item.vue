@@ -37,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import FileIcon from "@/components/icon/icon-file.vue";
-import Icon from "@/components/icon/index.vue";
+import FileIcon from "@/components/file-icon.vue";
+import { Icon } from "@/components/ui/icon";
 import { FileInfo } from "@type";
 import useClick from "@manager/hooks/useClick";
 

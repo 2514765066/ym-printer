@@ -1,5 +1,5 @@
 <template>
-  <div class="manager-window wh-screen grid">
+  <div class="manager-window wh-screen grid bg-bg">
     <TitleBar />
 
     <NavBar />
@@ -19,8 +19,6 @@ useUpdateStore();
 
 <style lang="scss">
 .manager-window {
-  background-color: var(--bg-color);
-
   grid-template-columns: 50px calc(100vw - 50px);
   grid-template-rows: 44px calc(100vh - 44px);
 

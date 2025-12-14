@@ -4,9 +4,9 @@ const { name } = require("./package.json");
  * @type {import('electron-builder').Configuration}
  */
 module.exports = {
-  appId: `com.2514765066.${name}`,
-  artifactName: name,
-  productName: name,
+  appId: `com.2514765066.ym-printer`,
+  artifactName: "ym-printer",
+  productName: "ym-printer",
   files: ["out", "resources/pdfium.dll", "resources/printer.exe"],
   asar: false,
   electronLanguages: ["zh-CN"],

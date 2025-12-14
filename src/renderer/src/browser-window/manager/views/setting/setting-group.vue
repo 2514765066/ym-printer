@@ -1,8 +1,8 @@
 <template>
-  <section class="group mb-6 flex flex-col">
-    <header class="py-4 text-sub text-xs">{{ label }}</header>
+  <section class="mb-6 flex flex-col">
+    <span class="py-2 text-xs text-sub">{{ label }}</span>
 
-    <div class="flex flex-col gap-1.5">
+    <div class="flex flex-col gap-2">
       <slot></slot>
     </div>
   </section>
@@ -14,9 +14,4 @@ defineProps<{
 }>();
 </script>
 
-<style scoped lang="scss">
-.group {
-  width: 90%;
-  max-width: 1150px;
-}
-</style>
+<style scoped lang="scss"></style>

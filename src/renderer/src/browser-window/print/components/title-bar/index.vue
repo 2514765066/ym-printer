@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import FileIcon from "@/components/icon/icon-file.vue";
+import FileIcon from "@/components/file-icon.vue";
 import { useFileStore } from "@print/stores/useFileStore";
 import { useConfigStore } from "@print/stores/useConfigStore";
 

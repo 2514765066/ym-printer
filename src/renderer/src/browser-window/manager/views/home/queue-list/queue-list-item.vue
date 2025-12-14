@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import FileIcon from "@/components/icon/icon-file.vue";
+import FileIcon from "@/components/file-icon.vue";
 import { QueueItem } from "@type";
 import { getPrice } from "@/utils/price";
 import useClick from "@manager/hooks/useClick";
@@ -66,7 +66,7 @@ li {
   transition: background-color 0.1s;
 
   &:not(.active):hover {
-    background-color: var(--hover-bg-color);
+    background-color: var(--hover-color);
   }
 }
 

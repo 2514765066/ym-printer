@@ -33,9 +33,6 @@ export default defineConfig({
       __APP_VERSION__: JSON.stringify(version),
       __APP_NAME__: JSON.stringify(name),
     },
-    build: {
-      assetsInlineLimit: 0,
-    },
     resolve: {
       alias: {
         "@": resolve("src/renderer/src"),

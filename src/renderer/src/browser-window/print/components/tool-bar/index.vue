@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { useViewStore } from "@print/stores/useViewStore";
-import Icon from "@/components/icon/index.vue";
+import { Icon } from "@/components/ui/icon";
 
 const { scale, pageCount, dark } = storeToRefs(useViewStore());
 const { dpi, subScale, addScale, toggleTheme } = useViewStore();
@@ -54,7 +54,7 @@ const { dpi, subScale, addScale, toggleTheme } = useViewStore();
     transition: background-color 0.1s;
 
     &:hover {
-      background-color: var(--hover-bg-color);
+      background-color: var(--hover-color);
     }
   }
 }

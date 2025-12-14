@@ -1,5 +1,5 @@
 <template>
-  <div class="print-window wh-screen grid">
+  <div class="print-window wh-screen grid bg-bg">
     <TitleBar />
 
     <ListBar />
@@ -20,7 +20,7 @@ import Content from "@print/components/content/index.vue";
 import { useConfigStore } from "@print/stores/useConfigStore";
 import { useFileStore } from "@print/stores/useFileStore";
 import { printFinishKey } from "./keys";
-import { confirm } from "@/components/dialog";
+import MessageBox from "@/components/ui/message-box";
 
 const fileStore = useFileStore();
 const configStore = useConfigStore();
@@ -40,33 +40,28 @@ provide(printFinishKey, async (range: number[]) => {
     range: toRaw(range),
   });
 
-  switch (configStore.finishBehavior) {
-    case "close":
-      ipcRenderer.invoke("close");
-      break;
-
-    case "not":
-      break;
-
-    default:
-      const res = await confirm({
-        title: "打印完成",
-        content: "打印完成是否退出",
-      });
-
-      if (!res) {
-        return;
-      }
-
-      ipcRenderer.invoke("close");
+  if (configStore.finishBehavior == "not") {
+    return;
   }
+
+  if (configStore.finishBehavior == "close") {
+    ipcRenderer.invoke("close");
+    return;
+  }
+
+  const res = await MessageBox.confirm({
+    label: "打印完成",
+    content: "打印完成是否退出",
+  });
+
+  if (!res) return;
+
+  ipcRenderer.invoke("close");
 });
 </script>
 
 <style lang="scss">
 .print-window {
-  background-color: var(--bg-color);
-
   grid-template-rows: 44px 50px calc(100vh - 44px - 50px);
   grid-template-columns: 260px calc(100vw - 260px);
 

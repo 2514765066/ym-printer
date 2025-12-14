@@ -1,5 +1,5 @@
 <template>
-  <ElTooltip :content="label" placement="right" :hide-after="0">
+  <Tooltip :label="label" placement="right">
     <RouterLink
       class="flex-center aspect-square rounded-md transition-colors hover:bg-hover"
       :class="{ active }"
@@ -11,12 +11,12 @@
         :color="active ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)'"
       />
     </RouterLink>
-  </ElTooltip>
+  </Tooltip>
 </template>
 
 <script setup lang="ts">
-import Icon, { IconName } from "@/components/icon/index.vue";
-import { ElTooltip } from "element-plus";
+import { Icon, IconName } from "@/components/ui/icon";
+import Tooltip from "@/components/ui/tooltip.vue";
 
 const { to } = defineProps<{
   label: string;
@@ -31,6 +31,6 @@ const active = computed(() => route.path.includes(to));
 
 <style scoped lang="scss">
 .active {
-  background-color: var(--hover-bg-color);
+  background-color: var(--hover-color);
 }
 </style>

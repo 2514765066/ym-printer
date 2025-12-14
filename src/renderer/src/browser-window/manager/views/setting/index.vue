@@ -1,18 +1,20 @@
 <template>
-  <ElScrollbar class="settings" view-class="p-2 flex flex-col items-center">
-    <Price />
+  <Content>
+    <main class="py-6">
+      <Price />
 
-    <General />
+      <General />
 
-    <About />
-  </ElScrollbar>
+      <About />
+    </main>
+  </Content>
 </template>
 
 <script setup lang="ts">
-import General from "./general/index.vue";
-import Price from "./price/index.vue";
-import About from "./about/index.vue";
-import { ElScrollbar } from "element-plus";
+import Content from "@manager/components/content/index.vue";
+import General from "./setting-general/index.vue";
+import Price from "./setting-price/index.vue";
+import About from "./setting-about/index.vue";
 </script>
 
 <style scoped lang="scss"></style>

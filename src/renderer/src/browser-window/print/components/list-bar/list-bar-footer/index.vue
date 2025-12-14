@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ElButton, ElButtonGroup } from "element-plus";
 import { More } from "@element-plus/icons-vue";
-import { MenuGroup, Menu } from "@/components/menu";
+import { MenuGroup, Menu } from "@/components/ui/menu";
 import { printDialog } from "@/components/notification";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useConfigStore } from "@print/stores/useConfigStore";
@@ -71,8 +71,6 @@ const usePrint = (cb: () => void | Promise<void>) => {
 //开始打印
 const handlePrint = usePrint(async () => {
   parserRange();
-
-  console.log(range.value);
 
   //全是单页
   if (isSimplex(range.value)) {

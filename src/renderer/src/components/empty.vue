@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon, { IconName } from "@/components/icon/index.vue";
+import { Icon, IconName } from "@/components/ui/icon";
 
 defineProps<{
   label: string;

@@ -39,7 +39,7 @@
 import { ElCheckbox, ElScrollbar } from "element-plus";
 import Item from "./queue-list-item.vue";
 import Empty from "@/components/empty.vue";
-import { ContextMenu, MenuGroup } from "@/components/menu";
+import { ContextMenu, MenuGroup } from "@/components/ui/menu";
 import { useQueueStore } from "@manager/stores/useQueueStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import useChecked from "@manager/hooks/useCheck";

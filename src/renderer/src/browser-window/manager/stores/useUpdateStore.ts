@@ -1,8 +1,8 @@
 import { useConfigStore } from "@manager/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
-import { confirm } from "@/components/dialog";
+import MessageBox from "@/components/ui/message-box";
 import { getDayDiff } from "@/utils/time";
-import { global } from "@/components/loading";
+import Loading from "@/components/ui/loading";
 
 type Status =
   | "init"
@@ -27,8 +27,8 @@ export const useUpdateStore = defineStore("update", () => {
     try {
       const installUpdate = async () => {
         //安装
-        const installResult = await confirm({
-          title: "安装更新",
+        const installResult = await MessageBox.confirm({
+          label: "安装更新",
           content: "更新下载完成是否安装",
         });
 
@@ -39,7 +39,7 @@ export const useUpdateStore = defineStore("update", () => {
 
         save();
 
-        global();
+        Loading.service();
 
         await ipcRenderer.invoke("installUpdate");
       };
@@ -68,8 +68,8 @@ export const useUpdateStore = defineStore("update", () => {
 
       status.value = "update-available";
 
-      const checkResult = await confirm({
-        title: "🎉发现更新",
+      const checkResult = await MessageBox.confirm({
+        label: "🎉发现更新",
         content: `发现新版本${res},是否更新?`,
       });
 
@@ -86,9 +86,12 @@ export const useUpdateStore = defineStore("update", () => {
       status.value = "downloaded";
 
       installUpdate();
-    } catch {
+    } catch (e) {
       eventEmitter.emit("error:show", "出错了,请重试");
+
       status.value = "init";
+
+      console.error(e);
     }
   };
 
