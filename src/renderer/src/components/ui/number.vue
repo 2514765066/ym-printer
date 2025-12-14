@@ -29,7 +29,7 @@ import { Icon } from "@/components/ui/icon";
 import { ElInputNumber } from "element-plus";
 import Button from "./button.vue";
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     step?: number;
     min?: number;

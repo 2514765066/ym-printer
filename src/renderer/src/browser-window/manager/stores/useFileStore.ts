@@ -58,6 +58,7 @@ export const useFileStore = defineStore("manager-file", () => {
 
   return {
     files,
+    finishFilesID,
     addFile,
     clearFile,
     getFile,

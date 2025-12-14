@@ -65,6 +65,6 @@ defineExpose({
   top: calc(v-bind("y") * 1px);
   left: calc(v-bind("x") * 1px);
 
-  z-index: 999;
+  z-index: 9999;
 }
 </style>

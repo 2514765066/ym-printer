@@ -10,7 +10,7 @@
         {{ printing ? "正在上传" : "开始打印" }}
       </ElButton>
 
-      <Menu :data="menu" placement="top">
+      <MenuTooltip :data="menu" placement="top">
         <ElButton
           style="width: 32px; height: 32px"
           type="primary"
@@ -18,7 +18,7 @@
           :loading="printing"
           @click="parserRange"
         />
-      </Menu>
+      </MenuTooltip>
     </ElButtonGroup>
   </footer>
 </template>
@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { ElButton, ElButtonGroup } from "element-plus";
 import { More } from "@element-plus/icons-vue";
-import { MenuGroup, Menu } from "@/components/ui/menu";
+import { MenuGroup, MenuTooltip } from "@/components/ui/menu";
 import { printDialog } from "@/components/notification";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useConfigStore } from "@print/stores/useConfigStore";
