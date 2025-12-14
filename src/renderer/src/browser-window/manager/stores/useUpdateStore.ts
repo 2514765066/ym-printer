@@ -100,16 +100,11 @@ export const useUpdateStore = defineStore("update", () => {
     localStorage.setItem("lastUpdateTime", String(Date.now()));
   };
 
-  //监听下载进度
-  ipcRenderer.addListener("updateProgress", (_, percrent) => {
-    downloadProgress.value = percrent;
-
-    if (percrent == 100) {
-      status.value = "init";
-    }
-  });
-
   const init = () => {
+    if (!configStore.config.autoUpdate) {
+      return;
+    }
+
     const lastUpdateTime = localStorage.getItem("lastUpdateTime");
 
     const day = getDayDiff(Number(lastUpdateTime) || 0, Date.now());
@@ -120,6 +115,15 @@ export const useUpdateStore = defineStore("update", () => {
 
     checkUpdate();
   };
+
+  //监听下载进度
+  ipcRenderer.addListener("updateProgress", (_, percrent) => {
+    downloadProgress.value = percrent;
+
+    if (percrent == 100) {
+      status.value = "init";
+    }
+  });
 
   init();
 
