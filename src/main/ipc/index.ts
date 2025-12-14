@@ -149,9 +149,14 @@ ipcMain.handle("print", async (_, config) => {
 ipcMain.handle("openPrint", async (_, option) => {
   const { file } = option;
 
-  const res = await createPrint(file.id);
+  const win = await createPrint(file.id);
 
-  res?.webContents.send("openPrint", option);
+  if (!win) {
+    return;
+  }
+
+  win.setTitle(option.file.name);
+  win.webContents.send("openPrint", option);
 });
 
 //完成打印
