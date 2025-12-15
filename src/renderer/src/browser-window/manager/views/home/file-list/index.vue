@@ -1,50 +1,30 @@
 <template>
-  <main
+  <section
     class="file relative border-r border-border"
     v-drag="{
       onDrop: handleDrop,
-      change: handleChange,
+      onChange: handleChange,
     }"
   >
-    <Tip v-if="isDraggingOver" />
+    <ListDragTip v-if="isDraggingOver" />
 
     <Empty label="文档文件" icon="file" v-if="files.size == 0" />
 
-    <ElScrollbar
-      height="calc(100vh - 44px)"
-      view-class="p-2 flex flex-col gap-1"
-      v-else
-    >
-      <Item
-        v-for="item in files.values()"
-        :key="item.id"
-        :data="item"
-        :printed="isFinish(item.id)"
-        @click="handlePrint(item)"
-        @contextmenu="contextMenuRef?.open"
-      />
-    </ElScrollbar>
-  </main>
-
-  <MenuContext :data="contextMenu" ref="menu" />
+    <ListContent v-else />
+  </section>
 </template>
 
 <script setup lang="ts">
-import { MenuContext, MenuGroup } from "@/components/ui/menu";
-import Item from "./file-list-item.vue";
-import { ElScrollbar } from "element-plus";
-import Tip from "@/components/drag-tip.vue";
+import ListDragTip from "./list-drag-tip.vue";
 import Empty from "@/components/empty.vue";
+import ListContent from "./list-content/index.vue";
 import vDrag from "@manager/hooks/useDrag";
 import { useFileStore } from "@manager/stores/useFileStore";
-import { FileInfo } from "@type";
-import eventEmitter from "@/hooks/eventEmitter";
 
-const { files, finishFilesID } = storeToRefs(useFileStore());
-const { addFile, removeFile, isFinish, clearFile } = useFileStore();
+const { files } = storeToRefs(useFileStore());
+const { addFile } = useFileStore();
 
-const contextMenuRef = useTemplateRef("menu");
-
+//是否拖拽悬浮
 const isDraggingOver = ref(false);
 
 //处理状态改变
@@ -60,64 +40,6 @@ const handleDrop = (e: DragEvent) => {
 
   addFile(Array.from(files));
 };
-
-//打印页面
-const handlePrint = (data: FileInfo) => {
-  ipcRenderer.invoke("openPrint", {
-    file: toRaw(data),
-  });
-};
-
-const contextMenu: MenuGroup[] = [
-  {
-    label: "更多操作",
-    children: [
-      {
-        label: "打印预览",
-        icon: "print",
-        onSelect: handlePrint,
-      },
-    ],
-  },
-  {
-    children: [
-      {
-        label: '删除 "当前文件"',
-        icon: "remove",
-        hoverColor: "#f87171",
-
-        onSelect(data: FileInfo) {
-          removeFile(data.id);
-
-          eventEmitter.emit("success:show", "已删除文件");
-        },
-      },
-      {
-        label: '删除 "所有打印完成的文件"',
-        icon: "remove",
-        hoverColor: "#f87171",
-        hidden: (data: FileInfo) => !isFinish(data.id),
-        onSelect() {
-          for (const id of finishFilesID.value) {
-            removeFile(id);
-          }
-
-          eventEmitter.emit("success:show", "已删除所有打印完成文件");
-        },
-      },
-      {
-        label: '删除 "所有文件"',
-        icon: "remove",
-        hoverColor: "#f87171",
-        onSelect() {
-          clearFile();
-
-          eventEmitter.emit("success:show", "已删除所有文件");
-        },
-      },
-    ],
-  },
-];
 </script>
 
 <style scoped lang="scss">

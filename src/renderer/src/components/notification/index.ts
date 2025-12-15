@@ -8,7 +8,6 @@ export const printDialog = () => {
     title: "请翻页",
     position: "bottom-right",
     duration: 0,
-    type: "info",
     onClose: () => handle.close(),
     message: () =>
       h(PrintTipContent, {

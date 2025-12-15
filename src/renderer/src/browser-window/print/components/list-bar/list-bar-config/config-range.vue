@@ -1,20 +1,11 @@
 <template>
   <ElFormItem label="打印范围" label-position="top" :rules="rule" prop="range">
-    <Tooltip trigger="focus" placement="right">
+    <Tooltip :label="label" trigger="focus" placement="right">
       <ElInput
         v-model="config.range"
         style="width: 100%"
         placeholder="格式 1,1-,-10,-"
       />
-
-      <template #content>
-        <div class="text-main">
-          <strong>-</strong>：表示从1到文档页数<br />
-          <strong>2-</strong>：表示从2到文档页数<br />
-          <strong>-10</strong>：表示从1到10<br />
-          <strong>5-5</strong>：两个相同数字组成的范围算单独的数字5
-        </div>
-      </template>
     </Tooltip>
   </ElFormItem>
 </template>
@@ -27,6 +18,11 @@ import { useViewStore } from "@/browser-window/print/stores/useViewStore";
 
 const { config } = storeToRefs(useConfigStore());
 const { pageCount } = storeToRefs(useViewStore());
+
+const label = `-：表示从1到文档页数
+2-：表示从2到文档页数
+-10：表示从1到10
+5-5：两个相同数字组成的范围算单独的数字5`;
 
 const rule: FormItemRule = {
   trigger: "change",

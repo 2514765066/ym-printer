@@ -84,7 +84,14 @@ html {
 }
 
 .el-notification {
+  padding: 1rem !important;
   --el-notification-width: 300px !important;
+
+  background-color: var(--list-color) !important;
+
+  .el-notification__group {
+    margin: unset !important;
+  }
 }
 
 .el-select__popper {

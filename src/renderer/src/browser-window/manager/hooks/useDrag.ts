@@ -8,7 +8,7 @@ export default {
       onOver?: (e: DragEvent) => void;
       onLeave?: (e: DragEvent) => void;
       onDrop?: (e: DragEvent) => void;
-      change?: (data: boolean) => void;
+      onChange?: (data: boolean) => void;
     }>
   ) {
     let dragLeaveTimeout: number | undefined;
@@ -17,7 +17,7 @@ export default {
 
     const handleChange = (value: boolean) => {
       isDraggingOver = value;
-      if (binding.value?.change) binding.value.change(value);
+      if (binding.value?.onChange) binding.value.onChange(value);
     };
 
     const handleDragEnter = (e: DragEvent) => {
