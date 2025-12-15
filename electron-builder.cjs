@@ -1,5 +1,3 @@
-const { name } = require("./package.json");
-
 /**
  * @type {import('electron-builder').Configuration}
  */
