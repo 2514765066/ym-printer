@@ -58,6 +58,10 @@ html {
   margin: unset !important;
 }
 
+.is-resizing {
+  cursor: ew-resize;
+}
+
 .rotate {
   animation: rotate 1s infinite linear;
 }

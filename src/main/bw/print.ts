@@ -1,7 +1,6 @@
 import { join } from "path";
-import { isDev } from "ym-electron.js";
 import { BrowserWindow } from "electron";
-import { browserWindows } from "./index";
+import { browserWindows, load } from "./index";
 import Store from "electron-store";
 
 const store = new Store();
@@ -39,11 +38,11 @@ export const createPrint = async (id: string) => {
     webPreferences: {
       preload: join(__dirname, "../preload/print.mjs"),
       sandbox: false,
-      // devTools: isDev(),
     },
   });
 
-  bw.on("resized", () => {
+  //处理窗口调整大小
+  const handleResized = () => {
     const [width, height] = bw.getSize();
 
     const option = {
@@ -54,24 +53,25 @@ export const createPrint = async (id: string) => {
     lastSize = option;
 
     store.set("print-window-size", option);
-  });
+  };
 
-  bw.on("closed", () => {
+  //处理窗口关闭
+  const handleClosed = () => {
     browserWindows.delete(id);
-  });
+
+    if (browserWindows.size == 1) {
+      const win = browserWindows.get("manager")!;
+
+      win.show();
+    }
+  };
 
   browserWindows.set(id, bw);
 
-  if (isDev() && process.env["ELECTRON_RENDERER_URL"]) {
-    bw.webContents.openDevTools({ mode: "detach" });
-    await bw.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}/#/print`);
-  } else {
-    await bw.loadFile(join(__dirname, "../renderer/index.html"), {
-      hash: "print",
-    });
-  }
+  bw.on("closed", handleClosed);
+  bw.on("resized", handleResized);
 
-  bw.show();
+  await load(bw, "print");
 
   return bw;
 };

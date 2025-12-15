@@ -1,12 +1,11 @@
 import { join } from "path";
-import { isDev } from "ym-electron.js";
 import { BrowserWindow } from "electron";
-import { browserWindows } from "./index";
+import { browserWindows, load } from "./index";
 import Store from "electron-store";
 
 const store = new Store();
 
-const lastSize = store.get("window-size", {
+let lastSize = store.get("window-size", {
   width: 1024,
   height: 768,
 }) as Electron.Size;
@@ -34,23 +33,38 @@ export const createMain = async () => {
     },
   });
 
-  bw.on("resized", () => {
+  //处理窗口调整大小
+  const handleResized = () => {
     const [width, height] = bw.getSize();
-    store.set("window-size", { width, height });
-  });
+
+    const option = {
+      width,
+      height,
+    };
+
+    lastSize = option;
+
+    store.set("manager-window-size", option);
+  };
+
+  //处理窗口准备关闭
+  const handleClose = (e: Electron.Event) => {
+    //如果只有一个窗口直接关闭
+    if (browserWindows.size == 1) {
+      return;
+    }
+
+    e.preventDefault();
+
+    bw.hide();
+  };
 
   browserWindows.set("manager", bw);
 
-  if (isDev() && process.env["ELECTRON_RENDERER_URL"]) {
-    bw.webContents.openDevTools({ mode: "detach" });
-    await bw.loadURL(`${process.env["ELECTRON_RENDERER_URL"]}/#/manager`);
-  } else {
-    await bw.loadFile(join(__dirname, "../renderer/index.html"), {
-      hash: "manager",
-    });
-  }
+  bw.on("close", handleClose);
+  bw.on("resized", handleResized);
 
-  bw.show();
+  await load(bw, "manager");
 
   return bw;
 };

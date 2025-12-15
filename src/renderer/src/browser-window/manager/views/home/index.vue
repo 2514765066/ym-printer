@@ -1,20 +1,37 @@
 <template>
-  <main class="home grid">
+  <main class="home grid" ref="containerRef">
     <FileList />
+
+    <ResizeHandle
+      class="-translate-x-1/2"
+      :containerRef="containerRef"
+      :padding="200"
+      v-model="fileListWidth"
+    />
 
     <QueueList />
   </main>
 </template>
 
 <script setup lang="ts">
+import ResizeHandle from "@manager/components/resize-handle.vue";
 import FileList from "./file-list/index.vue";
 import QueueList from "./queue-list/index.vue";
+import useStore from "@manager/hooks/useStore";
+
+const fileListWidth = useStore("file-list-width", 280);
+
+const containerRef = useTemplateRef("containerRef");
 </script>
 
 <style scoped lang="scss">
 .home {
-  grid-template-columns: 280px calc(100vw - 50px - 280px);
+  --file-list-width: calc(v-bind("fileListWidth") * 1px);
 
-  grid-template-areas: "file finish-queue";
+  grid-template-columns: var(--file-list-width) 4px calc(
+      100% - var(--file-list-width) - 4px
+    );
+
+  grid-template-areas: "file handle finish-queue";
 }
 </style>

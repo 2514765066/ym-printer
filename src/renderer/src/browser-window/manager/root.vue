@@ -19,8 +19,8 @@ useUpdateStore();
 
 <style lang="scss">
 .manager-window {
-  grid-template-columns: 50px calc(100vw - 50px);
   grid-template-rows: 44px calc(100vh - 44px);
+  grid-template-columns: 50px calc(100vw - 50px);
 
   grid-template-areas:
     "title-bar title-bar"
