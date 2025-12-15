@@ -10,11 +10,13 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    padding?: number;
+    leftPadding?: number;
+    rightPadding?: number;
     containerRef: HTMLElement | null;
   }>(),
   {
-    padding: 20,
+    leftPadding: 20,
+    rightPadding: 20,
   }
 );
 
@@ -35,8 +37,8 @@ const handleMousemove = (e: MouseEvent) => {
   const offsetX = e.clientX - rect.left;
 
   model.value = Math.max(
-    props.padding,
-    Math.min(offsetX, rect.width - props.padding)
+    props.leftPadding,
+    Math.min(offsetX, rect.width - props.rightPadding)
   );
 };
 

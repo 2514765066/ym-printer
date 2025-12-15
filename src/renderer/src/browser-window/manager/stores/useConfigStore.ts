@@ -21,6 +21,8 @@ const createConfig = () => {
   };
 };
 
+type Config = ReturnType<typeof createConfig>;
+
 //初始化配置
 const initConfig = () => {
   try {
@@ -31,7 +33,7 @@ const initConfig = () => {
 };
 
 export const useConfigStore = defineStore("manager-config", () => {
-  const config = ref(initConfig());
+  const config = ref<Config>(initConfig());
 
   //切换自动更新
   const toggleAutoUpdate = () => {

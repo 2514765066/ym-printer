@@ -7,8 +7,6 @@
     <ToolBar />
 
     <Content />
-
-    <RouterView />
   </div>
 </template>
 

@@ -9,15 +9,17 @@
     :value-on-clear="0"
   >
     <template #decrease-icon>
-      <Button square>
+      <Button :bg="bg" square>
         <Icon icon="subtract" size="18" />
       </Button>
     </template>
 
-    <template #suffix>元</template>
+    <template #suffix>
+      {{ suffix }}
+    </template>
 
     <template #increase-icon>
-      <Button square>
+      <Button :bg="bg" square>
         <Icon icon="add" size="18" />
       </Button>
     </template>
@@ -35,6 +37,8 @@ withDefaults(
     min?: number;
     max?: number;
     precision?: number;
+    suffix?: string;
+    bg?: string;
   }>(),
   {
     min: 0,
@@ -42,7 +46,7 @@ withDefaults(
   }
 );
 
-const model = defineModel<number>({
+const model = defineModel({
   required: true,
 });
 </script>
@@ -59,6 +63,12 @@ const model = defineModel<number>({
 
   &:deep(.el-input-number__increase) {
     border: unset !important;
+  }
+
+  &:deep(.el-input) {
+    .el-input__inner {
+      flex-grow: unset !important;
+    }
   }
 }
 </style>

@@ -14,6 +14,7 @@ withDefaults(
   defineProps<{
     type?: "primary" | "default";
     square?: boolean;
+    bg?: string;
   }>(),
   {
     type: "default",
@@ -41,7 +42,7 @@ button {
 
 .default {
   color: var(--main-color);
-  background-color: #303030;
+  background-color: v-bind("bg || '#303030'");
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
     0 0.5px 0 0 rgba(255, 255, 255, 0.1) inset;
 

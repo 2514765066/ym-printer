@@ -93,7 +93,7 @@ const contextMenu: MenuGroup[] = [
         },
       },
       {
-        label: '删除 "所有打印完成文件"',
+        label: '删除 "所有打印完成的文件"',
         icon: "remove",
         hoverColor: "#f87171",
         hidden: (data: FileInfo) => !isFinish(data.id),

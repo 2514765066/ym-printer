@@ -7,6 +7,7 @@ import { ElInput } from "element-plus";
 
 defineProps<{
   placeholder?: string;
+  bg?: string;
 }>();
 
 const model = defineModel<string>();
@@ -16,7 +17,7 @@ const model = defineModel<string>();
 .text {
   border-radius: 6px !important;
 
-  background-color: #292929 !important;
+  background-color: v-bind("bg || '#303030'") !important;
 
   &:deep(.el-input__wrapper) {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),

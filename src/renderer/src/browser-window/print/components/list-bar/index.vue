@@ -33,6 +33,7 @@ import Printer from "./list-bar-config/printer.vue";
 import Count from "./list-bar-config/count.vue";
 import { ElForm, ElScrollbar } from "element-plus";
 import { useConfigStore } from "@print/stores/useConfigStore";
+//@ts-ignore
 import { ruleFormRef } from "./index";
 
 const { config } = storeToRefs(useConfigStore());

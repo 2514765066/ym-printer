@@ -1,5 +1,5 @@
 <template>
-  <Tooltip :label="data.name" :sub="data.path" placement="right">
+  <Tooltip :label="data.name" placement="right">
     <li
       class="p-2 flex items-center gap-2 rounded-md hover:bg-hover transition-colors"
       :class="{

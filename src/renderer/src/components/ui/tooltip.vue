@@ -11,10 +11,12 @@
     <slot></slot>
 
     <template #content>
-      <div class="flex flex-col">
-        <span class="text-white" v-if="label">{{ label }}</span>
-        <span class="text-sub text-xs" v-if="sub">{{ sub }}</span>
-      </div>
+      <slot name="content">
+        <div class="max-w-80 flex flex-col">
+          <span class="text-white" v-if="label">{{ label }}</span>
+          <span class="text-sub text-xs break-all" v-if="sub">{{ sub }}</span>
+        </div>
+      </slot>
     </template>
   </ElTooltip>
 </template>

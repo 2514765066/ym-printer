@@ -1,6 +1,6 @@
 <template>
   <ElFormItem label="打印范围" label-position="top" :rules="rule" prop="range">
-    <ElTooltip trigger="focus" :hide-after="0" placement="right">
+    <Tooltip trigger="focus" placement="right">
       <ElInput
         v-model="config.range"
         style="width: 100%"
@@ -8,17 +8,20 @@
       />
 
       <template #content>
-        <strong>-</strong>：表示从1到文档页数<br />
-        <strong>2-</strong>：表示从2到文档页数<br />
-        <strong>-10</strong>：表示从1到10<br />
-        <strong>5-5</strong>：两个相同数字组成的范围算单独的数字5
+        <div class="text-main">
+          <strong>-</strong>：表示从1到文档页数<br />
+          <strong>2-</strong>：表示从2到文档页数<br />
+          <strong>-10</strong>：表示从1到10<br />
+          <strong>5-5</strong>：两个相同数字组成的范围算单独的数字5
+        </div>
       </template>
-    </ElTooltip>
+    </Tooltip>
   </ElFormItem>
 </template>
 
 <script setup lang="ts">
-import { ElInput, ElFormItem, ElTooltip, FormItemRule } from "element-plus";
+import Tooltip from "@/components/ui/tooltip.vue";
+import { ElInput, ElFormItem, FormItemRule } from "element-plus";
 import { useConfigStore } from "@print/stores/useConfigStore";
 import { useViewStore } from "@/browser-window/print/stores/useViewStore";
 

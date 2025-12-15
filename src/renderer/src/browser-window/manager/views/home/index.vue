@@ -5,7 +5,8 @@
     <ResizeHandle
       class="-translate-x-1/2"
       :containerRef="containerRef"
-      :padding="200"
+      :left-padding="200"
+      :right-padding="400"
       v-model="fileListWidth"
     />
 
