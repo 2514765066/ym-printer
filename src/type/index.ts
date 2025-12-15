@@ -53,6 +53,8 @@ interface PrintOption {
   count: number;
   orientation: "portrait" | "landscape";
   range: number[];
+  cartridge: "black" | "color";
+  dpi: number;
 }
 
 //打开打印的配置
@@ -104,6 +106,12 @@ export type PrintConfig = {
 
   //范围
   range: string;
+
+  //墨盒类型
+  cartridge: "black" | "color";
+
+  //缩放
+  dpi: number;
 };
 
 //队列项

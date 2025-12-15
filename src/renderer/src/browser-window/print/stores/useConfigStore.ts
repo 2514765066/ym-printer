@@ -14,6 +14,8 @@ export const useConfigStore = defineStore("print-config", () => {
     count: 1,
     mode: "mix",
     range: "",
+    cartridge: "black",
+    dpi: 300,
   });
 
   //设置配置
@@ -29,6 +31,8 @@ export const useConfigStore = defineStore("print-config", () => {
       orientation: config.value.orientation,
       count: config.value.count,
       range: toRaw(range),
+      cartridge: config.value.cartridge,
+      dpi: config.value.dpi,
     });
   };
 

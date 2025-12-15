@@ -117,7 +117,7 @@ ipcMain.handle("clearCache", async () => {
 ipcMain.handle("print", async (_, config) => {
   const { promise, resolve, reject } = Promise.withResolvers<boolean>();
 
-  const { printer, count, md5, range, orientation } = config;
+  const { printer, count, md5, range, orientation, cartridge, dpi } = config;
 
   const path = join(cachePath, `${md5}.pdf`);
 
@@ -130,6 +130,8 @@ ipcMain.handle("print", async (_, config) => {
       `--range=${range.join(",")}`,
       `--orientation=${orientation}`,
       `--count=${count}`,
+      `--cartridge=${cartridge}`,
+      `--dpi=${dpi}`,
     ],
     e => {
       if (e && e.code != 3221225477) {
