@@ -35,6 +35,7 @@ import eventEmitter from "@/hooks/eventEmitter";
 import Loading from "@/components/ui/loading/index.vue";
 
 const { printerTasks, selectedPrinter, status } = storeToRefs(usePrinterTask());
+const { initPrinterTasks } = usePrinterTask();
 
 const contextMenuRef = useTemplateRef("contextMenuRef");
 
@@ -53,6 +54,8 @@ const menu: MenuGroup[] = [
             id
           );
 
+          initPrinterTasks();
+
           eventEmitter.emit("success:show", "已删除当前任务");
         },
       },
@@ -62,6 +65,8 @@ const menu: MenuGroup[] = [
         hoverColor: "#f87171",
         async onSelect() {
           await ipcRenderer.invoke("removePrinterTask", selectedPrinter.value);
+
+          initPrinterTasks();
 
           eventEmitter.emit("success:show", "已删除所有任务");
         },

@@ -21,9 +21,10 @@ import useLoading from "@/hooks/useLoading";
 import { Icon } from "@/components/ui/icon";
 import Tooltip from "@/components/ui/tooltip.vue";
 import { usePrinterTask } from "@manager/stores/usePrinterTask";
+import throttle from "@/utils/throttle";
 
 const { selectedPrinter } = storeToRefs(usePrinterTask());
-const { getPrinterTasks } = usePrinterTask();
+const { initPrinterTasks } = usePrinterTask();
 
 const printers = ref<string[]>([]);
 
@@ -35,7 +36,7 @@ const [isPrinting, handlePrintTest] = useLoading(async () => {
 });
 
 //刷新打印任务列表
-const [_, reloadPrinterTasks] = useLoading(getPrinterTasks);
+const reloadPrinterTasks = throttle(initPrinterTasks);
 
 onMounted(async () => {
   printers.value = await ipcRenderer.invoke("getPrinters");

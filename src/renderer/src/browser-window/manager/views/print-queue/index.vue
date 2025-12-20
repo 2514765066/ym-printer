@@ -11,20 +11,16 @@ import PrinterList from "./printer-list/index.vue";
 import PrinterQueue from "./printer-queue/index.vue";
 import { usePrinterTask } from "@manager/stores/usePrinterTask";
 
-const { getPrinterTasks } = usePrinterTask();
-
-let timer: number;
+const { initPrinterTasks, clearPrinterTasks } = usePrinterTask();
 
 //离开页面
 onBeforeRouteLeave(() => {
-  window.clearInterval(timer);
+  clearPrinterTasks();
 });
 
 //初始化调用
 onMounted(() => {
-  getPrinterTasks();
-
-  timer = window.setInterval(getPrinterTasks, 3000);
+  initPrinterTasks();
 });
 </script>
 

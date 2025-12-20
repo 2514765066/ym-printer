@@ -4,6 +4,8 @@ import useStoreRef from "@/hooks/useStoreRef";
 type Status = "init" | "loading" | "finish";
 
 export const usePrinterTask = defineStore("printerTask", () => {
+  let timer: number;
+
   //所有打印机
   const printers = ref<string[]>([]);
 
@@ -31,18 +33,32 @@ export const usePrinterTask = defineStore("printerTask", () => {
     selectedPrinter.value = value;
   };
 
+  //初始化任务
+  const initPrinterTasks = async () => {
+    getPrinterTasks();
+
+    clearPrinterTasks();
+
+    timer = window.setInterval(getPrinterTasks, 3000);
+  };
+
+  //清除打印任务
+  const clearPrinterTasks = () => {
+    clearInterval(timer);
+  };
+
   //初始化
   const init = async () => {
     printers.value = await ipcRenderer.invoke("getPrinters");
 
-    watchEffect(async () => {
-      if (!selectedPrinter.value) {
+    watch(selectedPrinter, async value => {
+      if (!value) {
         return;
       }
 
       status.value = "loading";
 
-      await getPrinterTasks();
+      await initPrinterTasks();
 
       status.value = "finish";
     });
@@ -57,5 +73,7 @@ export const usePrinterTask = defineStore("printerTask", () => {
     status,
     getPrinterTasks,
     setPrinter,
+    initPrinterTasks,
+    clearPrinterTasks,
   };
 });
