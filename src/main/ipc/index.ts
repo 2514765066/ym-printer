@@ -3,6 +3,7 @@ import { join } from "path";
 import {
   cachePath,
   printerPath,
+  resources,
   testPath,
   update,
   updatePath,
@@ -24,7 +25,9 @@ import { formatPrinterTask } from "@/utils/format";
 ipcMain.handle("getPrinters", () => {
   const { promise, resolve } = Promise.withResolvers<string[]>();
 
-  const cmd = `powershell -NoProfile "Get-Printer | Select -ExpandProperty Name | ConvertTo-Json -Compress"`;
+  const path = join(resources, "getPrinters.ps1");
+
+  const cmd = `powershell -NoProfile -ExecutionPolicy Bypass -File "${path}"`;
 
   exec(cmd, (err, stdout) => {
     if (err) {
@@ -254,7 +257,9 @@ ipcMain.handle("close", e => {
 ipcMain.handle("getPrinterTask", (_, printer) => {
   const { promise, resolve } = Promise.withResolvers<PrinterTask[]>();
 
-  const cmd = `powershell -NoProfile "Get-PrintJob -PrinterName '${printer}' | Select-Object ID, DocumentName, @{Name='JobStatus';Expression={$_.JobStatus.ToString()}} | ConvertTo-Json -Compress"`;
+  const path = join(resources, "getPrinterTasks.ps1");
+
+  const cmd = `powershell -NoProfile -ExecutionPolicy Bypass -File "${path}" -PrinterName "${printer}"`;
 
   exec(cmd, (err, stdout) => {
     if (err) {

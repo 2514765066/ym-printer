@@ -10,6 +10,8 @@ module.exports = {
     "resources/pdfium.dll",
     "resources/printer.exe",
     "resources/test.pdf",
+    "resources/getPrinters.ps1",
+    "resources/getPrinterTasks.ps1",
   ],
   asar: false,
   electronLanguages: ["zh-CN"],
