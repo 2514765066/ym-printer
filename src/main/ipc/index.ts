@@ -118,7 +118,7 @@ ipcMain.handle("clearCache", async () => {
 });
 
 //打印
-ipcMain.handle("print", async (_, config) => {
+ipcMain.handle("print", async (_, config, docName) => {
   const { promise, resolve, reject } = Promise.withResolvers<boolean>();
 
   const { printer, count, md5, range, orientation, cartridge, dpi } = config;
@@ -128,6 +128,7 @@ ipcMain.handle("print", async (_, config) => {
   execFile(
     printerPath,
     [
+      `--docName=${docName}`,
       `--file=${path}`,
       `--printer=${printer}`,
       `--range=${range.join(",")}`,
@@ -153,14 +154,18 @@ ipcMain.handle("print", async (_, config) => {
 ipcMain.handle("printTest", (_, printer) => {
   const { promise, resolve, reject } = Promise.withResolvers<boolean>();
 
-  execFile(printerPath, [`--file=${testPath}`, `--printer=${printer}`], e => {
-    if (e && e.code != 3221225477) {
-      reject(false);
-      return;
-    }
+  execFile(
+    printerPath,
+    [`--docName=测试页`, `--file=${testPath}`, `--printer=${printer}`],
+    e => {
+      if (e && e.code != 3221225477) {
+        reject(false);
+        return;
+      }
 
-    resolve(true);
-  });
+      resolve(true);
+    }
+  );
 
   return promise;
 });

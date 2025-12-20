@@ -25,7 +25,7 @@ export type IpcEvent = {
   updateProgress: (percent: number) => boolean;
 
   //打印
-  print: (config: PrintOption) => boolean;
+  print: (config: PrintOption, docName: string) => boolean;
 
   //打印测试也
   printTest: (printer: string) => boolean;

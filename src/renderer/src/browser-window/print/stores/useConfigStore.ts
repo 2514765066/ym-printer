@@ -35,11 +35,15 @@ export const useConfigStore = defineStore("print-config", () => {
 
   //打印范围中的内容
   const print = async (range: number[]) => {
-    await ipcRenderer.invoke("print", {
-      md5: file.value.md5,
-      ...config,
-      range: toRaw(range),
-    });
+    await ipcRenderer.invoke(
+      "print",
+      {
+        md5: file.value.md5,
+        ...config,
+        range: toRaw(range),
+      },
+      file.value.name
+    );
   };
 
   //是否是全单
