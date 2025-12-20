@@ -27,6 +27,9 @@ export type IpcEvent = {
   //打印
   print: (config: PrintOption) => boolean;
 
+  //打印测试也
+  printTest: (printer: string) => boolean;
+
   //打开打印窗口
   openPrint: (option: OpenPrint) => void;
 
@@ -44,6 +47,12 @@ export type IpcEvent = {
 
   //安装
   installUpdate: () => void;
+
+  //获取打印机打印队列
+  getPrinterTask: (printer: string) => PrinterTask[];
+
+  //删除打印机任务
+  removePrinterTask: (printer: string, id?: number) => boolean;
 };
 
 //打印配置
@@ -119,3 +128,13 @@ export type QueueItem = FinishPrintOption & {
   //文件id
   id: string;
 };
+
+//打印完成行为
+export type FinishBehavior = "tip" | "close" | "not";
+
+//打印任务
+export interface PrinterTask {
+  id: number;
+  name: string;
+  status: string[];
+}

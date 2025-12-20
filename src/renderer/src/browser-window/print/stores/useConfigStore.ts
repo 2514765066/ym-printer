@@ -1,15 +1,25 @@
+import useStoreRef from "@/hooks/useStoreRef";
 import { useFileStore } from "@print/stores/useFileStore";
-import { PrintConfig } from "@type";
+import { PrintConfig, FinishBehavior } from "@type";
 
 export const useConfigStore = defineStore("print-config", () => {
   const { file } = storeToRefs(useFileStore());
 
-  const finishBehavior = ref(localStorage.getItem("finishBehavior") || "tip");
+  //完成行为
+  const finishBehavior = useStoreRef<FinishBehavior>("tip", "finishBehavior");
+
+  //打印机
+  const printer = useStoreRef("", "printer");
 
   //打印配置
-  const config = ref<PrintConfig>({
+  const config = reactive<PrintConfig>({
     remark: "",
-    printer: localStorage.getItem("printer") || "",
+    get printer() {
+      return printer.value;
+    },
+    set printer(val: string) {
+      printer.value = val;
+    },
     orientation: "portrait",
     count: 1,
     mode: "mix",
@@ -20,19 +30,15 @@ export const useConfigStore = defineStore("print-config", () => {
 
   //设置配置
   const setConfig = (value: PrintConfig) => {
-    config.value = value;
+    Object.assign(config, value);
   };
 
   //打印范围中的内容
   const print = async (range: number[]) => {
     await ipcRenderer.invoke("print", {
       md5: file.value.md5,
-      printer: config.value.printer,
-      orientation: config.value.orientation,
-      count: config.value.count,
+      ...config,
       range: toRaw(range),
-      cartridge: config.value.cartridge,
-      dpi: config.value.dpi,
     });
   };
 
@@ -56,24 +62,6 @@ export const useConfigStore = defineStore("print-config", () => {
 
     await print(range);
   };
-
-  //初始化
-  const init = () => {
-    //保存打印机配置
-    watch(
-      () => config.value.printer,
-      val => {
-        localStorage.setItem("printer", val);
-      }
-    );
-
-    //保留打印完成行为
-    watch(finishBehavior, val => {
-      localStorage.setItem("finishBehavior", val);
-    });
-  };
-
-  init();
 
   return {
     finishBehavior,

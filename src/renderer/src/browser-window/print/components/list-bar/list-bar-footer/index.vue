@@ -8,6 +8,10 @@
         @click="handlePrint"
       >
         {{ printing ? "正在上传" : "开始打印" }}
+
+        <template #loading>
+          <Icon icon="loading" size="14" class="rotate mr-2" />
+        </template>
       </ElButton>
 
       <MenuTooltip :data="menu" placement="top">
@@ -17,7 +21,11 @@
           :icon="More"
           :loading="printing"
           @click="parserRange"
-        />
+        >
+          <template #loading>
+            <Icon icon="loading" size="14" class="rotate shrink-0" />
+          </template>
+        </ElButton>
       </MenuTooltip>
     </ElButtonGroup>
   </footer>
@@ -33,6 +41,7 @@ import { useConfigStore } from "@print/stores/useConfigStore";
 import { useRange } from "@print/hooks/useRange";
 import { validate } from "../index";
 import { printFinishKey } from "@print/keys";
+import { Icon } from "@/components/ui/icon";
 
 const { config } = storeToRefs(useConfigStore());
 const { printEven, printOdd, isSimplex } = useConfigStore();
@@ -110,7 +119,7 @@ const menu: MenuGroup[] = [
         onSelect: usePrint(() => {
           printFinish(range.value);
 
-          eventEmitter.emit("success:show", "添加完成");
+          eventEmitter.emit("success:show", "已标记为完成");
         }),
       },
     ],
@@ -118,36 +127,36 @@ const menu: MenuGroup[] = [
   {
     children: [
       {
-        label: "打印偶数页",
+        label: '打印 "偶数页"',
         icon: "print",
         sub: "#",
         hidden: () => isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printEven(range.value);
 
-          eventEmitter.emit("success:show", "打印完成");
+          eventEmitter.emit("success:show", "打印偶数页完成");
         }),
       },
       {
-        label: "打印奇数页",
+        label: '打印 "奇数页"',
         icon: "print",
         sub: "#",
         hidden: () => isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printOdd(range.value);
 
-          eventEmitter.emit("success:show", "打印完成");
+          eventEmitter.emit("success:show", "打印奇数页完成");
         }),
       },
       {
-        label: "打印单页",
+        label: '打印 "单页"',
         icon: "print",
         sub: "#",
         hidden: () => !isSimplex(range.value),
         onSelect: usePrint(async () => {
           await printOdd(range.value);
 
-          eventEmitter.emit("success:show", "打印完成");
+          eventEmitter.emit("success:show", "打印单页完成");
         }),
       },
     ],

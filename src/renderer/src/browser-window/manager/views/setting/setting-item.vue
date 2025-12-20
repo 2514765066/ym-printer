@@ -1,6 +1,6 @@
 <template>
   <section
-    class="h-16 p-2 pr-3 flex items-center gap-2 rounded-md bg-list border border-border"
+    class="h-16 px-2 pr-3 flex items-center gap-2 rounded-md bg-list border border-border"
   >
     <div class="w-10 flex-center aspect-square">
       <Icon :icon="icon" size="26" color="rgba(255,255,255,0.6)" />

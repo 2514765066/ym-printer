@@ -7,9 +7,10 @@
     :hide-after="100"
     popper-class="menu"
     :disabled="disabled"
+    v-model:visible="visible"
   >
     <template #content>
-      <Menu v-bind="$props" />
+      <Menu v-bind="$props" @close="handleClose" />
     </template>
 
     <slot></slot>
@@ -34,6 +35,12 @@ withDefaults(
     trigger: "click",
   }
 );
+
+const visible = ref(false);
+
+const handleClose = () => {
+  visible.value = false;
+};
 </script>
 
 <style lang="scss">

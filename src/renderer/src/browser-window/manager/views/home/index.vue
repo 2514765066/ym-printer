@@ -18,9 +18,9 @@
 import ResizeHandle from "@manager/components/resize-handle.vue";
 import FileList from "./file-list/index.vue";
 import QueueList from "./queue-list/index.vue";
-import useStore from "@manager/hooks/useStore";
+import useStoreRef from "@/hooks/useStoreRef";
 
-const fileListWidth = useStore("file-list-width", 280);
+const fileListWidth = useStoreRef(280, "file-list-width");
 
 const containerRef = useTemplateRef("containerRef");
 </script>

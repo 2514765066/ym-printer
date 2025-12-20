@@ -1,0 +1,15 @@
+export default {
+  Printing: "打印中",
+  Paused: "已暂停",
+  Spooling: "正在发送到打印机",
+  Deleting: "正在删除",
+  Error: "错误",
+  Offline: "脱机",
+  PaperOut: "缺纸",
+  Printed: "已打印",
+  Retained: "已保留",
+  Restarted: "已重新启动",
+  UserIntervention: "需要用户干预",
+  Blocked: "被阻止",
+  Completed: "已完成",
+};

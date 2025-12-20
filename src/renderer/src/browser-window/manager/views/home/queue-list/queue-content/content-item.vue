@@ -1,6 +1,6 @@
 <template>
-  <li
-    class="p-2 flex items-center gap-2 rounded-md"
+  <section
+    class="content-item p-2 flex items-center gap-2 rounded-md"
     :class="{ active }"
     @click="onSingleClick"
     @dblclick="onDoubleClick"
@@ -25,7 +25,7 @@
     </div>
 
     <span class="ml-auto text-sub text-sm">{{ price }} 元</span>
-  </li>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -62,7 +62,7 @@ const handleContextMenu = (e: MouseEvent) => {
 </script>
 
 <style scoped lang="scss">
-li {
+.content-item {
   transition: background-color 0.1s;
 
   &:not(.active):hover {

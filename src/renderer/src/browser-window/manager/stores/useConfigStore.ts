@@ -1,3 +1,4 @@
+import useStoreRef from "@/hooks/useStoreRef";
 import { appName } from "@/services/info";
 
 //创建配置
@@ -21,19 +22,8 @@ const createConfig = () => {
   };
 };
 
-type Config = ReturnType<typeof createConfig>;
-
-//初始化配置
-const initConfig = () => {
-  try {
-    return JSON.parse(localStorage.getItem("settings") ?? "");
-  } catch {
-    return createConfig();
-  }
-};
-
 export const useConfigStore = defineStore("manager-config", () => {
-  const config = ref<Config>(initConfig());
+  const config = useStoreRef(createConfig(), "settings");
 
   //切换自动更新
   const toggleAutoUpdate = () => {
@@ -44,17 +34,6 @@ export const useConfigStore = defineStore("manager-config", () => {
   const resetConfig = () => {
     config.value = createConfig();
   };
-
-  //自动保存配置
-  watch(
-    config,
-    val => {
-      localStorage.setItem("settings", JSON.stringify(val));
-    },
-    {
-      deep: true,
-    }
-  );
 
   return {
     config,

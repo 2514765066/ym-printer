@@ -1,10 +1,16 @@
 import { ipcMain } from "./ipcMain";
 import { join } from "path";
-import { cachePath, printerPath, update, updatePath } from "@/service/path";
+import {
+  cachePath,
+  printerPath,
+  testPath,
+  update,
+  updatePath,
+} from "@/service/path";
 import { copyFile, mkdir, readdir, stat, rm, readFile } from "fs/promises";
 import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
-import { FileInfo } from "@type";
+import { FileInfo, PrinterTask } from "@type";
 import { BrowserWindow } from "electron";
 import { createPrint } from "../bw/print";
 import { browserWindows } from "@/bw";
@@ -12,28 +18,26 @@ import { getFileInfo } from "@/utils/file";
 import { exec, execFile } from "child_process";
 import { checkUpdate, downloadUpdate, installUpdate } from "ym-publish";
 import { getMd5 } from "@/utils/md5";
+import { formatPrinterTask } from "@/utils/format";
 
 //获取打印机信息
 ipcMain.handle("getPrinters", () => {
-  const { promise, resolve, reject } = Promise.withResolvers<string[]>();
+  const { promise, resolve } = Promise.withResolvers<string[]>();
 
-  exec(
-    'powershell "Get-Printer | Select -ExpandProperty Name"',
-    (err, stdout) => {
-      if (err) {
-        reject(err);
-        return;
-      }
+  const cmd = `powershell -NoProfile "Get-Printer | Select -ExpandProperty Name | ConvertTo-Json -Compress"`;
 
-      const printers = stdout
-        .split("\n")
-        .map(x => x.trim())
-        .filter(Boolean)
-        .reverse();
-
-      resolve(printers);
+  exec(cmd, (err, stdout) => {
+    if (err) {
+      resolve([]);
+      return;
     }
-  );
+
+    const rawPrinters = JSON.parse(stdout);
+
+    const printers = Array.isArray(rawPrinters) ? rawPrinters : [rawPrinters];
+
+    resolve(printers);
+  });
 
   return promise;
 });
@@ -121,7 +125,6 @@ ipcMain.handle("print", async (_, config) => {
 
   const path = join(cachePath, `${md5}.pdf`);
 
-  console.time("print");
   execFile(
     printerPath,
     [
@@ -140,9 +143,24 @@ ipcMain.handle("print", async (_, config) => {
       }
 
       resolve(true);
-      console.timeEnd();
     }
   );
+
+  return promise;
+});
+
+//打印测试页面
+ipcMain.handle("printTest", (_, printer) => {
+  const { promise, resolve, reject } = Promise.withResolvers<boolean>();
+
+  execFile(printerPath, [`--file=${testPath}`, `--printer=${printer}`], e => {
+    if (e && e.code != 3221225477) {
+      reject(false);
+      return;
+    }
+
+    resolve(true);
+  });
 
   return promise;
 });
@@ -225,4 +243,58 @@ ipcMain.handle("close", e => {
   const win = BrowserWindow.fromWebContents(e.sender);
 
   win?.close();
+});
+
+//获取打印机状态
+ipcMain.handle("getPrinterTask", (_, printer) => {
+  const { promise, resolve } = Promise.withResolvers<PrinterTask[]>();
+
+  const cmd = `powershell -NoProfile "Get-PrintJob -PrinterName '${printer}' | Select-Object ID, DocumentName, @{Name='JobStatus';Expression={$_.JobStatus.ToString()}} | ConvertTo-Json -Compress"`;
+
+  exec(cmd, (err, stdout) => {
+    if (err) {
+      console.error(err);
+      return resolve([]);
+    }
+
+    try {
+      //原始任务
+      const rawTask = JSON.parse(stdout);
+
+      const tasks = Array.isArray(rawTask) ? rawTask : [rawTask];
+
+      //格式化任务
+      const res = tasks.map(item => {
+        return formatPrinterTask(item);
+      });
+
+      resolve(res);
+    } catch {
+      return resolve([]);
+    }
+  });
+
+  return promise;
+});
+
+//删除打印机任务
+ipcMain.handle("removePrinterTask", (_, printer: string, id?: number) => {
+  const { promise, resolve } = Promise.withResolvers<boolean>();
+
+  let cmd = `powershell -NoProfile "Remove-PrintJob -PrinterName '${printer}' -ID ${id}"`;
+
+  if (id === undefined) {
+    cmd = `powershell -NoProfile "Get-PrintJob -PrinterName '${printer}' | Remove-PrintJob"`;
+  }
+
+  exec(cmd, err => {
+    if (err) {
+      console.error(err);
+      return resolve(false);
+    }
+
+    resolve(true);
+  });
+
+  return promise;
 });

@@ -7,6 +7,9 @@ export const userDataPath = app.getPath("userData");
 //资源文件夹
 export const resources = join(__dirname, "../../resources");
 
+//测试页路径
+export const testPath = join(resources, "test.pdf");
+
 //缓存路径
 export const cachePath = join(resources, "cache");
 

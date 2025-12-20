@@ -5,10 +5,15 @@
 <script setup lang="ts">
 import { ElInput } from "element-plus";
 
-defineProps<{
-  placeholder?: string;
-  bg?: string;
-}>();
+withDefaults(
+  defineProps<{
+    placeholder?: string;
+    bg?: string;
+  }>(),
+  {
+    bg: "#303030",
+  }
+);
 
 const model = defineModel<string>();
 </script>
@@ -17,7 +22,7 @@ const model = defineModel<string>();
 .text {
   border-radius: 6px !important;
 
-  background-color: v-bind("bg || '#303030'") !important;
+  background-color: v-bind("bg") !important;
 
   &:deep(.el-input__wrapper) {
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
