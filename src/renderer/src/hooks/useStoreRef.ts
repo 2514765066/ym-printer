@@ -1,37 +1,31 @@
 import debounce from "@/utils/debounce";
 
 export default <T>(defaultValue: T, key: string) => {
-  const stored = localStorage.getItem(key);
+  let value = defaultValue;
 
   const saveData = debounce(value => {
     localStorage.setItem(key, JSON.stringify(value));
   }, 300);
 
-  return customRef<T>((track, trigger) => {
-    let value: T;
+  const stored = localStorage.getItem(key);
 
-    if (stored !== null) {
-      try {
-        value = JSON.parse(stored);
-      } catch {
-        value = defaultValue;
+  if (stored !== null) {
+    try {
+      const json = JSON.parse(stored);
+
+      if (typeof defaultValue == "object") {
+        value = Object.assign(defaultValue as object, json);
+      } else {
+        value = json;
       }
-    } else {
+    } catch {
       value = defaultValue;
     }
+  }
 
-    return {
-      get() {
-        track();
-        return value;
-      },
-      set(newValue: T) {
-        value = newValue;
+  const data = ref(value);
 
-        saveData(newValue);
+  watch(data, saveData, { deep: true });
 
-        trigger();
-      },
-    };
-  });
+  return data;
 };

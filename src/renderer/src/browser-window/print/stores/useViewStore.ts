@@ -1,6 +1,8 @@
+import useStoreRef from "@/hooks/useStoreRef";
+
 export const useViewStore = defineStore("print-view", () => {
   //暗色主题
-  const dark = ref(false);
+  const dark = useStoreRef(false, "dark");
 
   //页数
   const pageCount = ref(0);
@@ -9,7 +11,7 @@ export const useViewStore = defineStore("print-view", () => {
   const dpi = 2;
 
   //缩放倍率
-  const scale = ref(100 / dpi);
+  const scale = useStoreRef(100 / dpi, "scale");
 
   //增大倍率
   const addScale = () => {
@@ -25,30 +27,6 @@ export const useViewStore = defineStore("print-view", () => {
   const toggleTheme = () => {
     dark.value = !dark.value;
   };
-
-  //初始化
-  const init = () => {
-    const scaleResult = localStorage.getItem("scale");
-    const darkResult = localStorage.getItem("dark");
-
-    if (scaleResult) {
-      scale.value = Number(scaleResult);
-    }
-
-    if (darkResult) {
-      dark.value = Boolean(darkResult);
-    }
-
-    watch(scale, value => {
-      localStorage.setItem("scale", String(value));
-    });
-
-    watch(dark, value => {
-      localStorage.setItem("dark", String(value));
-    });
-  };
-
-  init();
 
   return {
     dark,

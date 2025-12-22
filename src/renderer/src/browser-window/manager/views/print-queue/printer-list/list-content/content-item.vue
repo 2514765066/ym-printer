@@ -20,7 +20,7 @@
 import { Icon } from "@/components/ui/icon";
 import Tooltip from "@/components/ui/tooltip.vue";
 
-const props = defineProps<{
+defineProps<{
   label: string;
   active?: boolean;
 }>();

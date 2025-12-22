@@ -21,8 +21,10 @@ import time from "@iconify/icons-fluent/clock-20-regular";
 import bug from "@iconify/icons-fluent/bug-20-regular";
 import reload from "@iconify/icons-fluent/arrow-clockwise-20-regular";
 import queues from "@iconify/icons-fluent/document-queue-multiple-20-regular";
+import reset from "@iconify/icons-fluent/arrow-reset-20-regular";
 
 export const iconPacks = {
+  reset,
   queues,
   reload,
   bug,

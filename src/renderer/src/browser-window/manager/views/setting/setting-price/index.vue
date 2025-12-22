@@ -1,8 +1,8 @@
 <template>
   <Group label="价格">
-    <PriceSimplex v-model="config.simplexPrice" />
+    <PriceSimplex />
 
-    <PriceDuplex v-model="config.duplexPrice" />
+    <PriceDuplex />
   </Group>
 </template>
 
@@ -10,9 +10,6 @@
 import Group from "../setting-group.vue";
 import PriceSimplex from "./price-simplex.vue";
 import PriceDuplex from "./price-duplex.vue";
-import { useConfigStore } from "@manager/stores/useConfigStore";
-
-const { config } = storeToRefs(useConfigStore());
 </script>
 
 <style scoped lang="scss"></style>

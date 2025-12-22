@@ -5,6 +5,8 @@
     <Repo />
 
     <Cache />
+
+    <Reset />
   </Group>
 </template>
 
@@ -13,6 +15,7 @@ import Group from "../setting-group.vue";
 import Cache from "./general-cache.vue";
 import Repo from "./general-repo.vue";
 import AutoUpdate from "./general-autoUpdate.vue";
+import Reset from "./general-reset.vue";
 </script>
 
 <style scoped lang="scss"></style>

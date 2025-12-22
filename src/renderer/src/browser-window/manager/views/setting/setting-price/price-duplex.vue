@@ -6,7 +6,7 @@
       :max="999"
       :precision="2"
       suffix="元"
-      v-model="model"
+      v-model="config.duplexPrice"
     />
   </Item>
 </template>
@@ -14,10 +14,9 @@
 <script setup lang="ts">
 import Number from "@/components/ui/number.vue";
 import Item from "@manager/views/setting/setting-item.vue";
+import { useConfigStore } from "@manager/stores/useConfigStore";
 
-const model = defineModel({
-  required: true,
-});
+const { config } = storeToRefs(useConfigStore());
 </script>
 
 <style scoped lang="scss"></style>
