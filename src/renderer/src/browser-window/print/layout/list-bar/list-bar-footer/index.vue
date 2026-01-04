@@ -40,14 +40,13 @@ import eventEmitter from "@/hooks/eventEmitter";
 import { useConfigStore } from "@print/stores/useConfigStore";
 import { useRange } from "@print/hooks/useRange";
 import { validate } from "../index";
-import { printFinishKey } from "@print/keys";
 import { Icon } from "@/components/ui/icon";
+import { usePrintStore } from "@/browser-window/print/stores/usePrintStore";
 
 const { config } = storeToRefs(useConfigStore());
 const { printEven, printOdd, isSimplex } = useConfigStore();
+const { printFinish } = usePrintStore();
 const { range, parser } = useRange();
-
-const printFinish = inject(printFinishKey)!;
 
 //是否在打印
 const printing = ref(false);

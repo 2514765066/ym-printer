@@ -1,12 +1,12 @@
 import { RouteRecordRaw } from "vue-router";
-import Root from "@manager/root.vue";
+import Layout from "@manager/layout/index.vue";
 import Home from "@manager/views/home/index.vue";
 import Setting from "@manager/views/setting/index.vue";
 import PrintQueue from "@manager/views/print-queue/index.vue";
 
 const route: RouteRecordRaw = {
   path: "/manager",
-  component: Root,
+  component: Layout,
   children: [
     {
       path: "",

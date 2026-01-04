@@ -1,9 +1,9 @@
 import { RouteRecordRaw } from "vue-router";
-import Root from "@print/root.vue";
+import Layout from "@print/layout/index.vue";
 
 const route: RouteRecordRaw = {
   path: "/print",
-  component: Root,
+  component: Layout,
 };
 
 export default route;
