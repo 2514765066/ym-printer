@@ -70,7 +70,7 @@ const price = computed(() => {
     res += getPrice(item.range, item.config.count) * 100;
   }
 
-  return res / 100;
+  return (res / 100).toFixed(2);
 });
 
 const handlePreview = (data: QueueItem) => {
