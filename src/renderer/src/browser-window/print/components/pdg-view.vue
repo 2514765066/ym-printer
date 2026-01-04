@@ -92,10 +92,11 @@ main {
 
     transform: scale(calc(v-bind("scale") * 1%));
     transform-origin: top left;
+    transition: filter 0.1s;
   }
 }
 
 .dark {
-  filter: invert(0.8);
+  filter: invert(0.8) hue-rotate(180deg);
 }
 </style>
