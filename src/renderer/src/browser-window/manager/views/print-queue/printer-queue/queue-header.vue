@@ -8,7 +8,7 @@
 
     <Tooltip label="刷新打印队列">
       <Button bg="#262626" square @click="reloadPrinterTasks">
-        <Icon icon="reload" size="18" />
+        <Icon icon="reload" width="18" />
       </Button>
     </Tooltip>
   </section>
@@ -18,7 +18,7 @@
 import Button from "@/components/ui/button.vue";
 import eventEmitter from "@/hooks/eventEmitter";
 import useLoading from "@/hooks/useLoading";
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 import Tooltip from "@/components/ui/tooltip.vue";
 import { usePrinterTask } from "@manager/stores/usePrinterTask";
 import throttle from "@/utils/throttle";

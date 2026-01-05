@@ -1,5 +1,6 @@
-import { PrintConfig } from "@type";
-import { useViewStore } from "../stores/useViewStore";
+import { useViewStore } from "@print/stores/useViewStore";
+import { getValue } from "@/utils/value";
+import { useConfigStore } from "@print/stores/useConfigStore";
 
 //解析单独的范围
 const parseRange = (range: string, max: number) => {
@@ -59,24 +60,9 @@ const mixMode = (parts: number[][]) => {
 
     result.push(...part);
 
-    //单数字
-    if (part.length == 1) {
+    //当前范围是奇数
+    if (isOdd(part.length)) {
       result.push(0);
-      continue;
-    }
-
-    const nextPart = parts[i + 1];
-
-    //是最后一个元素并且总范围是奇数
-    if (!nextPart && isOdd(result.length)) {
-      result.push(0);
-      continue;
-    }
-
-    //不是最后一个元素并且是当前范围是奇数
-    if (nextPart && isOdd(part.length)) {
-      result.push(0);
-      continue;
     }
   }
 
@@ -84,11 +70,9 @@ const mixMode = (parts: number[][]) => {
 };
 
 //解析范围
-export const useRange = () => {
+export const useRange = (rangeStr: string | (() => string)) => {
   const { pageCount } = storeToRefs(useViewStore());
-
-  //范围
-  const range = ref<number[]>([]);
+  const { config } = storeToRefs(useConfigStore());
 
   //模式
   const modeMap = {
@@ -97,19 +81,13 @@ export const useRange = () => {
     mix: mixMode,
   };
 
-  //解析范围
-  const parser = (rangeStr: string, mode: PrintConfig["mode"]) => {
-    const parts = rangeStr
+  return () => {
+    const parts = getValue(rangeStr)
       .split(/[,，]/)
       .map(item => parseRange(item, pageCount.value));
 
-    const fn = modeMap[mode];
+    const fn = modeMap[config.value.mode];
 
-    range.value = fn(parts);
-  };
-
-  return {
-    range,
-    parser,
+    return fn(parts);
   };
 };

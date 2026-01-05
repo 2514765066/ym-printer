@@ -1,5 +1,3 @@
-import { IconName } from "../icon";
-
 type GetOption<T> = T | ((data?: any) => T);
 
 export type MenuProps = {
@@ -10,14 +8,14 @@ export type MenuProps = {
 
 export type MenuGroup = {
   label?: string;
-  hidden?: boolean;
+  hidden?: GetOption<boolean>;
   children: GetOption<MenuItem[]>;
 };
 
 export type MenuItem = {
   label?: string;
   value?: string | number | symbol;
-  icon?: IconName;
+  icon?: string;
   sub?: GetOption<string>;
   hoverColor?: string;
   active?: GetOption<boolean>;

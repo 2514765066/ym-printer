@@ -9,7 +9,7 @@
     @click="handleClick"
     v-if="!hidden"
   >
-    <Icon :icon="data.icon" size="18" v-if="data.icon" />
+    <Icon :icon="data.icon" width="18" v-if="data.icon" />
 
     <span class="text-sm text-main ellipsis">
       {{ data.label }}
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from "@/components/ui/icon/index.vue";
+import { Icon } from "@iconify/vue";
 import { MenuItem } from "../../type";
 import { getValue } from "@/utils/value";
 

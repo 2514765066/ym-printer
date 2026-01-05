@@ -10,7 +10,7 @@
   >
     <template #decrease-icon>
       <Button :bg="bg" square>
-        <Icon icon="subtract" size="18" />
+        <Icon icon="subtract" width="18" />
       </Button>
     </template>
 
@@ -20,14 +20,14 @@
 
     <template #increase-icon>
       <Button :bg="bg" square>
-        <Icon icon="add" size="18" />
+        <Icon icon="add" width="18" />
       </Button>
     </template>
   </ElInputNumber>
 </template>
 
 <script setup lang="ts">
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 import { ElInputNumber } from "element-plus";
 import Button from "./button.vue";
 

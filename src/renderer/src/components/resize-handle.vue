@@ -1,10 +1,12 @@
 <template>
-  <section
-    class="w-1 hover:bg-primary hover:cursor-ew-resize"
-    :class="{ active: isActive }"
-    @mousedown="handleMousedown"
-    @mouseup="handleMouseup"
-  ></section>
+  <section class="w-0 relative flex-center">
+    <div
+      class="w-1 h-full absolute z-10 hover:bg-primary hover:cursor-ew-resize"
+      :class="{ active: isActive }"
+      @mousedown="handleMousedown"
+      @mouseup="handleMouseup"
+    ></div>
+  </section>
 </template>
 
 <script setup lang="ts">

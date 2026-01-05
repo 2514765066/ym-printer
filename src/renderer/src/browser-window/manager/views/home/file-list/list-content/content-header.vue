@@ -6,7 +6,7 @@
       <button
         class="ml-auto h-full flex-center rounded-md aspect-square hover:bg-hover"
       >
-        <Icon icon="sort" size="18" />
+        <Icon icon="sort" width="18" />
       </button>
     </MenuTooltip>
   </section>
@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { useFileStore } from "@manager/stores/useFileStore";
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 import { MenuGroup, MenuTooltip } from "@/components/ui/menu";
 
 const { files } = storeToRefs(useFileStore());

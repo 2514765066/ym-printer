@@ -50,6 +50,10 @@ html {
   @apply whitespace-nowrap overflow-hidden text-ellipsis;
 }
 
+svg.iconify {
+  color: var(--main-color);
+}
+
 .p-unset {
   padding: unset !important;
 }

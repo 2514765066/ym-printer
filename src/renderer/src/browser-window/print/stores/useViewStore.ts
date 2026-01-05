@@ -1,8 +1,8 @@
-import useStoreRef from "@/hooks/useStoreRef";
+import { useStorage } from "@vueuse/core";
 
 export const useViewStore = defineStore("print-view", () => {
   //暗色主题
-  const dark = useStoreRef(false, "dark");
+  const dark = useStorage("dark", false);
 
   //页数
   const pageCount = ref(0);
@@ -11,7 +11,7 @@ export const useViewStore = defineStore("print-view", () => {
   const dpi = 2;
 
   //缩放倍率
-  const scale = useStoreRef(100 / dpi, "scale");
+  const scale = useStorage("scale", 100 / dpi);
 
   //增大倍率
   const addScale = () => {

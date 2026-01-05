@@ -1,5 +1,5 @@
-import useStoreRef from "@/hooks/useStoreRef";
 import { appName } from "@/services/info";
+import { useStorage } from "@vueuse/core";
 
 //创建配置
 const createConfig = () => {
@@ -23,7 +23,9 @@ const createConfig = () => {
 };
 
 export const useConfigStore = defineStore("manager-config", () => {
-  const config = useStoreRef(createConfig(), "settings");
+  const config = useStorage("settings", createConfig(), localStorage, {
+    mergeDefaults: true,
+  });
 
   //切换自动更新
   const toggleAutoUpdate = () => {

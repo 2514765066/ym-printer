@@ -10,7 +10,7 @@
         {{ printing ? "正在上传" : "开始打印" }}
 
         <template #loading>
-          <Icon icon="loading" size="14" class="rotate mr-2" />
+          <Icon icon="loading" width="14" class="rotate mr-2" />
         </template>
       </ElButton>
 
@@ -20,10 +20,9 @@
           type="primary"
           :icon="More"
           :loading="printing"
-          @click="parserRange"
         >
           <template #loading>
-            <Icon icon="loading" size="14" class="rotate shrink-0" />
+            <Icon icon="loading" width="14" class="rotate shrink-0" />
           </template>
         </ElButton>
       </MenuTooltip>
@@ -32,77 +31,25 @@
 </template>
 
 <script setup lang="ts">
-import { ElButton, ElButtonGroup } from "element-plus";
-import { More } from "@element-plus/icons-vue";
-import { MenuGroup, MenuTooltip } from "@/components/ui/menu";
-import { printDialog } from "@/components/notification";
 import eventEmitter from "@/hooks/eventEmitter";
-import { useConfigStore } from "@print/stores/useConfigStore";
 import { useRange } from "@print/hooks/useRange";
-import { validate } from "../index";
-import { Icon } from "@/components/ui/icon";
-import { usePrintStore } from "@/browser-window/print/stores/usePrintStore";
+import { printing, useValidate } from "../index";
+import { MenuGroup, MenuTooltip } from "@/components/ui/menu";
+import { usePrintStore } from "@print/stores/usePrintStore";
+import { useConfigStore } from "@print/stores/useConfigStore";
+import { ElButtonGroup, ElButton } from "element-plus";
+import { More } from "@element-plus/icons-vue";
+import { Icon } from "@iconify/vue";
 
 const { config } = storeToRefs(useConfigStore());
-const { printEven, printOdd, isSimplex } = useConfigStore();
-const { printFinish } = usePrintStore();
-const { range, parser } = useRange();
-
-//是否在打印
-const printing = ref(false);
-
-//解析范围
-const parserRange = () => {
-  parser(config.value.range || "-", config.value.mode);
-};
-
-const usePrint = (cb: () => void | Promise<void>) => {
-  return async () => {
-    const valid = await validate();
-
-    if (!valid) {
-      return;
-    }
-
-    printing.value = true;
-
-    try {
-      await cb();
-    } catch {
-      eventEmitter.emit("error:show", "打印失败");
-    } finally {
-      printing.value = false;
-    }
-  };
-};
+const { printFinish, printAuto, printEven, printOdd } = usePrintStore();
+const parserRange = useRange(() => config.value.range || "-");
 
 //开始打印
-const handlePrint = usePrint(async () => {
-  parserRange();
+const handlePrint = useValidate(async () => {
+  const range = parserRange();
 
-  //全是单页
-  if (isSimplex(range.value)) {
-    await printOdd(range.value);
-
-    printFinish(range.value);
-
-    eventEmitter.emit("success:show", "打印完成");
-    return;
-  }
-
-  //需要双打
-  await printEven(range.value);
-
-  //判断是否要打奇数页
-  const result = await printDialog();
-
-  if (!result) {
-    return;
-  }
-
-  await printOdd(range.value);
-
-  printFinish(range.value);
+  await printAuto(range);
 
   eventEmitter.emit("success:show", "打印完成");
 });
@@ -114,9 +61,11 @@ const menu: MenuGroup[] = [
     children: [
       {
         label: "标记为打印完成",
-        icon: "queue",
-        onSelect: usePrint(() => {
-          printFinish(range.value);
+        icon: "check",
+        onSelect: useValidate(() => {
+          const range = parserRange();
+
+          printFinish(range);
 
           eventEmitter.emit("success:show", "已标记为完成");
         }),
@@ -124,14 +73,16 @@ const menu: MenuGroup[] = [
     ],
   },
   {
+    hidden: () => config.value.mode == "simplex",
     children: [
       {
         label: '打印 "偶数页"',
         icon: "print",
         sub: "#",
-        hidden: () => isSimplex(range.value),
-        onSelect: usePrint(async () => {
-          await printEven(range.value);
+        onSelect: useValidate(async () => {
+          const range = parserRange();
+
+          await printEven(range);
 
           eventEmitter.emit("success:show", "打印偶数页完成");
         }),
@@ -140,22 +91,12 @@ const menu: MenuGroup[] = [
         label: '打印 "奇数页"',
         icon: "print",
         sub: "#",
-        hidden: () => isSimplex(range.value),
-        onSelect: usePrint(async () => {
-          await printOdd(range.value);
+        onSelect: useValidate(async () => {
+          const range = parserRange();
+
+          await printOdd(range);
 
           eventEmitter.emit("success:show", "打印奇数页完成");
-        }),
-      },
-      {
-        label: '打印 "单页"',
-        icon: "print",
-        sub: "#",
-        hidden: () => !isSimplex(range.value),
-        onSelect: usePrint(async () => {
-          await printOdd(range.value);
-
-          eventEmitter.emit("success:show", "打印单页完成");
         }),
       },
     ],

@@ -1,11 +1,11 @@
 <template>
   <section class="wh-full flex-center">
-    <Icon icon="loading" class="rotate" :size="size" :color="color" />
+    <Icon icon="loading" class="rotate" :width="size" :color="color" />
   </section>
 </template>
 
 <script setup lang="ts">
-import Icon from "@/components/ui/icon/index.vue";
+import { Icon } from "@iconify/vue";
 
 withDefaults(
   defineProps<{

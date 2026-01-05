@@ -12,12 +12,17 @@
         <Icon
           icon="loading"
           class="rotate"
-          size="32"
+          width="32"
           color="rgba(255,255,255,0.6)"
           v-if="loading"
         />
 
-        <Icon icon="check" size="24" color="#0CBC4D" v-else-if="printed" />
+        <Icon
+          icon="checkFilled"
+          width="24"
+          color="#0CBC4D"
+          v-else-if="printed"
+        />
 
         <FileIcon class="h-full" :ext="data.ext" v-else />
       </div>
@@ -37,7 +42,7 @@
 
 <script setup lang="ts">
 import FileIcon from "@/components/file-icon.vue";
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 import Tooltip from "@/components/ui/tooltip.vue";
 import { FileInfo } from "@type";
 

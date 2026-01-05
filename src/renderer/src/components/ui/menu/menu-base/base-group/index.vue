@@ -1,5 +1,5 @@
 <template>
-  <section class="menu-group p-1 flex flex-col" v-if="!data.hidden">
+  <section class="menu-group p-1 flex flex-col" v-if="!hidden">
     <div class="h-8 px-3 flex items-center" v-if="data.label">
       <span class="text-xs text-sub">{{ data.label }}</span>
     </div>
@@ -13,7 +13,7 @@ import Item from "./group-item.vue";
 import { MenuGroup } from "../../type";
 import { getValue } from "@/utils/value";
 
-const props = defineProps<{
+const { data } = defineProps<{
   data: MenuGroup;
 }>();
 
@@ -21,7 +21,11 @@ const props = defineProps<{
 const customData = inject<Ref<any>>("customData")!;
 
 const children = computed(() => {
-  return getValue(props.data.children, customData.value);
+  return getValue(data.children, customData.value);
+});
+
+const hidden = computed(() => {
+  return getValue(data.hidden, customData.value);
 });
 </script>
 

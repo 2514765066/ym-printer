@@ -1,5 +1,5 @@
 import { PrinterTask } from "@type";
-import useStoreRef from "@/hooks/useStoreRef";
+import { useStorage } from "@vueuse/core";
 
 type Status = "init" | "loading" | "finish";
 
@@ -10,7 +10,7 @@ export const usePrinterTask = defineStore("printerTask", () => {
   const printers = ref<string[]>([]);
 
   //选中的打印机
-  const selectedPrinter = useStoreRef("", "printer");
+  const selectedPrinter = useStorage("printer", "");
 
   //当前打印机打印机任务
   const printerTasks = ref<PrinterTask[]>([]);

@@ -3,7 +3,7 @@
     class="p-2 flex items-center gap-2 rounded-md hover:bg-hover transition-colors"
     @contextmenu="handleContextmenu"
   >
-    <Icon icon="queue" size="24" />
+    <Icon icon="queue" width="24" />
 
     <span class="text-main text-sm ellipsis">
       {{ data.name }}
@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { PrinterTask } from "@type";
 import statusMap from "./status-map";
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 
 const props = defineProps<{
   data: PrinterTask;

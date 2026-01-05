@@ -5,19 +5,18 @@
     :class="`
     ${type} 
     ${square ? 'aspect-square' : 'px-4'} 
-    ${loading && 'loading'}
     `"
-    :disabled="loading"
+    :disabled="disabled || loading"
     @click="emits('click')"
   >
-    <icon icon="loading" size="16" class="rotate" v-if="loading" />
+    <icon icon="loading" width="16" class="rotate" v-if="loading" />
 
     <slot></slot>
   </button>
 </template>
 
 <script setup lang="ts">
-import { Icon } from "./icon";
+import { Icon } from "@iconify/vue";
 
 withDefaults(
   defineProps<{
@@ -25,6 +24,7 @@ withDefaults(
     square?: boolean;
     bg?: string;
     loading?: boolean;
+    disabled?: boolean;
   }>(),
   {
     type: "default",
@@ -40,6 +40,11 @@ const emits = defineEmits<{
 <style scoped lang="scss">
 button {
   transition: background-color 0.1s;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 
 .primary {
@@ -60,10 +65,5 @@ button {
   &:hover {
     background-color: #383838;
   }
-}
-
-.loading {
-  cursor: not-allowed;
-  opacity: 0.5;
 }
 </style>

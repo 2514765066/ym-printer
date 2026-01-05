@@ -12,7 +12,7 @@
         class="w-8 flex-center aspect-square rounded-md"
         @click="subScale"
       >
-        <Icon icon="subtract" size="18" />
+        <Icon icon="subtract" width="18" />
       </button>
 
       <span class="text-main text-sm">{{ scale * dpi }}%</span>
@@ -21,7 +21,7 @@
         class="w-8 flex-center aspect-square rounded-md"
         @click="addScale"
       >
-        <Icon icon="add" size="18" />
+        <Icon icon="add" width="18" />
       </button>
     </div>
 
@@ -30,9 +30,9 @@
         class="w-8 flex-center aspect-square rounded-md"
         @click="toggleTheme"
       >
-        <Icon icon="moon" size="20" v-if="dark" />
+        <Icon icon="moon" width="20" v-if="dark" />
 
-        <Icon icon="sun" size="20" v-else />
+        <Icon icon="sun" width="20" v-else />
       </button>
     </div>
   </section>
@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { useViewStore } from "@print/stores/useViewStore";
-import { Icon } from "@/components/ui/icon";
+import { Icon } from "@iconify/vue";
 
 const { scale, pageCount, dark } = storeToRefs(useViewStore());
 const { dpi, subScale, addScale, toggleTheme } = useViewStore();
