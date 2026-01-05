@@ -51,7 +51,7 @@ const handleMousedown = () => {
   }
 
   isActive.value = true;
-  document.body.classList.add("is-resizing");
+  document.body.classList.add("cursor-ew-resize");
 
   props.containerRef.addEventListener("mousemove", handleMousemove);
   props.containerRef.addEventListener("mouseup", handleMouseup);
@@ -64,7 +64,7 @@ const handleMouseup = () => {
   }
 
   isActive.value = false;
-  document.body.classList.remove("is-resizing");
+  document.body.classList.remove("cursor-ew-resize");
 
   props.containerRef.removeEventListener("mousemove", handleMousemove);
   props.containerRef.removeEventListener("mouseup", handleMouseup);

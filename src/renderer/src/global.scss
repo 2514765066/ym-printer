@@ -62,10 +62,6 @@ svg.iconify {
   margin: unset !important;
 }
 
-.is-resizing {
-  cursor: ew-resize;
-}
-
 .rotate {
   animation: rotate 1s infinite linear;
 }
@@ -142,13 +138,4 @@ svg.iconify {
 
 .el-overlay {
   background-color: rgba(#000, 0.3) !important;
-}
-
-.el-radio {
-  .el-radio__inner {
-    &::after {
-      width: 7px;
-      height: 7px;
-    }
-  }
 }
