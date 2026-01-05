@@ -25,7 +25,7 @@ export const usePrinterTask = defineStore("printerTask", () => {
       selectedPrinter.value
     );
 
-    console.log(printerTasks.value);
+
   };
 
   //设置打印机

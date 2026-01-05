@@ -18,7 +18,6 @@ import about from "@iconify/icons-fluent/error-circle-20-regular";
 import update from "@iconify/icons-fluent/arrow-circle-up-20-regular";
 import globe from "@iconify/icons-fluent/globe-20-regular";
 import check from "@iconify/icons-fluent/checkmark-20-regular";
-import checkFilled from "@iconify/icons-fluent/checkmark-20-filled";
 import sort from "@iconify/icons-fluent/arrow-sort-20-regular";
 import time from "@iconify/icons-fluent/clock-20-regular";
 import bug from "@iconify/icons-fluent/bug-20-regular";
@@ -27,7 +26,6 @@ import queues from "@iconify/icons-fluent/document-queue-multiple-20-regular";
 import reset from "@iconify/icons-fluent/arrow-reset-20-regular";
 
 export const iconPacks = {
-  checkFilled,
   reset,
   queues,
   reload,

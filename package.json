@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
+    "@electron/rebuild": "^4.0.2",
     "@iconify/icons-fluent": "^1.2.38",
     "@iconify/vue": "^5.0.0",
     "@types/node": "^22.18.6",

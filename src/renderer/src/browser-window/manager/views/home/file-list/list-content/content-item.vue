@@ -12,17 +12,12 @@
         <Icon
           icon="loading"
           class="rotate"
-          width="32"
-          color="rgba(255,255,255,0.6)"
+          width="26"
+          color="rgba(255,255,255,0.5)"
           v-if="loading"
         />
 
-        <Icon
-          icon="checkFilled"
-          width="24"
-          color="#0CBC4D"
-          v-else-if="printed"
-        />
+        <Icon icon="check" width="26" color="#0CBC4D" v-else-if="printed" />
 
         <FileIcon class="h-full" :ext="data.ext" v-else />
       </div>

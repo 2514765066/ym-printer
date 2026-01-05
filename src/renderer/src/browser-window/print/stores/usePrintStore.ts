@@ -45,8 +45,6 @@ export const usePrintStore = defineStore("print-print", () => {
 
   //自动打印
   const printAuto = async (range: number[]) => {
-    console.log(range);
-
     //单页
     if (isSimplex(range)) {
       await printOdd(range);
