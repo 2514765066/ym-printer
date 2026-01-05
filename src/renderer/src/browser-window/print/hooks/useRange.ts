@@ -73,8 +73,8 @@ const mixMode = (parts: number[][]) => {
       continue;
     }
 
-    //下一位是单数字并且是当前范围是奇数
-    if (nextPart && nextPart.length == 1 && isOdd(part.length)) {
+    //不是最后一个元素并且是当前范围是奇数
+    if (nextPart && isOdd(part.length)) {
       result.push(0);
       continue;
     }
