@@ -1,5 +1,5 @@
 export default (cb: () => HTMLDivElement | undefined) => {
-  let panning = false;
+  const panning = ref(false);
   let startX = 0;
   let startY = 0;
   let startLeft = 0;
@@ -13,14 +13,11 @@ export default (cb: () => HTMLDivElement | undefined) => {
       return;
     }
 
-    panning = true;
+    panning.value = true;
     startX = e.clientX;
     startY = e.clientY;
     startLeft = containerRef.scrollLeft;
     startTop = containerRef.scrollTop;
-
-    //添加鼠标样式
-    document.body.classList.add("cursor-grabbing");
 
     //鼠标移动
     containerRef.addEventListener("mousemove", handleMousemove);
@@ -37,10 +34,7 @@ export default (cb: () => HTMLDivElement | undefined) => {
       return;
     }
 
-    panning = false;
-
-    //移除鼠标样式
-    document.body.classList.remove("cursor-grabbing");
+    panning.value = false;
 
     //移除鼠标移动
     containerRef.removeEventListener("mousemove", handleMousemove);
@@ -53,7 +47,7 @@ export default (cb: () => HTMLDivElement | undefined) => {
   const handleMousemove = (e: MouseEvent) => {
     const containerRef = cb();
 
-    if (!containerRef || !panning) {
+    if (!containerRef || !panning.value) {
       return;
     }
 
@@ -61,5 +55,5 @@ export default (cb: () => HTMLDivElement | undefined) => {
     containerRef.scrollTop = startTop - (e.clientY - startY);
   };
 
-  return { handleMousedown, handleMousemove };
+  return { panning, handleMousedown, handleMousemove };
 };

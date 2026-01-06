@@ -1,10 +1,10 @@
 <template>
-  <ElScrollbar class="content" ref="scrollbarRef">
-    <div
-      class="hover:cursor-grab"
-      @mousedown="handleMousedown"
-      @mousemove="handleMousemove"
-    >
+  <ElScrollbar
+    class="content"
+    ref="scrollbarRef"
+    :wrap-class="`${panning ? 'cursor-grabbing' : 'cursor-grab'}`"
+  >
+    <div @mousedown="handleMousedown" @mousemove="handleMousemove">
       <PdfView />
     </div>
   </ElScrollbar>
@@ -15,14 +15,14 @@ import { ElScrollbar } from "element-plus";
 import PdfView from "@print/components/pdg-view.vue";
 import { useViewStore } from "@print/stores/useViewStore";
 import { useEventListener } from "@vueuse/core";
-import useMove from "../../hooks/useMove";
+import useMove from "@print/hooks/useMove";
 
 const { addScale, subScale } = useViewStore();
 
 //组件实例
 const scrollbarRef = useTemplateRef("scrollbarRef");
 
-const { handleMousedown, handleMousemove } = useMove(
+const { panning, handleMousedown, handleMousemove } = useMove(
   () => scrollbarRef.value?.wrapRef
 );
 
