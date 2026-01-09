@@ -32,7 +32,7 @@ const model = defineModel<string>();
   }
 
   &:deep(.is-focus) {
-    border-bottom-color: var(--primary-color);
+    border-bottom-color: var(--color-primary);
   }
 }
 </style>

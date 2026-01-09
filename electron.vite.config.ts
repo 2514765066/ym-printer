@@ -4,6 +4,7 @@ import vue from "@vitejs/plugin-vue";
 import { version, name } from "./package.json";
 import AutoImport from "unplugin-auto-import/vite";
 import ElementPlus from "unplugin-element-plus/vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   main: {
@@ -45,6 +46,7 @@ export default defineConfig({
     plugins: [
       vue(),
       ElementPlus({}),
+      tailwindcss(),
       AutoImport({
         imports: ["vue", "pinia", "vue-router"],
         dts: true,

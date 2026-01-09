@@ -37,6 +37,6 @@ const handleClick = () => {
 
 <style scoped lang="scss">
 .active {
-  background-color: var(--hover-color);
+  background-color: var(--color-hover);
 }
 </style>

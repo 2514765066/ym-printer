@@ -49,15 +49,15 @@ button {
 
 .primary {
   color: #fff;
-  background-color: var(--primary-color);
+  background-color: var(--color-primary);
 
   &:hover {
-    background-color: var(--primary-dark-color);
+    background-color: var(--color-primary-dark);
   }
 }
 
 .default {
-  color: var(--main-color);
+  color: var(--color-main);
   background-color: v-bind("bg");
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1),
     0 0.5px 0 0 rgba(255, 255, 255, 0.1) inset;

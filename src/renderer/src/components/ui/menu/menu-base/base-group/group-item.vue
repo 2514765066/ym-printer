@@ -79,7 +79,7 @@ const handleClick = () => {
 
 .active {
   * {
-    color: var(--primary-color);
+    color: var(--color-primary);
   }
 }
 </style>

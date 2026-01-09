@@ -66,11 +66,11 @@ const handleContextMenu = (e: MouseEvent) => {
   transition: background-color 0.1s;
 
   &:not(.active):hover {
-    background-color: var(--hover-color);
+    background-color: var(--color-hover);
   }
 }
 
 .active {
-  background-color: var(--active-bg-color);
+  background-color: var(--color-active-bg);
 }
 </style>

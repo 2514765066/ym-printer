@@ -1,57 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-* {
-  outline: none;
-  user-select: none;
-  background-color: transparent;
-  -webkit-tap-highlight-color: transparent;
-}
-
-img {
-  object-fit: cover;
-  -webkit-user-drag: none;
-}
-
 html {
-  --primary-color: #0169cc;
-
-  --primary-dark-color: #0f589d;
-
-  --main-color: rgba(255, 255, 255, 0.8);
-
-  --bg-color: #191919;
-
-  --list-color: #202020;
-
-  --hover-color: rgba(255, 255, 255, 0.05);
-
-  --border-color: #2a2a2a;
-
-  --active-bg-color: rgba(35, 131, 226, 0.1);
-
   --el-color-primary: #0169cc !important;
 }
 
-.flex-center {
-  @apply flex justify-center items-center;
-}
-
-.wh-screen {
-  @apply w-screen h-screen;
-}
-
-.wh-full {
-  @apply w-full h-full;
-}
-
-.ellipsis {
-  @apply whitespace-nowrap overflow-hidden text-ellipsis;
-}
-
 svg.iconify {
-  color: var(--main-color);
+  color: var(--color-main);
 }
 
 .p-unset {
@@ -87,7 +39,7 @@ svg.iconify {
   padding: 1rem !important;
   --el-notification-width: 300px !important;
 
-  background-color: var(--list-color) !important;
+  background-color: var(--color-list) !important;
 
   .el-notification__group {
     margin: unset !important;
@@ -132,8 +84,8 @@ svg.iconify {
 .el-dialog {
   --el-dialog-border-radius: 10px !important;
   box-shadow: 0 1px 10px 0 rgba(#000, 0.5) !important;
-  border: 1px solid var(--border-color);
-  background-color: var(--list-color) !important;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-list) !important;
 }
 
 .el-overlay {

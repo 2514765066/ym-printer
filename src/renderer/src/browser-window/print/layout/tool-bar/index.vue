@@ -54,7 +54,7 @@ const { dpi, subScale, addScale, toggleTheme } = useViewStore();
     transition: background-color 0.1s;
 
     &:hover {
-      background-color: var(--hover-color);
+      background-color: var(--color-hover);
     }
   }
 }

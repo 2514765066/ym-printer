@@ -73,6 +73,6 @@ const handleMouseup = () => {
 
 <style scoped lang="scss">
 .active {
-  background-color: var(--primary-color);
+  background-color: var(--color-primary);
 }
 </style>
