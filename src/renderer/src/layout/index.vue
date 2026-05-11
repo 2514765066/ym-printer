@@ -1,11 +1,5 @@
 <template>
-  <div
-    class="manager-window wh-screen grid"
-    v-drag="{
-      onDrop: handleDrop,
-      onChange: handleChange,
-    }"
-  >
+  <div class="manager-window wh-screen grid" v-drag="dragOption">
     <TitleBar />
 
     <SideBar />
@@ -13,7 +7,7 @@
     <RouterView />
   </div>
 
-  <DragOverlay v-if="isDragOver" />
+  <DragOverlay v-if="isDragging" />
 </template>
 
 <script setup lang="ts">
@@ -28,20 +22,21 @@ import DragOverlay from "./drag-overlay .vue";
 useUpdateStore();
 const { addDoc } = useDocStore();
 
-const isDragOver = ref(false);
+const isDragging = ref(false);
 
-//处理状态改变
-const handleChange = (value: boolean) => {
-  isDragOver.value = value;
-};
+//拖拽配置
+const dragOption = {
+  onChange: (val: boolean) => {
+    isDragging.value = val;
+  },
 
-//拖拽结束
-const handleDrop = (e: DragEvent) => {
-  const files = e.dataTransfer?.files;
+  onDrop: (e: DragEvent) => {
+    const files = e.dataTransfer?.files;
 
-  if (!files) return;
+    if (!files) return;
 
-  addDoc(Array.from(files));
+    addDoc(Array.from(files));
+  },
 };
 </script>
 
