@@ -12,7 +12,7 @@ import { copyFile, mkdir, readFile } from "fs/promises";
 import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
 import { Doc, PrinterTask } from "@type";
-import { app, BrowserWindow, dialog } from "electron";
+import { BrowserWindow, dialog } from "electron";
 import { parseDoc } from "@/utils/doc";
 import { exec, execFile } from "child_process";
 import { checkUpdate, downloadUpdate, installUpdate } from "ym-publish";
@@ -216,7 +216,7 @@ ipcMain.handle("downloadUpdate", async e => {
 
 //安装
 ipcMain.handle("installUpdate", () => {
-  installUpdate(updatePath, app.getPath("exe"), true);
+  installUpdate(updatePath, ["--currentuser"]);
 });
 
 //获取打印机状态

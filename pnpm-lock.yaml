@@ -133,8 +133,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       ym-publish:
-        specifier: 1.5.0
-        version: 1.5.0
+        specifier: 1.6.0
+        version: 1.6.0
 
 packages:
 
@@ -3060,8 +3060,8 @@ packages:
   ym-electron.js@4.1.0:
     resolution: {integrity: sha512-DDgzd+TeRdQr57f+qXsAQX6u4uXbOBTE9lI7PtoPFT1wSh7ln7M4vjt6+A4Zryn6QGNjp/RI4rt5Oy79MriJmg==}
 
-  ym-publish@1.5.0:
-    resolution: {integrity: sha512-b2T/5/P7Q0bz3Icv8Aa9pk44ie/s41vV9Z5COvG4nc2xfsppO20s3wJShZBG+o9IMqdFFB1up34L72tbe9B4zg==}
+  ym-publish@1.6.0:
+    resolution: {integrity: sha512-X+9DrDzT6FKak9303T4VlBdzbOAy9WN4Tm2zDm7fHOmADs+ZXwZoMK4QmTlVzRbM4u2bfibR2nnBjAa1hMWp3g==}
 
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
@@ -6102,7 +6102,7 @@ snapshots:
 
   ym-electron.js@4.1.0: {}
 
-  ym-publish@1.5.0: {}
+  ym-publish@1.6.0: {}
 
   yocto-queue@0.1.0: {}
 
