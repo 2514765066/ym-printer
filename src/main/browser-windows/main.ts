@@ -1,6 +1,6 @@
 import { join } from "path";
 import { BrowserWindow } from "electron";
-import { browserWindows, load } from "./index";
+import { load } from "./index";
 import Store from "electron-store";
 import { is } from "@electron-toolkit/utils";
 
@@ -42,35 +42,17 @@ export const createMainWindow = () => {
     }
   });
 
-  //处理关闭窗口
-  mainWindow.on("close", e => {
-    //如果只有一个窗口直接关闭
-    if (browserWindows.size == 1) {
-      return;
-    }
-
-    e.preventDefault();
-
-    mainWindow.hide();
-  });
-
   //处理窗口调整大小
   mainWindow.on("resized", () => {
     const [width, height] = mainWindow.getSize();
 
-    const option = {
+    store.set("manager-window-size", {
       width,
       height,
-    };
-
-    lastSize = option;
-
-    store.set("manager-window-size", option);
+    });
   });
 
   load(mainWindow);
-
-  browserWindows.set("manager", mainWindow);
 
   return mainWindow;
 };

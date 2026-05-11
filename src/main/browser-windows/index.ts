@@ -2,7 +2,7 @@ import { is } from "@electron-toolkit/utils";
 import { BrowserWindow } from "electron";
 import { join } from "path";
 
-export const browserWindows = new Map<string, BrowserWindow>();
+// export const browserWindows = new Map<string, BrowserWindow>();
 
 //加载文件
 export const load = (bw: BrowserWindow) => {
