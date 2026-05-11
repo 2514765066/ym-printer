@@ -46,6 +46,12 @@
 
           <DropdownMenuSeparator />
 
+          <DropdownMenuItem :disabled="!isSimplex" @select="handlePrintSimplex">
+            <PrinterIcon />
+
+            <span>打印 "单页"</span>
+          </DropdownMenuItem>
+
           <DropdownMenuItem :disabled="isSimplex" @select="handlePrintEven">
             <PrinterIcon />
 
@@ -202,6 +208,21 @@ const handlePrintFinish = handleSubmit(async values => {
   doc.status = "printed";
 
   eventEmitter.emit("success:show", "标记为打印完成");
+});
+
+//打印单页
+const handlePrintSimplex = handleSubmit(async values => {
+  const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
+
+  Object.assign(doc, values);
+
+  isPrinting.value = true;
+
+  await printOdd(doc);
+
+  isPrinting.value = false;
+
+  eventEmitter.emit("success:show", "打印单页完成");
 });
 
 //打印偶数页
