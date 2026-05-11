@@ -1,18 +1,30 @@
-import { useConfigStore } from "@manager/stores/useConfigStore";
+import { useConfigStore } from "@/stores/useConfigStore";
+import { Doc } from "@type";
 
 //获取价格
-export const getPrice = (range: number[], count: number) => {
-  const settingsStore = useConfigStore();
+export const getPrice = (doc: Doc) => {
+  if (!doc.formatRange) {
+    return 0;
+  }
 
-  const simplexPrice = settingsStore.config.simplexPrice * 100;
+  const { config } = storeToRefs(useConfigStore());
 
-  const duplexPrice = settingsStore.config.duplexPrice * 100;
+  let simplexPrice = 0;
+  let duplexPrice = 0;
+
+  if (doc.cartridge == "black") {
+    simplexPrice = config.value.blackSimplexPrice * 100;
+    duplexPrice = config.value.blackDuplexPrice * 100;
+  } else {
+    simplexPrice = config.value.colorSimplexPrice * 100;
+    duplexPrice = config.value.colorSimplexPrice * 100;
+  }
 
   let result = 0;
 
-  for (let i = 1; i < range.length; i += 2) {
-    result += range[i] == 0 ? simplexPrice : duplexPrice;
+  for (let i = 1; i < doc.formatRange.length; i += 2) {
+    result += doc.formatRange[i] == 0 ? simplexPrice : duplexPrice;
   }
 
-  return (result * count) / 100;
+  return (result * doc.count) / 100;
 };

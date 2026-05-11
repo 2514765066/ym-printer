@@ -1,27 +1,10 @@
-import { FileInfo, PrintConfig } from "@type";
-
 // 定义事件到函数类型的映射
 type EventMap = {
   "success:show": (msg: string) => void;
   "error:show": (msg: string) => void;
 
-  "tip:show": () => void;
-  "tip:hide": () => void;
-
-  "print:show": (
-    set: (data: PrintConfig) => void,
-    config?: PrintConfig,
-    file?: FileInfo
-  ) => void;
-
-  "printFirst": () => void;
-
-  "dialog:show": (option: {
-    label: string;
-    content: string;
-    confirmLabel: string;
-    cancelLabel: string;
-  }) => void;
+  "dialog-print:show": () => void;
+  "dialog-setting:show": () => void;
 };
 
 type EventNames = keyof EventMap;

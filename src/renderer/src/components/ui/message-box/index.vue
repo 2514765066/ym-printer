@@ -1,29 +1,40 @@
 <template>
-  <ElDialog
-    :width="350"
-    :title="data.label"
-    align-center
-    v-model="data.visible"
-  >
-    <span class="text-base">{{ data.content }}</span>
+  <AlertDialog v-model:open="data.visible">
+    <AlertDialogContent class="w-100">
+      <AlertDialogHeader>
+        <AlertDialogTitle>
+          {{ data.title }}
+        </AlertDialogTitle>
 
-    <template #footer>
-      <div class="flex gap-2">
-        <Buttom class="flex-1" type="primary" @click="handleConfirm">
-          {{ data.confirmButtonText || "确定" }}
-        </Buttom>
+        <AlertDialogDescription>
+          {{ data.description }}
+        </AlertDialogDescription>
+      </AlertDialogHeader>
 
-        <Buttom class="flex-1" @click="handleCancel">
+      <AlertDialogFooter>
+        <AlertDialogCancel class="flex-1" @click="handleCancel">
           {{ data.cancelButtonText || "取消" }}
-        </Buttom>
-      </div>
-    </template>
-  </ElDialog>
+        </AlertDialogCancel>
+
+        <AlertDialogAction class="flex-1" @click="handleConfirm">
+          {{ data.confirmButtonText || "确定" }}
+        </AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
 </template>
 
 <script setup lang="ts">
-import { ElDialog } from "element-plus";
-import Buttom from "@/components/ui/button.vue";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { data } from "./message-box";
 
 //处理确定

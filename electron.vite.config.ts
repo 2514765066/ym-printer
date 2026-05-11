@@ -19,16 +19,7 @@ export default defineConfig({
       __APP_VERSION__: JSON.stringify(version),
     },
   },
-  preload: {
-    build: {
-      rollupOptions: {
-        input: {
-          manager: resolve(__dirname, "src/preload/manager.ts"),
-          print: resolve(__dirname, "src/preload/print.ts"),
-        },
-      },
-    },
-  },
+  preload: {},
   renderer: {
     define: {
       __APP_VERSION__: JSON.stringify(version),
@@ -38,8 +29,6 @@ export default defineConfig({
       alias: {
         "@": resolve("src/renderer/src"),
         "@type": resolve("src/type/index"),
-        "@manager": resolve("src/renderer/src/browser-window/manager"),
-        "@print": resolve("src/renderer/src/browser-window/print"),
       },
     },
 

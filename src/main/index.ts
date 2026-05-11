@@ -1,42 +1,31 @@
-import { isSecondeInstanceStart, onMounted } from "ym-electron.js";
-import { createMain } from "@/bw/manager";
+import { isSecondeInstanceStart } from "ym-electron.js";
+import { createMainWindow } from "@/browser-windows/main";
 import "@/ipc/index";
 import { createWord, exitWord } from "./service/doc";
 import { app } from "electron";
-import { getFileInfo, isDoc } from "./utils/file";
+import { optimizer } from "@electron-toolkit/utils";
+import { rm } from "fs/promises";
+import { cachePath } from "./service/path";
 
 //禁止多开
 if (isSecondeInstanceStart()) {
   app.exit();
 }
 
-onMounted(async () => {
+app.whenReady().then(async () => {
   createWord();
-  const win = await createMain();
 
-  app.on("second-instance", async (_, argv) => {
-    //打开文件
-    const path = argv.find(item => isDoc(item));
+  createMainWindow();
 
-    if (path) {
-      const file = await getFileInfo(path);
-
-      win.webContents.send("finishFilesInfo", [file]);
-    }
-
-    win.show();
+  //创建快捷键
+  app.on("browser-window-created", (_, window) => {
+    optimizer.watchWindowShortcuts(window);
   });
 
+  //退出软件关闭word和缓存
   app.on("before-quit", () => {
+    rm(cachePath, { recursive: true });
+
     exitWord();
   });
-
-  //打开文件
-  const path = process.argv.find(item => isDoc(item));
-
-  if (path) {
-    const file = await getFileInfo(path);
-
-    win.webContents.send("finishFilesInfo", [file]);
-  }
 });

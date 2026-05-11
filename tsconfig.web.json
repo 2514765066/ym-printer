@@ -6,8 +6,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/renderer/src/*"],
-      "@manager/*": ["src/renderer/src/browser-window/manager/*"],
-      "@print/*": ["src/renderer/src/browser-window/print/*"],
       "@type": ["src/type/index"]
     }
   }

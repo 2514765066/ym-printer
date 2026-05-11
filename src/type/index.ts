@@ -3,41 +3,26 @@ export type IpcEvent = {
   //获取打印机信息
   getPrinters: () => string[];
 
-  //获取文件信息
-  getFilesInfo: (paths: string[]) => void;
+  //添加文档
+  addDoc: (paths?: string[]) => void;
 
-  //文件信息获取完成
-  finishFilesInfo: (files: FileInfo[]) => void;
+  //添加文档完成
+  addDocFinish: (dos: Doc[]) => void;
 
-  //解析文件
-  parserFile: (file: FileInfo) => void;
+  //解析文档
+  parserDoc: (file: Doc) => void;
 
   //获取pdf
   getPdf: (md5: string) => Buffer<ArrayBuffer>;
 
-  //获取缓存大小
-  getCacheSize: () => number;
-
-  //清理缓存
-  clearCache: () => void;
-
-  //更新进度
-  updateProgress: (percent: number) => boolean;
-
   //打印
-  print: (config: PrintOption, docName: string) => boolean;
+  print: (config: Doc, range: number[]) => boolean;
 
   //打印测试也
   printTest: (printer: string) => boolean;
 
-  //打开打印窗口
-  openPrint: (option: OpenPrint) => void;
-
-  //完成打印
-  finishPrint: (option: FinishPrintOption) => void;
-
-  //关闭窗口
-  close: () => void;
+  //更新进度
+  updateProgress: (percent: number) => boolean;
 
   //检查更新
   checkUpdata: (url: string) => false | string;
@@ -55,32 +40,12 @@ export type IpcEvent = {
   removePrinterTask: (printer: string, id?: number) => boolean;
 };
 
-//打印配置
-interface PrintOption {
-  md5: string;
-  printer: string;
-  count: number;
-  orientation: "portrait" | "landscape";
-  range: number[];
-  cartridge: "black" | "color";
-  dpi: number;
-}
+//文档信息
+export type Doc = {
+  //状态
+  status: "loading" | "init" | "printing" | "printed";
 
-//打开打印的配置
-interface OpenPrint {
-  file: FileInfo;
-  config?: PrintConfig;
-}
-
-//完成打印的配置
-interface FinishPrintOption {
-  file: FileInfo;
-  config: PrintConfig;
-  range: number[];
-}
-
-//文件信息
-export type FileInfo = {
+  //唯一标识
   id: string;
 
   //文件名
@@ -94,18 +59,15 @@ export type FileInfo = {
 
   //拓展名
   ext: string;
-};
 
-//打印配置
-export type PrintConfig = {
+  //页数
+  pageCount: number;
+
   //备注
   remark: string;
 
   //打印机id
   printer: string;
-
-  //方向
-  orientation: "portrait" | "landscape";
 
   //打印数量
   count: number;
@@ -119,18 +81,39 @@ export type PrintConfig = {
   //墨盒类型
   cartridge: "black" | "color";
 
-  //缩放
-  dpi: number;
+  //方向
+  orientation: "portrait" | "landscape";
+
+  //格式化范围
+  formatRange?: number[];
 };
 
-//队列项
-export type QueueItem = FinishPrintOption & {
-  //文件id
-  id: string;
-};
+//完成的文档信息
+export type DocFinish = Doc & DocPrintConfig;
 
-//打印完成行为
-export type FinishBehavior = "tip" | "close" | "not";
+//打印配置
+export type DocPrintConfig = {
+  //备注
+  remark: string;
+
+  //打印机id
+  printer: string;
+
+  //打印数量
+  count: number;
+
+  //模式
+  mode: "simplex" | "duplex" | "mix";
+
+  //范围
+  range: string;
+
+  //墨盒类型
+  cartridge: "black" | "color";
+
+  //方向
+  orientation: "portrait" | "landscape";
+};
 
 //打印任务
 export interface PrinterTask {

@@ -2,8 +2,8 @@ import { render } from "vue";
 import Dialog from "./index.vue";
 
 export const data = reactive({
-  label: "",
-  content: "",
+  title: "",
+  description: "",
   confirmButtonText: "",
   cancelButtonText: "",
 
@@ -13,8 +13,8 @@ export const data = reactive({
 });
 
 export interface ConfirmOption {
-  label: string;
-  content: string;
+  title: string;
+  description: string;
   confirmButtonText?: string;
   cancelButtonText?: string;
 }

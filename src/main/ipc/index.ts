@@ -8,18 +8,20 @@ import {
   update,
   updatePath,
 } from "@/service/path";
-import { copyFile, mkdir, readdir, stat, rm, readFile } from "fs/promises";
+import { copyFile, mkdir, readFile } from "fs/promises";
 import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
-import { FileInfo, PrinterTask } from "@type";
-import { BrowserWindow } from "electron";
-import { createPrint } from "../bw/print";
-import { browserWindows } from "@/bw";
-import { getFileInfo } from "@/utils/file";
+import { Doc, PrinterTask } from "@type";
+import { app, BrowserWindow, dialog } from "electron";
+import { parseDoc } from "@/utils/doc";
 import { exec, execFile } from "child_process";
 import { checkUpdate, downloadUpdate, installUpdate } from "ym-publish";
 import { getMd5 } from "@/utils/md5";
 import { formatPrinterTask } from "@/utils/format";
+
+declare global {
+  const __APP_VERSION__: string;
+}
 
 //获取打印机信息
 ipcMain.handle("getPrinters", () => {
@@ -45,19 +47,41 @@ ipcMain.handle("getPrinters", () => {
   return promise;
 });
 
-//获取文件信息
-ipcMain.on("getFilesInfo", async (e, paths) => {
-  const res: FileInfo[] = [];
+//添加文档
+ipcMain.handle("addDoc", async (e, paths = []) => {
+  const win = BrowserWindow.fromWebContents(e.sender)!;
 
-  for (const path of paths) {
-    const file = await getFileInfo(path);
+  //路径不存在就选择
+  if (paths.length == 0) {
+    const result = await dialog.showOpenDialog(win, {
+      title: "请选择文档",
+      properties: ["openFile", "multiSelections"],
+      filters: [
+        {
+          name: "文档文件",
+          extensions: ["doc", "docx", "pdf", "wps"],
+        },
+      ],
+    });
 
-    res.push(file);
+    if (result.canceled) {
+      return;
+    }
+
+    paths = result.filePaths;
   }
 
-  const win = BrowserWindow.fromWebContents(e.sender);
+  if (paths.length == 0) {
+    return;
+  }
 
-  win?.webContents.send("finishFilesInfo", res);
+  const res: Doc[] = await Promise.all(
+    paths.map(async path => {
+      return await parseDoc(path);
+    }),
+  );
+
+  win.webContents.send("addDocFinish", res);
 });
 
 //读取pdf
@@ -68,7 +92,7 @@ ipcMain.handle("getPdf", async (_, md5: string) => {
 });
 
 //解析文件
-ipcMain.handle("parserFile", async (_, file) => {
+ipcMain.handle("parserDoc", async (_, file) => {
   const { md5, ext, path } = file;
 
   if (!existsSync(cachePath)) {
@@ -94,51 +118,21 @@ ipcMain.handle("parserFile", async (_, file) => {
   }
 });
 
-//获取缓存大小
-ipcMain.handle("getCacheSize", async () => {
-  if (!existsSync(cachePath)) {
-    return 0;
-  }
-
-  let totalSize = 0;
-
-  const files = await readdir(cachePath);
-
-  for (const file of files) {
-    const path = join(cachePath, file);
-
-    const stats = await stat(path);
-
-    totalSize += stats.size;
-  }
-
-  return totalSize;
-});
-
-//清理缓存
-ipcMain.handle("clearCache", async () => {
-  await rm(cachePath, { recursive: true });
-});
-
 //打印
-ipcMain.handle("print", async (_, config, docName) => {
+ipcMain.handle("print", async (_, config, range) => {
   const { promise, resolve, reject } = Promise.withResolvers<boolean>();
-
-  const { printer, count, md5, range, orientation, cartridge, dpi } = config;
-
-  const path = join(cachePath, `${md5}.pdf`);
 
   execFile(
     printerPath,
     [
-      `--docName=${docName}`,
-      `--file=${path}`,
-      `--printer=${printer}`,
+      `--docName=${config.name}`,
+      `--file=${join(cachePath, `${config.md5}.pdf`)}`,
+      `--printer=${config.printer}`,
       `--range=${range.join(",")}`,
-      `--orientation=${orientation}`,
-      `--count=${count}`,
-      `--cartridge=${cartridge}`,
-      `--dpi=${dpi}`,
+      `--orientation=${config.orientation}`,
+      `--count=${config.count}`,
+      `--cartridge=${config.cartridge}`,
+      `--dpi=300`,
     ],
     e => {
       if (e && e.code != 3221225477) {
@@ -147,7 +141,7 @@ ipcMain.handle("print", async (_, config, docName) => {
       }
 
       resolve(true);
-    }
+    },
   );
 
   return promise;
@@ -167,31 +161,10 @@ ipcMain.handle("printTest", (_, printer) => {
       }
 
       resolve(true);
-    }
+    },
   );
 
   return promise;
-});
-
-//打开打印窗口
-ipcMain.handle("openPrint", async (_, option) => {
-  const { file } = option;
-
-  const win = await createPrint(file.id);
-
-  if (!win) {
-    return;
-  }
-
-  win.setTitle(option.file.name);
-  win.webContents.send("openPrint", option);
-});
-
-//完成打印
-ipcMain.handle("finishPrint", async (_, option) => {
-  const win = browserWindows.get("manager")!;
-
-  win.webContents.send("finishPrint", option);
 });
 
 let checkUpdateInfo = {
@@ -243,14 +216,7 @@ ipcMain.handle("downloadUpdate", async e => {
 
 //安装
 ipcMain.handle("installUpdate", () => {
-  installUpdate(updatePath, true);
-});
-
-//关闭窗口
-ipcMain.handle("close", e => {
-  const win = BrowserWindow.fromWebContents(e.sender);
-
-  win?.close();
+  installUpdate(updatePath, app.getPath("exe"), true);
 });
 
 //获取打印机状态
