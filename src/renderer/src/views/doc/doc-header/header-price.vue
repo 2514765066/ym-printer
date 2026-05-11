@@ -12,7 +12,7 @@
       <span>取消全选</span>
     </Button>
 
-    <Button variant="outline" @click="setStatus()">
+    <Button variant="outline" @click="handleCancelPrice">
       <XIcon />
 
       <span>取消计价</span>
@@ -59,6 +59,13 @@ const handleCheckAll = () => {
     .map(item => item.id);
 
   checkAll(ids);
+};
+
+//处理取消计价
+const handleCancelPrice = () => {
+  setStatus();
+
+  cancelCheckAll();
 };
 </script>
 
