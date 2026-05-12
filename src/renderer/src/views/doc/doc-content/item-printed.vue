@@ -15,7 +15,7 @@
         @update:model-value="toggleCheck(data.id)"
       />
 
-      <Check class="size-7 stroke-green-500!" v-else />
+      <FileIcon :size="36" :ext="data.ext" v-else />
     </ItemMedia>
 
     <ItemContent>
@@ -86,11 +86,11 @@ import {
 } from "@/components/ui/item";
 import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
-import { Check } from "lucide-vue-next";
 import { cartridgeMap, modeMap, orientationMap } from "@/map";
 import { getPrice } from "@/utils/price";
 import { status } from "../index";
 import { checked, toggleCheck } from "../check";
+import FileIcon from "@/components/file-icon.vue";
 
 defineEmits<{
   print: [id: string];
