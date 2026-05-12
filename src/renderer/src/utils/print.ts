@@ -59,7 +59,7 @@ export const printAuto = async (
   //打印偶数页
   await print(config, getEvenRange(config.formatRange));
 
-  const result = await printToast(config.remark || config.name);
+  const result = await printToast(config);
 
   if (!result) {
     printCancel && printCancel();

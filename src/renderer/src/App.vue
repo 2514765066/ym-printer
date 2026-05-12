@@ -7,7 +7,7 @@
     <DialogSetting />
   </TooltipProvider>
 
-  <Toaster style="--width: 350px" position="bottom-right" :visible-toasts="5" />
+  <Toaster style="--width: 400px" position="bottom-right" :visible-toasts="5" />
 </template>
 
 <script setup lang="ts">

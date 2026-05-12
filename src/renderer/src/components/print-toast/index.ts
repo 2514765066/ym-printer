@@ -1,13 +1,14 @@
 import { toast } from "vue-sonner";
 import Toast from "./index.vue";
+import { Doc } from "@type";
 
-export const printToast = (title: string) => {
+export const printToast = (config: Doc) => {
   const { promise, resolve } = Promise.withResolvers<boolean>();
 
   const id = toast(
     markRaw(
       h(Toast, {
-        title,
+        data: config,
         onConfirm: () => {
           toast.dismiss(id);
           resolve(true);
@@ -20,6 +21,10 @@ export const printToast = (title: string) => {
     ),
     {
       duration: Infinity,
+      onDismiss() {
+        toast.dismiss(id);
+        resolve(false);
+      },
     },
   );
 
