@@ -40,7 +40,7 @@ const open = () => {
 const save = (option: SaveOption) => {
   const { md5, inputPath, outputPath } = option;
 
-  try {
+  const toPdf = () => {
     const doc = word.Documents.Open(inputPath, false, true, false);
 
     doc.ExportAsFixedFormat(outputPath, 17);
@@ -48,16 +48,18 @@ const save = (option: SaveOption) => {
     port.postMessage(md5);
 
     doc.Close(false);
+  };
+
+  try {
+    toPdf();
   } catch (e) {
     console.error("worker报错", e);
 
+    exit();
+
     open();
 
-    save({
-      md5,
-      inputPath,
-      outputPath,
-    });
+    toPdf();
   }
 };
 
