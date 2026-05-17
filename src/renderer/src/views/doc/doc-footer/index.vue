@@ -1,5 +1,8 @@
 <template>
-  <footer class="h-7 px-3 flex items-center gap-4 border-t" v-if="docs.length">
+  <footer
+    class="w-fit h-7 ml-auto px-3 flex items-center gap-4"
+    v-if="docs.length"
+  >
     <span class="text-xs">文档: {{ docs.length }} </span>
 
     <span class="text-xs">完成: {{ finishCount }} </span>
