@@ -1,7 +1,10 @@
 import eventEmitter from "@/hooks/eventEmitter";
 import { Doc } from "@type";
+import { useWorkspaceStore } from "./useWorkspaceStore";
 
 export const useDocStore = defineStore("doc", () => {
+  const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
+
   //所有文件
   const docs = ref<Doc[]>([]);
 
@@ -13,6 +16,7 @@ export const useDocStore = defineStore("doc", () => {
     return (
       getDoc(selectedDocID.value) || {
         status: "init",
+        workspaceId: "",
         id: "",
         name: "",
         path: "",
@@ -53,25 +57,32 @@ export const useDocStore = defineStore("doc", () => {
       return;
     }
 
-    ipcRenderer.invoke("addDoc", paths);
+    ipcRenderer.invoke("addDoc", {
+      workspaceId: selectedWorkspaceID.value,
+      paths,
+    });
   };
 
   //清空
-  const clearDoc = () => {
-    docs.value = [];
+  const clearDoc = (workspaceId: string) => {
+    docs.value = docs.value.filter(doc => doc.workspaceId !== workspaceId);
   };
 
   //文件获取完成
   ipcRenderer.on("addDocFinish", (_, data) => {
-    const ids = docs.value.map(item => item.id);
+    const paths = docs.value.map(item => item.path);
 
     for (const item of data) {
-      if (ids.includes(item.id)) {
+      if (paths.includes(item.path)) {
         eventEmitter.emit("error:show", `${item.name} 已存在`);
-        return;
+        continue;
       }
 
       docs.value.push(item);
+
+      ipcRenderer.invoke("parserDoc", item).then(() => {
+        getDoc(item.id)!.status = "init";
+      });
     }
   });
 

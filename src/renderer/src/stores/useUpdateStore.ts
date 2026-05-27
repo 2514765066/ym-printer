@@ -1,10 +1,8 @@
 import { useConfigStore } from "@/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import MessageBox from "@/components/ui/message-box";
-import { getDayDiff } from "@/utils/time";
 import Loading from "@/components/loading";
 import { repoMap } from "@/map";
-import { useStorage } from "@vueuse/core";
 
 type Status =
   | "init"
@@ -18,9 +16,6 @@ type Status =
 export const useUpdateStore = defineStore("update", () => {
   const { config } = storeToRefs(useConfigStore());
 
-  //最近更新时间
-  const latestUpdateTime = useStorage("lastUpdateTime", Date.now());
-
   //状态
   const status = ref<Status>("init");
 
@@ -29,8 +24,6 @@ export const useUpdateStore = defineStore("update", () => {
 
   //检查更新
   const checkUpdate = async () => {
-    latestUpdateTime.value = Date.now();
-
     try {
       const installUpdate = async () => {
         //安装
@@ -99,25 +92,9 @@ export const useUpdateStore = defineStore("update", () => {
 
   //初始化
   const init = () => {
-    if (!config.value.autoUpdate) {
-      return;
+    if (config.value.autoUpdate) {
+      checkUpdate();
     }
-
-    //当前时间
-    const now = Date.now();
-
-    //对比上次时间
-    const day = getDayDiff(latestUpdateTime.value, now);
-
-    //改成当前时间
-    latestUpdateTime.value = Date.now();
-
-    //不自动更新
-    if (day < 3) {
-      return;
-    }
-
-    checkUpdate();
   };
 
   //监听下载进度

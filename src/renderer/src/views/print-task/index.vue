@@ -1,23 +1,22 @@
 <template>
-  <Container
-    class="relative"
-    :is-empty="printerTasks.length == 0"
-    empty-width-header
-  >
-    <template #header>
-      <QueueHeader />
-    </template>
+  <section class="wh-full flex flex-col relative">
+    <QueueHeader class="p-1 z-10" />
 
-    <template #empty>
+    <div
+      class="wh-full absolute left-50 top-50 -translate-x-50 -translate-y-50"
+      v-if="printerTasks.length == 0"
+    >
       <QueueEmpty />
-    </template>
+    </div>
 
-    <QueueContent />
-  </Container>
+    <ElScrollbar class="flex-1" v-else>
+      <QueueContent />
+    </ElScrollbar>
+  </section>
 </template>
 
 <script setup lang="ts">
-import Container from "@/components/container/index.vue";
+import { ElScrollbar } from "element-plus";
 import QueueHeader from "./queue-header/index.vue";
 import QueueContent from "./queue-content/index.vue";
 import QueueEmpty from "./queue-empty.vue";

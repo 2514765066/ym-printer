@@ -1,3 +1,5 @@
+import { Workspace } from "@/stores/useWorkspaceStore";
+
 // 定义事件到函数类型的映射
 type EventMap = {
   "success:show": (msg: string) => void;
@@ -5,6 +7,8 @@ type EventMap = {
 
   "dialog-print:show": () => void;
   "dialog-setting:show": () => void;
+  "dialog-workspace-add:show": () => void;
+  "dialog-workspace-rename:show": (workspace: Workspace) => void;
 };
 
 type EventNames = keyof EventMap;

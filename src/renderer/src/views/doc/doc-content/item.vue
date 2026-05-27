@@ -1,9 +1,8 @@
 <template>
   <Item
-    class="dark:hover:bg-accent/30"
+    class="dark:hover:bg-accent/30 rounded-none"
     :class="{ 'pointer-events-none opacity-60': status == 'price' }"
     size="sm"
-    variant="outline"
     @click="$emit('print', data.id)"
   >
     <ItemMedia variant="image">

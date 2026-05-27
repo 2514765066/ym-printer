@@ -48,8 +48,10 @@ ipcMain.handle("getPrinters", () => {
 });
 
 //添加文档
-ipcMain.handle("addDoc", async (e, paths = []) => {
+ipcMain.handle("addDoc", async (e, option) => {
   const win = BrowserWindow.fromWebContents(e.sender)!;
+
+  let { workspaceId, paths = [] } = option;
 
   //路径不存在就选择
   if (paths.length == 0) {
@@ -77,7 +79,10 @@ ipcMain.handle("addDoc", async (e, paths = []) => {
 
   const res: Doc[] = await Promise.all(
     paths.map(async path => {
-      return await parseDoc(path);
+      return await parseDoc({
+        path,
+        workspaceId,
+      });
     }),
   );
 

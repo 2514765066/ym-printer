@@ -1,13 +1,14 @@
 <template>
-  <Dialog v-model:open="open">
-    <DialogContent
-      class="max-w-none! w-[90vw] h-[calc(100vh-100px)] p-0!"
+  <Sheet v-model:open="open">
+    <SheetContent
+      side="bottom"
+      class="h-[calc(100vh-44px)] p-0!"
       @interact-outside="handleInteractOutside"
     >
       <VisuallyHidden as-child>
-        <DialogTitle>
-          <DialogDescription />
-        </DialogTitle>
+        <SheetTitle>
+          <SheetDescription />
+        </SheetTitle>
       </VisuallyHidden>
 
       <div class="dialog-print wh-full grid overflow-hidden">
@@ -17,20 +18,20 @@
 
         <PreivewPdf class="col-start-2 col-end-3 row-start-2 row-end-3" />
       </div>
-    </DialogContent>
-  </Dialog>
+    </SheetContent>
+  </Sheet>
 </template>
 
 <script setup lang="ts">
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import TitleBar from "./title-bar/index.vue";
 import SideBar from "./side-bar/index.vue";
 import PreivewPdf from "@/components/preview-pdf/index.vue";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { VisuallyHidden } from "reka-ui";
 import { open } from "./index";
 

@@ -1,5 +1,5 @@
 <template>
-  <Item size="sm" variant="outline">
+  <Item class="dark:hover:bg-accent/30" size="sm">
     <ItemMedia variant="image">
       <Spinner class="size-7 stroke-muted-foreground!" />
     </ItemMedia>

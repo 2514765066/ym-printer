@@ -1,8 +1,7 @@
 <template>
   <Item
-    class="dark:hover:bg-accent/30 has-aria-checked:border-primary has-aria-checked:bg-primary/10 has-aria-checked:hover:bg-primary/20!"
+    class="dark:hover:bg-accent/30 has-aria-checked:border-primary has-aria-checked:bg-primary/10 has-aria-checked:hover:bg-primary/20! rounded-none"
     size="sm"
-    variant="outline"
     as="label"
     :for="data.id"
     @click="$emit('print', data.id)"
@@ -19,7 +18,7 @@
     </ItemMedia>
 
     <ItemContent>
-      <ItemTitle>
+      <ItemTitle :title="data.name">
         <span v-if="data.remark"> {{ data.remark }} | </span>
 
         {{ data.name }}

@@ -1,24 +1,24 @@
 <template>
-  <section class="flex items-center gap-2">
-    <Button variant="outline" @click="handleCheckAll">
+  <section class="flex items-center">
+    <Button variant="ghost" size="sm" @click="handleCheckAll">
       <SquareCheckIcon />
 
       <span>全选文档</span>
     </Button>
 
-    <Button variant="outline" @click="cancelCheckAll">
+    <Button variant="ghost" size="sm" @click="cancelCheckAll">
       <SquareIcon />
 
       <span>取消全选</span>
     </Button>
 
-    <Button variant="outline" @click="handleCancelPrice">
+    <Button variant="ghost" size="sm" @click="handleCancelPrice">
       <XIcon />
 
       <span>取消计价</span>
     </Button>
 
-    <span class="ml-auto mr-4 text-sm text-green-500">
+    <span class="ml-auto mr-2 text-sm text-green-500">
       总价: {{ price }} 元
     </span>
   </section>

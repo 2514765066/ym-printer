@@ -1,5 +1,5 @@
 <template>
-  <Item class="dark:hover:bg-accent/30" size="sm" variant="outline">
+  <Item class="dark:hover:bg-accent/30 rounded-none" size="sm">
     <ItemMedia variant="icon">
       <FileTextIcon />
     </ItemMedia>

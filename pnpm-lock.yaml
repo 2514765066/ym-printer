@@ -69,9 +69,6 @@ importers:
       '@vueuse/core':
         specifier: ^14.1.0
         version: 14.1.0(vue@3.5.23(typescript@5.9.3))
-      dayjs:
-        specifier: ^1.11.19
-        version: 1.11.19
       electron:
         specifier: 38.6.0
         version: 38.6.0

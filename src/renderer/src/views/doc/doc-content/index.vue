@@ -1,17 +1,18 @@
 <template>
   <VueDraggable
-    class="flex flex-col gap-2"
+    class="flex flex-col"
     :animation="200"
-    v-model="docs"
+    :model-value="filterDocs"
+    @update:model-value="handleSort"
     :disabled="status != 'default'"
   >
-    <template v-for="(item, index) in docs" :key="item.id">
+    <template v-for="(item, index) in filterDocs" :key="item.id">
       <ContextMenu>
         <ContextMenuTrigger as-child>
           <component
             :is="map[item.status]"
             @print="handlePrint"
-            v-model="docs[index]"
+            v-model="filterDocs[index]"
           />
         </ContextMenuTrigger>
 
@@ -21,6 +22,26 @@
 
             <span> 打印 "当前文档"</span>
           </ContextMenuItem>
+
+          <ContextMenuSub>
+            <ContextMenuSubTrigger>
+              <CornerUpRightIcon class="mr-2" />
+
+              <span> 移动 "当前文档"</span>
+            </ContextMenuSubTrigger>
+
+            <ContextMenuSubContent class="min-w-40">
+              <ContextMenuRadioGroup v-model="item.workspaceId">
+                <ContextMenuRadioItem
+                  v-for="item in workspace"
+                  :key="item.id"
+                  :value="item.id"
+                >
+                  {{ item.name }}
+                </ContextMenuRadioItem>
+              </ContextMenuRadioGroup>
+            </ContextMenuSubContent>
+          </ContextMenuSub>
 
           <ContextMenuSeparator />
 
@@ -45,6 +66,11 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
+  ContextMenuSub,
+  ContextMenuSubTrigger,
+  ContextMenuSubContent,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
 } from "@/components/ui/context-menu";
 import Item from "./item.vue";
 import ItemPrinting from "./item-printing.vue";
@@ -53,17 +79,35 @@ import { useDocStore } from "@/stores/useDocStore";
 import ItemLoading from "./item-loading.vue";
 import { VueDraggable } from "vue-draggable-plus";
 import { status } from "..";
-import { PrinterIcon, Trash2Icon } from "lucide-vue-next";
+import { CornerUpRightIcon, PrinterIcon, Trash2Icon } from "lucide-vue-next";
 import eventEmitter from "@/hooks/eventEmitter";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import { Doc } from "@type";
 
 const { docs } = storeToRefs(useDocStore());
 const { selectDoc, removeDoc } = useDocStore();
+const { workspace, selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 const map = {
   loading: ItemLoading,
   init: Item,
   printing: ItemPrinting,
   printed: ItemPrinted,
+};
+
+const filterDocs = computed(() => {
+  return docs.value.filter(
+    item => item.workspaceId == selectedWorkspaceID.value,
+  );
+});
+
+//排序
+const handleSort = (data: Doc[]) => {
+  const order = docs.value.filter(
+    item => item.workspaceId != selectedWorkspaceID.value,
+  );
+
+  docs.value = [...order, ...data];
 };
 
 //打印文档

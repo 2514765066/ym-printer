@@ -26,12 +26,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { Doc } from "@type";
 
 const data = defineModel<Doc>({ required: true });
-
-onMounted(async () => {
-  await ipcRenderer.invoke("parserDoc", toRaw(data.value));
-
-  data.value.status = "init";
-});
 </script>
 
 <style scoped lang="scss"></style>

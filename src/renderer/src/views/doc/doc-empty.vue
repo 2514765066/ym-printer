@@ -34,8 +34,13 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+
+const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 const handleAdd = () => {
-  ipcRenderer.invoke("addDoc");
+  ipcRenderer.invoke("addDoc", {
+    workspaceId: selectedWorkspaceID.value,
+  });
 };
 </script>

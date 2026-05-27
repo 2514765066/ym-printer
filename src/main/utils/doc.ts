@@ -1,9 +1,16 @@
 import { basename, extname } from "path";
 import { getMd5 } from "./md5";
 import { Doc } from "@type";
+import { nanoid } from "nanoid";
 
 //解析文档
-export const parseDoc = async (path: string): Promise<Doc> => {
+export const parseDoc = async (option: {
+  path: string;
+  workspaceId: string;
+}): Promise<Doc> => {
+  const { path, workspaceId } = option;
+
+  //名称
   const name = basename(path);
 
   //后缀
@@ -13,7 +20,7 @@ export const parseDoc = async (path: string): Promise<Doc> => {
   const md5 = await getMd5(path);
 
   return {
-    id: path,
+    id: nanoid(),
     name,
     path,
     md5,
@@ -27,5 +34,6 @@ export const parseDoc = async (path: string): Promise<Doc> => {
     range: "",
     cartridge: "black",
     orientation: "portrait",
+    workspaceId,
   };
 };

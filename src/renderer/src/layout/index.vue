@@ -1,22 +1,54 @@
 <template>
-  <div class="manager-window wh-screen grid" v-drag="dragOption">
+  <div class="manager-window wh-screen grid bg-sidebar" v-drag="dragOption">
     <TitleBar />
 
-    <SideBar />
+    <ResizablePanelGroup
+      class="pb-2"
+      direction="horizontal"
+      autoSaveId="layout"
+    >
+      <ResizablePanel
+        ref="panelRef"
+        :min-size="160"
+        :default-size="260"
+        collapsible
+        :collapsedSize="0"
+        size-unit="px"
+      >
+        <SideBar />
+      </ResizablePanel>
 
-    <RouterView />
+      <ResizableHandle class="bg-transparent!" />
+
+      <ResizablePanel
+        class="pr-2"
+        :class="{
+          'pl-2': panelRef?.isCollapsed,
+        }"
+        :min-size="50"
+      >
+        <RouterView class="bg-background border rounded-lg" />
+      </ResizablePanel>
+    </ResizablePanelGroup>
   </div>
 
   <DragOverlay v-if="isDragging" />
 </template>
 
 <script setup lang="ts">
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import SideBar from "./side-bar/index.vue";
 import TitleBar from "./title-bar/index.vue";
 import { useUpdateStore } from "@/stores/useUpdateStore";
 import vDrag from "@/hooks/useDrag";
 import { useDocStore } from "@/stores/useDocStore";
 import DragOverlay from "./drag-overlay .vue";
+//@ts-ignore
+import { panelRef } from ".";
 
 //修复进入必须进入设置界面才会检查更新的bug
 useUpdateStore();
@@ -42,11 +74,10 @@ const dragOption = {
 
 <style lang="scss">
 .manager-window {
-  grid-template-rows: 44px calc(100vh - 44px);
-  grid-template-columns: 50px calc(100vw - 50px);
+  grid-template-rows: 40px calc(100vh - 40px);
 
   grid-template-areas:
-    "side-bar title-bar"
-    "side-bar content";
+    "title-bar"
+    "content";
 }
 </style>

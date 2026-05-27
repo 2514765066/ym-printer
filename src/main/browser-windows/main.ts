@@ -24,7 +24,7 @@ export const createMainWindow = () => {
     titleBarOverlay: {
       symbolColor: "#d4d4d4",
       color: "rgba(0,0,0,0)",
-      height: 44,
+      height: 40,
     },
 
     webPreferences: {
@@ -46,7 +46,7 @@ export const createMainWindow = () => {
   mainWindow.on("resized", () => {
     const [width, height] = mainWindow.getSize();
 
-    store.set("manager-window-size", {
+    store.set("window-size", {
       width,
       height,
     });

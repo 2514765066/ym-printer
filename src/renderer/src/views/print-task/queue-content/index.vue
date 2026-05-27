@@ -1,5 +1,5 @@
 <template>
-  <section view-class="flex flex-col gap-2">
+  <section class="flex flex-col">
     <Item v-for="item in printerTasks" :key="item.id" :data="item" />
   </section>
 </template>

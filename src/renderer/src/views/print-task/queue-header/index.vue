@@ -1,30 +1,34 @@
 <template>
-  <section class="flex gap-2">
-    <Printer class="max-w-60" />
+  <section class="flex">
+    <Printer
+      class="max-w-60 border-none! ring-0! bg-transparent! hover:bg-accent/50! transition-colors"
+    />
 
-    <Button
-      class="ml-auto"
-      variant="outline"
-      :disabled="isPrinting"
-      @click="handlePrintTest"
-    >
-      <Spinner v-if="isPrinting" />
+    <Tooltip label="打印测试页" side="bottom">
+      <Button
+        class="ml-auto"
+        variant="ghost"
+        size="icon-sm"
+        :disabled="isPrinting"
+        @click="handlePrintTest"
+      >
+        <Spinner class="size-4" v-if="isPrinting" />
 
-      <TestTubeDiagonalIcon v-else />
+        <TestTubeDiagonalIcon class="size-4" v-else />
+      </Button>
+    </Tooltip>
 
-      <span>打印测试页</span>
-    </Button>
-
-    <Button variant="outline" @click="handleReload">
-      <RotateCwIcon />
-
-      <span>刷新</span>
-    </Button>
+    <Tooltip label="刷新" side="bottom">
+      <Button variant="ghost" size="icon-sm" @click="handleReload">
+        <RotateCwIcon class="size-4" />
+      </Button>
+    </Tooltip>
   </section>
 </template>
 
 <script setup lang="ts">
 import Printer from "@/components/printer.vue";
+import Tooltip from "@/components/tooltip.vue";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import eventEmitter from "@/hooks/eventEmitter";

@@ -1,6 +1,6 @@
 <template>
   <form class="flex flex-col border-r">
-    <ElScrollbar view-class="p-2.5">
+    <ElScrollbar view-class="p-3">
       <FieldGroup>
         <Remark />
 
@@ -18,7 +18,7 @@
       </FieldGroup>
     </ElScrollbar>
 
-    <ButtonGroup class="w-full mt-auto p-2.5">
+    <ButtonGroup class="w-full mt-auto p-3">
       <Button
         type="button"
         class="flex-1"
@@ -207,7 +207,7 @@ const handlePrintFinish = handleSubmit(async values => {
 
   doc.status = "printed";
 
-  eventEmitter.emit("success:show", "标记为打印完成");
+  eventEmitter.emit("success:show", `${doc.name} 标记为打印完成`);
 });
 
 //打印单页

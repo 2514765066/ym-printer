@@ -1,22 +1,18 @@
 <template>
-  <Tooltip :label="label" side="right">
-    <Button
-      :class="{
-        'bg-accent dark:bg-accent/50': active,
-      }"
-      variant="ghost"
-      size="icon"
-      @click="handleClick"
-    >
-      <slot></slot>
-    </Button>
-  </Tooltip>
+  <section
+    class="h-8 px-2 flex items-center gap-2 rounded hover:bg-accent/50 transition-colors"
+    :class="{
+      'bg-accent dark:bg-accent/50': active,
+    }"
+    @click="handleClick"
+  >
+    <slot></slot>
+
+    <span class="text-sm truncate">{{ label }}</span>
+  </section>
 </template>
 
 <script setup lang="ts">
-import Tooltip from "@/components/tooltip.vue";
-import { Button } from "@/components/ui/button";
-
 const router = useRouter();
 const route = useRoute();
 

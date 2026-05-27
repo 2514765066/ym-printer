@@ -4,7 +4,7 @@ export type IpcEvent = {
   getPrinters: () => string[];
 
   //添加文档
-  addDoc: (paths?: string[]) => void;
+  addDoc: (option: { workspaceId: string; paths?: string[] }) => void;
 
   //添加文档完成
   addDocFinish: (dos: Doc[]) => void;
@@ -44,6 +44,9 @@ export type IpcEvent = {
 export type Doc = {
   //状态
   status: "loading" | "init" | "printing" | "printed";
+
+  //工作空间id
+  workspaceId: string;
 
   //唯一标识
   id: string;
