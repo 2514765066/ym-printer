@@ -43,7 +43,7 @@ export type IpcEvent = {
 //文档信息
 export type Doc = {
   //状态
-  status: "loading" | "init" | "printing" | "printed";
+  status: "loading" | "init" | "upload" | "printing" | "printed";
 
   //工作空间id
   workspaceId: string;

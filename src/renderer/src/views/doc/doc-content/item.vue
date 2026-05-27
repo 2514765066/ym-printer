@@ -33,11 +33,13 @@ import FileIcon from "@/components/file-icon.vue";
 import { Doc } from "@type";
 import { status } from "..";
 
+defineProps<{
+  data: Doc;
+}>();
+
 defineEmits<{
   print: [id: string];
 }>();
-
-const data = defineModel<Doc>({ required: true });
 </script>
 
 <style scoped lang="scss"></style>

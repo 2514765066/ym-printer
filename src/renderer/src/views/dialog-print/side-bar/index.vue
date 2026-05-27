@@ -177,19 +177,24 @@ const handlePrint = handleSubmit(async values => {
 
   isPrinting.value = true;
 
-  await printAuto(
-    toRaw(doc),
-    () => {
+  await printAuto(toRaw(doc), {
+    printFinish() {
       doc.status = "printed";
 
       eventEmitter.emit("success:show", "打印完成");
     },
-    () => {
+    printCancel() {
       doc.status = "init";
 
       eventEmitter.emit("error:show", "取消打印");
     },
-  );
+    printBefore() {
+      doc.status = "upload";
+    },
+    printAfter() {
+      doc.status = "printing";
+    },
+  });
 
   isPrinting.value = false;
 });
