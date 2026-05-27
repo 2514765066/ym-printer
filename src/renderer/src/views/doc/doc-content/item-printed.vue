@@ -91,14 +91,16 @@ import { status } from "../index";
 import { checked, toggleCheck } from "../check";
 import FileIcon from "@/components/file-icon.vue";
 
+const props = defineProps<{
+  data: Doc;
+}>();
+
 defineEmits<{
   print: [id: string];
 }>();
 
-const data = defineModel<Doc>({ required: true });
-
 const price = computed(() => {
-  return getPrice(data.value);
+  return getPrice(props.data);
 });
 </script>
 

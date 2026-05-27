@@ -25,7 +25,9 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { Doc } from "@type";
 
-const data = defineModel<Doc>({ required: true });
+defineProps<{
+  data: Doc;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

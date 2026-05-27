@@ -1,6 +1,6 @@
-import { printToast } from "@/components/print-toast";
 import { Doc } from "@type";
 import { parserRange } from "./range";
+import { printPromise } from "@/stores/usePrintStore";
 
 //是否是全单
 const isSimplex = (range: number[]) => {
@@ -41,31 +41,45 @@ export const printOdd = async (config: Doc) => {
 //自动打印
 export const printAuto = async (
   config: Doc,
-  printFinish?: () => void,
-  printCancel?: () => void,
+  option: {
+    printFinish?: () => void;
+    printCancel?: () => void;
+    printBefore?: () => void;
+    printAfter?: () => void;
+  },
 ) => {
   if (!config.formatRange) {
     return;
   }
 
+  const { printFinish, printCancel, printBefore, printAfter } = option;
+
   //单页
   if (isSimplex(config.formatRange)) {
+    printBefore && printBefore();
+
     await print(config, getOddRange(config.formatRange));
 
     printFinish && printFinish();
     return;
   }
 
+  printBefore && printBefore();
+
   //打印偶数页
   await print(config, getEvenRange(config.formatRange));
 
-  const result = await printToast(config);
+  printAfter && printAfter();
+
+  const result = await printPromise(config);
 
   if (!result) {
     printCancel && printCancel();
 
     return;
   }
+
+  printBefore && printBefore();
 
   //打印奇数页
   await print(config, getOddRange(config.formatRange));

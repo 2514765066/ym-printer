@@ -12,7 +12,7 @@
           <component
             :is="map[item.status]"
             @print="handlePrint"
-            v-model="filterDocs[index]"
+            :data="filterDocs[index]"
           />
         </ContextMenuTrigger>
 
@@ -91,6 +91,7 @@ const { workspace, selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const map = {
   loading: ItemLoading,
   init: Item,
+  upload: ItemPrinting,
   printing: ItemPrinting,
   printed: ItemPrinted,
 };
