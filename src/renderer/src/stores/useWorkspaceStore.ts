@@ -13,10 +13,6 @@ export const useWorkspaceStore = defineStore("workspace", () => {
       id: "default",
       name: "默认空间",
     },
-    {
-      id: nanoid(),
-      name: "zmy",
-    },
   ]);
 
   //当前选中的工作空间id
