@@ -1,18 +1,18 @@
 <template>
   <section class="flex items-center">
-    <Button variant="ghost" size="sm" @click="handleCheckAll">
+    <Button variant="ghost" @click="handleCheckAll">
       <SquareCheckIcon />
 
       <span>全选文档</span>
     </Button>
 
-    <Button variant="ghost" size="sm" @click="cancelCheckAll">
+    <Button variant="ghost" @click="cancelCheckAll">
       <SquareIcon />
 
       <span>取消全选</span>
     </Button>
 
-    <Button variant="ghost" size="sm" @click="handleCancelPrice">
+    <Button variant="ghost" @click="handleCancelPrice">
       <XIcon />
 
       <span>取消计价</span>

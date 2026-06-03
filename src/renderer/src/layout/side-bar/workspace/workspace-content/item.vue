@@ -12,11 +12,11 @@
 
         <div class="flex items-center gap-1.5">
           <FolderOpenIcon
-            class="size-4 stroke-muted-foreground!"
+            class="size-4 text-muted-foreground"
             v-if="isSelected"
           />
 
-          <FolderClosedIcon class="size-4 stroke-muted-foreground!" v-else />
+          <FolderClosedIcon class="size-4 text-muted-foreground" v-else />
 
           <span class="text-xs text-muted-foreground truncate"> · </span>
 
@@ -43,7 +43,7 @@
       <ContextMenuSeparator />
 
       <ContextMenuItem variant="destructive" @select="handleRemoveDocs">
-        <Trash2Icon class="stroke-destructive-foreground!" />
+        <Trash2Icon />
 
         <span> 删除 "工作区中所有文档"</span>
       </ContextMenuItem>
@@ -53,7 +53,7 @@
         variant="destructive"
         @select="handleRemove"
       >
-        <Trash2Icon class="stroke-destructive-foreground!" />
+        <Trash2Icon />
 
         <span> 删除 "当前工作区"</span>
       </ContextMenuItem>

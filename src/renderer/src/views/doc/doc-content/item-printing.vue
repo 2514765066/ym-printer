@@ -1,7 +1,7 @@
 <template>
   <Item class="relative dark:hover:bg-accent/30 rounded-none!" size="sm">
     <ItemMedia variant="image">
-      <Spinner class="size-7 stroke-muted-foreground!" />
+      <Spinner class="size-7 text-muted-foreground" />
     </ItemMedia>
 
     <ItemContent>

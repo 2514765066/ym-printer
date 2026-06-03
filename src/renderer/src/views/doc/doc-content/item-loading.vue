@@ -1,7 +1,7 @@
 <template>
   <Item class="opacity-60" size="sm">
     <ItemMedia variant="image">
-      <Spinner class="size-7 stroke-muted-foreground!" />
+      <Spinner class="size-7 text-muted-foreground" />
     </ItemMedia>
 
     <ItemContent>

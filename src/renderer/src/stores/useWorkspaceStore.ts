@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 export interface Workspace {
   id: string;
   name: string;
+  printer?: string;
 }
 
 export const useWorkspaceStore = defineStore("workspace", () => {

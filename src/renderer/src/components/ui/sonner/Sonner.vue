@@ -26,7 +26,7 @@ const props = defineProps<ToasterProps>();
     v-bind="props"
   >
     <template #success-icon>
-      <CircleCheckIcon class="size-4 stroke-green-500!" />
+      <CircleCheckIcon class="size-4 text-green-500" />
     </template>
     <template #info-icon>
       <InfoIcon class="size-4" />
@@ -35,7 +35,7 @@ const props = defineProps<ToasterProps>();
       <TriangleAlertIcon class="size-4" />
     </template>
     <template #error-icon>
-      <OctagonXIcon class="size-4 stroke-red-500!" />
+      <OctagonXIcon class="size-4 text-red-500" />
     </template>
     <template #loading-icon>
       <div>

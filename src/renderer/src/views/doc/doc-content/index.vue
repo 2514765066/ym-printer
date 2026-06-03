@@ -49,7 +49,7 @@
             variant="destructive"
             @select="handleRemove(item.id)"
           >
-            <Trash2Icon class="stroke-destructive-foreground!" />
+            <Trash2Icon />
 
             <span> 删除 "当前文档"</span>
           </ContextMenuItem>

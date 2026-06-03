@@ -93,16 +93,17 @@ import { ElScrollbar } from "element-plus";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
-import { usePrinterStore } from "@/stores/usePrinterStore";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { useDocStore } from "@/stores/useDocStore";
 import { printAuto, printEven, printOdd } from "@/utils/print";
 import eventEmitter from "@/hooks/eventEmitter";
 import { close } from "../index";
 import { parserRange } from "@/utils/range";
 
-const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { selectedDoc, selectedDocID } = storeToRefs(useDocStore());
 const { getDoc } = useDocStore();
+const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
+
 const { handleSubmit, values } = useForm({
   validationSchema: toTypedSchema(
     z.object({
@@ -147,7 +148,7 @@ const { handleSubmit, values } = useForm({
   ),
   initialValues: {
     remark: "",
-    printer: selectedPrinter.value,
+    printer: selectedWorkspace.value.printer,
     count: 1,
     mode: "mix",
     range: "",

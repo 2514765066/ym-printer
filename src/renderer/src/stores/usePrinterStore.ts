@@ -12,16 +12,19 @@ export const usePrinterStore = defineStore("printer", () => {
     selectedPrinter.value = value;
   };
 
-  //初始化
-  const init = async () => {
-    printers.value = await ipcRenderer.invoke("getPrinters");
+  //获取打印机
+  const getPrinters = async () => {
+    const res = await ipcRenderer.invoke("getPrinters");
+
+    printers.value = res.sort();
   };
 
-  init();
+  getPrinters();
 
   return {
     printers,
     selectedPrinter,
     selectPrinter,
+    getPrinters,
   };
 });
