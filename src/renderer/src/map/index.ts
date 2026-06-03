@@ -51,7 +51,6 @@ export const repoMap = {
 
 export const updateMap = {
   checking: "正在检查更新...",
-  updateAvailable: "发现更新",
   updateNotAvailable: "已是最新版",
   downloading: (value: number | string) => `下载中: ${value}%`,
 };

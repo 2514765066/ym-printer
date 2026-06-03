@@ -1,7 +1,6 @@
 import { useConfigStore } from "@/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import MessageBox from "@/components/ui/message-box";
-import Loading from "@/components/loading";
 import { repoMap } from "@/map";
 
 type Status =
@@ -19,35 +18,31 @@ export const useUpdateStore = defineStore("update", () => {
   //状态
   const status = ref<Status>("init");
 
+  //最新版本
+  const latestVersion = ref("");
+
   //下载进度
   const downloadProgress = ref(0);
+
+  //安装更新
+  const installUpdate = async () => {
+    //安装
+    const res = await MessageBox.confirm({
+      title: "安装新版本",
+      description: "新版本下载完成,是否安装?",
+    });
+
+    //不安装
+    if (!res) {
+      return;
+    }
+
+    await ipcRenderer.invoke("installUpdate");
+  };
 
   //检查更新
   const checkUpdate = async () => {
     try {
-      const installUpdate = async () => {
-        //安装
-        const res = await MessageBox.confirm({
-          title: "安装新版本",
-          description: "新版本下载完成,是否安装?",
-        });
-
-        //不安装
-        if (!res) {
-          return;
-        }
-
-        Loading.service();
-
-        await ipcRenderer.invoke("installUpdate");
-      };
-
-      //如果下载完成就直接安装
-      if (status.value == "downloaded") {
-        installUpdate();
-        return;
-      }
-
       status.value = "checking";
 
       //更新地址
@@ -61,18 +56,7 @@ export const useUpdateStore = defineStore("update", () => {
         return;
       }
 
-      status.value = "updateAvailable";
-
-      const checkResult = await MessageBox.confirm({
-        title: "🎉发现新版本",
-        description: `发现新版本${res},是否更新?`,
-      });
-
-      //不更新
-      if (!checkResult) {
-        status.value = "init";
-        return;
-      }
+      latestVersion.value = res;
 
       status.value = "downloading";
 
@@ -111,6 +95,8 @@ export const useUpdateStore = defineStore("update", () => {
   return {
     status,
     downloadProgress,
+    latestVersion,
     checkUpdate,
+    installUpdate,
   };
 });
