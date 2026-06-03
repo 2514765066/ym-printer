@@ -9,19 +9,22 @@
         }"
         @click="handleClick"
       >
-        <div class="flex items-center gap-2">
+        <span class="text-sm truncate">{{ data.name }}</span>
+
+        <div class="flex items-center gap-1.5">
           <FolderOpenIcon
-            class="size-4"
+            class="size-4 stroke-muted-foreground!"
             v-if="selectedWorkspaceID == data.id"
           />
-          <FolderClosedIcon class="size-4" v-else />
 
-          <span class="text-sm truncate">{{ data.name }}</span>
+          <FolderClosedIcon class="size-4 stroke-muted-foreground!" v-else />
+
+          <span class="text-xs text-muted-foreground truncate"> · </span>
+
+          <span class="text-xs text-muted-foreground truncate">
+            {{ docCount }} 个文档
+          </span>
         </div>
-
-        <span class="text-xs text-muted-foreground truncate">
-          文档: {{ docCount }} &nbsp; 完成: {{ docFinishCount }}
-        </span>
       </section>
     </ContextMenuTrigger>
 
@@ -94,18 +97,6 @@ const props = defineProps<{
 const docCount = computed(() => {
   return docs.value.reduce((previousValue, currentValue) => {
     return previousValue + (currentValue.workspaceId === props.data.id ? 1 : 0);
-  }, 0);
-});
-
-const docFinishCount = computed(() => {
-  return docs.value.reduce((previousValue, currentValue) => {
-    return (
-      previousValue +
-      (currentValue.workspaceId === props.data.id &&
-      currentValue.status === "printed"
-        ? 1
-        : 0)
-    );
   }, 0);
 });
 
