@@ -1,5 +1,5 @@
 <template>
-  <Item class="opacity-60" size="sm" variant="outline">
+  <Item class="opacity-60" size="sm">
     <ItemMedia variant="image">
       <Spinner class="size-7 stroke-muted-foreground!" />
     </ItemMedia>

@@ -259,7 +259,9 @@ ipcMain.handle("getPrinterTask", (_, printer) => {
 });
 
 //删除打印机任务
-ipcMain.handle("removePrinterTask", (_, printer: string, id?: number) => {
+ipcMain.handle("removePrinterTask", (_, option) => {
+  const { printer, id } = option;
+
   const { promise, resolve } = Promise.withResolvers<boolean>();
 
   let cmd = `powershell -NoProfile "Remove-PrintJob -PrinterName '${printer}' -ID ${id}"`;

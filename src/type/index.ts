@@ -37,7 +37,7 @@ export type IpcEvent = {
   getPrinterTask: (printer: string) => PrinterTask[];
 
   //删除打印机任务
-  removePrinterTask: (printer: string, id?: number) => boolean;
+  removePrinterTask: (option: { printer: string; id?: number }) => boolean;
 };
 
 //文档信息
