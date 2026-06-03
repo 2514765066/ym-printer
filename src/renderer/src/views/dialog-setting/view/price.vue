@@ -17,7 +17,7 @@
             <NumberField
               :min="0"
               :max="999"
-              :step="0.05"
+              :step="0.01"
               :format-options="{
                 style: 'decimal',
                 minimumFractionDigits: 2,
@@ -45,7 +45,7 @@
             <NumberField
               :min="0"
               :max="999"
-              :step="0.05"
+              :step="0.01"
               :format-options="{
                 style: 'decimal',
                 minimumFractionDigits: 2,
@@ -79,7 +79,7 @@
             <NumberField
               :min="0"
               :max="999"
-              :step="0.05"
+              :step="0.01"
               :format-options="{
                 style: 'decimal',
                 minimumFractionDigits: 2,
@@ -107,7 +107,7 @@
             <NumberField
               :min="0"
               :max="999"
-              :step="0.05"
+              :step="0.01"
               :format-options="{
                 style: 'decimal',
                 minimumFractionDigits: 2,
