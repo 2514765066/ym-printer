@@ -1,6 +1,6 @@
 <template>
   <Item
-    class="dark:hover:bg-accent/30 has-aria-checked:border-primary has-aria-checked:bg-primary/10 has-aria-checked:hover:bg-primary/20! rounded-none"
+    class="hover:bg-accent/30 has-aria-checked:bg-primary/15 rounded-none"
     size="sm"
     as="label"
     :for="data.id"
@@ -100,7 +100,7 @@ defineEmits<{
 }>();
 
 const price = computed(() => {
-  return getPrice(props.data);
+  return getPrice(props.data).toFixed(2);
 });
 </script>
 

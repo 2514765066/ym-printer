@@ -1,7 +1,9 @@
 <template>
   <Item
     class="dark:hover:bg-accent/30 rounded-none"
-    :class="{ 'pointer-events-none opacity-60': status == 'price' }"
+    :class="{
+      'pointer-events-none! opacity-60': status == 'price',
+    }"
     size="sm"
     @click="$emit('print', data.id)"
   >

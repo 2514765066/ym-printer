@@ -4,8 +4,7 @@
       <section
         class="h-13 px-3 flex flex-col justify-center gap-1 rounded-[6px] hover:bg-accent/50 transition-colors"
         :class="{
-          'bg-accent/50':
-            route.path.includes('doc') && selectedWorkspaceID == data.id,
+          'bg-accent/50': isSelected,
         }"
         @click="handleClick"
       >
@@ -14,7 +13,7 @@
         <div class="flex items-center gap-1.5">
           <FolderOpenIcon
             class="size-4 stroke-muted-foreground!"
-            v-if="selectedWorkspaceID == data.id"
+            v-if="isSelected"
           />
 
           <FolderClosedIcon class="size-4 stroke-muted-foreground!" v-else />
@@ -98,6 +97,13 @@ const docCount = computed(() => {
   return docs.value.reduce((previousValue, currentValue) => {
     return previousValue + (currentValue.workspaceId === props.data.id ? 1 : 0);
   }, 0);
+});
+
+//是否选中
+const isSelected = computed(() => {
+  return (
+    route.path.includes("doc") && selectedWorkspaceID.value == props.data.id
+  );
 });
 
 //处理点击
