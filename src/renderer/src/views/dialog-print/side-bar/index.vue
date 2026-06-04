@@ -38,7 +38,7 @@
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="center" class="w-52">
-          <DropdownMenuItem @select="handlePrintFinish">
+          <DropdownMenuItem @click="handlePrintFinish">
             <CheckIcon />
 
             <span>标记为打印完成</span>
@@ -46,19 +46,19 @@
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem :disabled="!isSimplex" @select="handlePrintSimplex">
+          <DropdownMenuItem :disabled="!isSimplex" @click="handlePrintSimplex">
             <PrinterIcon />
 
             <span>打印 "单页"</span>
           </DropdownMenuItem>
 
-          <DropdownMenuItem :disabled="isSimplex" @select="handlePrintEven">
+          <DropdownMenuItem :disabled="isSimplex" @click="handlePrintEven">
             <PrinterIcon />
 
             <span>打印 "偶数页"</span>
           </DropdownMenuItem>
 
-          <DropdownMenuItem :disabled="isSimplex" @select="handlePrintOdd">
+          <DropdownMenuItem :disabled="isSimplex" @click="handlePrintOdd">
             <PrinterIcon />
 
             <span>打印 "奇数页"</span>
