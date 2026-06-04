@@ -19,9 +19,11 @@
 
     <ItemContent>
       <ItemTitle :title="data.name">
-        <span v-if="data.remark"> {{ data.remark }} | </span>
+        <span v-if="data.remark"> {{ data.remark }}</span>
 
-        {{ data.name }}
+        <span class="mx-1 text-muted-foreground" v-if="data.remark"> | </span>
+
+        <span> {{ data.name }}</span>
       </ItemTitle>
 
       <ItemDescription class="flex gap-4">
