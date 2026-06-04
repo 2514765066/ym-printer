@@ -12,12 +12,6 @@
       <span>取消全选</span>
     </Button>
 
-    <Button variant="ghost" @click="handleCancelPrice">
-      <XIcon />
-
-      <span>取消计价</span>
-    </Button>
-
     <span class="ml-auto mr-2 text-sm text-green-500">
       总价: {{ price }} 元
     </span>
@@ -26,8 +20,7 @@
 
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
-import { SquareCheckIcon, SquareIcon, XIcon } from "lucide-vue-next";
-import { setStatus } from "../index";
+import { SquareCheckIcon, SquareIcon } from "lucide-vue-next";
 import { cancelCheckAll, checkAll, checked } from "../check";
 import { useDocStore } from "@/stores/useDocStore";
 import { getPrice } from "@/utils/price";
@@ -59,13 +52,6 @@ const handleCheckAll = () => {
     .map(item => item.id);
 
   checkAll(ids);
-};
-
-//处理取消计价
-const handleCancelPrice = () => {
-  setStatus();
-
-  cancelCheckAll();
 };
 </script>
 

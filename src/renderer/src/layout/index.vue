@@ -27,7 +27,7 @@
         }"
         :min-size="50"
       >
-        <RouterView class="bg-background border rounded-lg" />
+        <RouterView class="bg-background border rounded-lg overflow-hidden" />
       </ResizablePanel>
     </ResizablePanelGroup>
   </div>

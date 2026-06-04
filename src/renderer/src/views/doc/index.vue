@@ -9,9 +9,11 @@
       <DocEmpty />
     </div>
 
-    <ElScrollbar class="flex-1" v-else>
+    <ElScrollbar class="flex-1" view-class="pb-12" v-else>
       <DocContent />
     </ElScrollbar>
+
+    <DocFooter v-if="hasDocs" />
   </section>
 </template>
 
@@ -20,6 +22,7 @@ import { ElScrollbar } from "element-plus";
 import DocHeader from "./doc-header/index.vue";
 import DocContent from "./doc-content/index.vue";
 import DocEmpty from "./doc-empty.vue";
+import DocFooter from "./doc-footer/index.vue";
 import { useDocStore } from "@/stores/useDocStore";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 
