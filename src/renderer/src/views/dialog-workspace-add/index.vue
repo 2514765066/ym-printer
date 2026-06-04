@@ -15,6 +15,12 @@
         />
       </Field>
 
+      <Field>
+        <FieldLabel>工作空间打印机</FieldLabel>
+
+        <Printer variant="outline" :iconVisible="false" v-model="printer" />
+      </Field>
+
       <DialogFooter>
         <Button @click="handleSubmit">确定</Button>
       </DialogFooter>
@@ -35,6 +41,7 @@ import {
 import { Input } from "@/components/ui/input";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import Printer from "@/components/printer.vue";
 
 const { addWorkspace } = useWorkspaceStore();
 
@@ -42,9 +49,12 @@ const open = ref(false);
 
 const name = ref("");
 
+const printer = ref("");
+
 const handleClose = () => {
   open.value = false;
   name.value = "";
+  printer.value = "";
 };
 
 //处理提交
@@ -53,7 +63,10 @@ const handleSubmit = () => {
     return;
   }
 
-  addWorkspace(name.value);
+  addWorkspace({
+    name: name.value,
+    printer: printer.value,
+  });
 
   handleClose();
 };

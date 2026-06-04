@@ -1,11 +1,13 @@
 <template>
   <Select v-model="model">
     <SelectTrigger
-      class="max-w-60 border-none! ring-0! bg-transparent! hover:bg-accent/50! transition-colors"
+      :class="`${variant == 'default' && 'border-none! ring-0! bg-transparent! hover:bg-accent/50! transition-colors'}`"
     >
-      <PrinterIcon />
+      <div class="flex items-center gap-2">
+        <PrinterIcon v-if="iconVisible" />
 
-      <SelectValue placeholder="请选择打印机" />
+        <SelectValue placeholder="请选择打印机" />
+      </div>
     </SelectTrigger>
 
     <SelectContent>
@@ -37,9 +39,22 @@ import { usePrinterStore } from "@/stores/usePrinterStore";
 import { PrinterIcon, RotateCwIcon } from "lucide-vue-next";
 import { Button } from "./ui/button";
 import { useLockFn } from "@/hooks/useLock";
+import { ClassValue } from "clsx";
 
 const { printers } = storeToRefs(usePrinterStore());
 const { getPrinters } = usePrinterStore();
+
+withDefaults(
+  defineProps<{
+    variant?: "default" | "outline";
+    class?: ClassValue;
+    iconVisible?: boolean;
+  }>(),
+  {
+    variant: "default",
+    iconVisible: true,
+  },
+);
 
 const model = defineModel<string>();
 

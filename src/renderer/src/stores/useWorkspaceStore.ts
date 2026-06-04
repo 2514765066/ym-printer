@@ -42,12 +42,12 @@ export const useWorkspaceStore = defineStore("workspace", () => {
   };
 
   //添加工作空间
-  const addWorkspace = (name: string) => {
+  const addWorkspace = (option: { name: string; printer: string }) => {
     const id = nanoid();
 
     workspace.value.push({
       id,
-      name,
+      ...option,
     });
 
     selectWorkspace(id);
