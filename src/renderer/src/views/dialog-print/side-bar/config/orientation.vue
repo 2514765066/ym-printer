@@ -3,28 +3,23 @@
     <Field :data-invalid="!!errors.length">
       <FieldLabel> 方向 </FieldLabel>
 
-      <Select
-        :name="field.name"
+      <ToggleGroup
+        class="w-full"
+        variant="outline"
+        type="single"
         :model-value="field.value"
-        @update:model-value="field.onChange"
+        @update:model-value="val => val && field.onChange(val)"
+        :aria-invalid="!!errors.length"
       >
-        <SelectTrigger
-          class="w-full bg-transparent!"
-          :aria-invalid="!!errors.length"
+        <ToggleGroupItem
+          class="flex-1"
+          v-for="item in Object.keys(orientationMap)"
+          :key="item"
+          :value="item"
         >
-          <SelectValue placeholder="请选择方向" />
-        </SelectTrigger>
-
-        <SelectContent>
-          <SelectItem
-            v-for="item in Object.keys(orientationMap)"
-            :key="item"
-            :value="item"
-          >
-            {{ orientationMap[item] }}
-          </SelectItem>
-        </SelectContent>
-      </Select>
+          {{ orientationMap[item] }}
+        </ToggleGroupItem>
+      </ToggleGroup>
 
       <FieldError :errors="errors" />
     </Field>
@@ -34,13 +29,7 @@
 <script setup lang="ts">
 import { Field as VeeField } from "vee-validate";
 import { Field, FieldLabel, FieldError } from "@/components/ui/field";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { orientationMap } from "@/map";
 </script>
 
