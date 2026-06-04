@@ -18,10 +18,10 @@ export const usePrinterTaskStore = defineStore("printer-task", () => {
   };
 
   //初始化任务
-  const startPrinterTasks = () => {
+  const startPrinterTasks = async () => {
     stopPrinterTasks();
 
-    getPrinterTasks();
+    await getPrinterTasks();
 
     timer = window.setInterval(getPrinterTasks, 3000);
   };

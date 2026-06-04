@@ -1,6 +1,6 @@
 export const useLockFn = <T extends unknown[]>(
   fn: (...args: T) => Promise<void>,
-): [Ref<boolean>, () => Promise<void>] => {
+): [Ref<boolean>, (...args: T) => Promise<void>] => {
   const locked = ref(false);
 
   return [

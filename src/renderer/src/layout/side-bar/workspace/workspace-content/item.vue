@@ -29,7 +29,7 @@
 
     <ContextMenuContent class="min-w-60">
       <ContextMenuItem @select="handleAdd">
-        <FilePlusCornerIcon />
+        <PlusIcon />
 
         <span> 添加文档 </span>
       </ContextMenuItem>
@@ -71,7 +71,7 @@ import {
 } from "@/components/ui/context-menu";
 import { Workspace } from "@/stores/useWorkspaceStore";
 import {
-  FilePlusCornerIcon,
+  PlusIcon,
   FolderClosedIcon,
   FolderOpenIcon,
   PencilLineIcon,

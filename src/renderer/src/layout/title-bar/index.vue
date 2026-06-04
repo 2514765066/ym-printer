@@ -51,7 +51,7 @@
           <img src="@/assets/icon.png" class="size-10" />
 
           <div class="flex flex-col">
-            <span class="text-sm">{{ appNameUpperCase }}</span>
+            <span class="text-sm">{{ productName }}</span>
 
             <span class="text-sm text-muted-foreground">
               当前版本: {{ appVersion }}
@@ -82,7 +82,7 @@ import {
   ArrowRightIcon,
 } from "lucide-vue-next";
 import { panelRef, toggleSilderbar } from "..";
-import { appNameUpperCase, appVersion } from "@/services/info";
+import { productName, appVersion } from "@/services/info";
 import { useUpdateStore } from "@/stores/useUpdateStore";
 
 const { latestVersion, status } = storeToRefs(useUpdateStore());

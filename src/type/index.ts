@@ -19,7 +19,7 @@ export type IpcEvent = {
   print: (config: Doc, range: number[]) => boolean;
 
   //打印测试也
-  printTest: (printer: string) => boolean;
+  printTest: (printer: string, cartridge: "color" | "black") => boolean;
 
   //更新进度
   updateProgress: (percent: number) => boolean;

@@ -148,7 +148,7 @@ const { handleSubmit, values } = useForm({
   ),
   initialValues: {
     remark: "",
-    printer: selectedWorkspace.value.printer,
+    printer: selectedWorkspace.value.printer || "",
     count: 1,
     mode: "mix",
     range: "",

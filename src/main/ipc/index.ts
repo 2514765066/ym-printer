@@ -4,7 +4,8 @@ import {
   cachePath,
   printerPath,
   resources,
-  testPath,
+  testBlackPath,
+  testColorPath,
   update,
   updatePath,
 } from "@/service/path";
@@ -153,12 +154,19 @@ ipcMain.handle("print", async (_, config, range) => {
 });
 
 //打印测试页面
-ipcMain.handle("printTest", (_, printer) => {
+ipcMain.handle("printTest", (_, printer, cartridge) => {
   const { promise, resolve, reject } = Promise.withResolvers<boolean>();
+
+  const testPath = cartridge == "color" ? testColorPath : testBlackPath;
 
   execFile(
     printerPath,
-    [`--docName=测试页`, `--file=${testPath}`, `--printer=${printer}`],
+    [
+      `--docName=测试页`,
+      `--file=${testPath}`,
+      `--printer=${printer}`,
+      `--cartridge=${cartridge}`,
+    ],
     e => {
       if (e && e.code != 3221225477) {
         reject(false);

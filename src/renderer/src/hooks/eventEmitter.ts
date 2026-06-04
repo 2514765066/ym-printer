@@ -3,6 +3,12 @@ import { Workspace } from "@/stores/useWorkspaceStore";
 // 定义事件到函数类型的映射
 type EventMap = {
   "success:show": (msg: string) => void;
+  "loading:show": (option: {
+    successMsg?: string;
+    errorMsg?: string;
+    loadingMsg?: string;
+    cb: () => Promise<void>;
+  }) => void;
   "error:show": (msg: string) => void;
 
   "dialog-print:show": () => void;

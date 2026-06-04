@@ -8,7 +8,8 @@ export const userDataPath = app.getPath("userData");
 export const resources = join(__dirname, "../../resources");
 
 //测试页路径
-export const testPath = join(resources, "test.pdf");
+export const testBlackPath = join(resources, "test-black.pdf");
+export const testColorPath = join(resources, "test-color.pdf");
 
 //缓存路径
 export const cachePath = join(resources, "cache");

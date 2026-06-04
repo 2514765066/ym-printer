@@ -10,27 +10,39 @@
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="center" class="w-52">
-        <DropdownMenuItem @select="handleReload">
-          <RotateCwIcon />
+        <DropdownMenuItem :disabled="reloadLock" @select="handleReload">
+          <Spinner v-if="reloadLock" />
 
-          <span>刷新打印机任务队列</span>
+          <RotateCwIcon v-else />
+
+          <span>刷新</span>
         </DropdownMenuItem>
 
-        <DropdownMenuItem :disabled="isPrinting" @select="handlePrintTest">
-          <Spinner v-if="isPrinting" />
+        <DropdownMenuItem
+          :disabled="printTestLock"
+          @select="handlePrintTest('black')"
+        >
+          <Spinner v-if="printTestLock" />
 
           <TestTubeDiagonalIcon v-else />
 
-          <span>打印测试页</span>
+          <span>打印测试页（黑白）</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem
+          :disabled="printTestLock"
+          @select="handlePrintTest('color')"
+        >
+          <Spinner v-if="printTestLock" />
+
+          <TestTubeDiagonalIcon v-else />
+
+          <span>打印测试页（彩色）</span>
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
-          :disabled="isPrinting"
-          variant="destructive"
-          @select="handleRemove"
-        >
+        <DropdownMenuItem variant="destructive" @select="handleRemove">
           <Trash2Icon />
 
           <span>删除打印机所有任务</span>
@@ -55,7 +67,6 @@ import eventEmitter from "@/hooks/eventEmitter";
 import { useLockFn } from "@/hooks/useLock";
 import { usePrinterStore } from "@/stores/usePrinterStore";
 import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
-import { useThrottleFn } from "@vueuse/core";
 import {
   MoreHorizontalIcon,
   RotateCwIcon,
@@ -67,20 +78,25 @@ const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { startPrinterTasks, removeAllPrinterTasks } = usePrinterTaskStore();
 
 //打印测试页
-const [isPrinting, handlePrintTest] = useLockFn(async () => {
-  await ipcRenderer.invoke("printTest", selectedPrinter.value);
+const [printTestLock, handlePrintTest] = useLockFn(
+  async (cartridge: "color" | "black") => {
+    await ipcRenderer.invoke("printTest", selectedPrinter.value, cartridge);
 
-  eventEmitter.emit("success:show", "打印测试页完成");
-});
+    eventEmitter.emit("success:show", "打印测试页完成");
+  },
+);
 
 //刷新打印任务列表
-const handleReload = useThrottleFn(startPrinterTasks, 1000);
+const [reloadLock, handleReload] = useLockFn(startPrinterTasks);
 
 //删除所有任务
 const handleRemove = async () => {
-  await removeAllPrinterTasks();
-
-  eventEmitter.emit("success:show", "已删除打印机所有任务");
+  eventEmitter.emit("loading:show", {
+    loadingMsg: "正在删除...",
+    successMsg: "已删除打印机所有任务",
+    errorMsg: "删除失败",
+    cb: removeAllPrinterTasks,
+  });
 };
 </script>
 

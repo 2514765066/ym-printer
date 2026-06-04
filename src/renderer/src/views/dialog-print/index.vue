@@ -1,10 +1,6 @@
 <template>
   <Sheet v-model:open="open">
-    <SheetContent
-      side="bottom"
-      class="h-[calc(100vh-44px)] p-0!"
-      @interact-outside="handleInteractOutside"
-    >
+    <SheetContent side="bottom" class="h-[calc(100vh-44px)] p-0!">
       <VisuallyHidden as-child>
         <SheetTitle>
           <SheetDescription />
@@ -34,14 +30,6 @@ import SideBar from "./side-bar/index.vue";
 import PreivewPdf from "@/components/preview-pdf/index.vue";
 import { VisuallyHidden } from "reka-ui";
 import { open } from "./index";
-
-const handleInteractOutside = (event: Event) => {
-  const target = event.target as HTMLElement;
-
-  if (target.closest("[data-sonner-toast]")) {
-    event.preventDefault();
-  }
-};
 </script>
 
 <style scoped lang="scss">

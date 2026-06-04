@@ -11,8 +11,10 @@
     </EmptyHeader>
 
     <EmptyContent>
-      <Button @click="handleReload">
-        <RotateCwIcon />
+      <Button :disabled="reloadLock" @click="handleReload">
+        <Spinner v-if="reloadLock" />
+
+        <RotateCwIcon v-else />
 
         <span>刷新</span>
       </Button>
@@ -31,11 +33,11 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { useThrottleFn } from "@vueuse/core";
 import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
+import { useLockFn } from "@/hooks/useLock";
+import { Spinner } from "@/components/ui/spinner";
 
 const { startPrinterTasks } = usePrinterTaskStore();
 
-//刷新打印任务列表
-const handleReload = useThrottleFn(startPrinterTasks, 1000);
+const [reloadLock, handleReload] = useLockFn(startPrinterTasks);
 </script>

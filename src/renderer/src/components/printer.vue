@@ -13,8 +13,8 @@
         {{ item }}
       </SelectItem>
 
-      <Button variant="ghost" :disabled="isLock" @click="handleRefresh">
-        <Spinner v-if="isLock" />
+      <Button variant="ghost" :disabled="refreshLock" @click="handleRefresh">
+        <Spinner v-if="refreshLock" />
 
         <RotateCwIcon v-else />
 
@@ -43,7 +43,7 @@ const { getPrinters } = usePrinterStore();
 
 const model = defineModel<string>();
 
-const [isLock, handleRefresh] = useLockFn(getPrinters);
+const [refreshLock, handleRefresh] = useLockFn(getPrinters);
 </script>
 
 <style scoped lang="scss"></style>

@@ -43,15 +43,12 @@ import {
 } from "@/components/ui/resizable";
 import SideBar from "./side-bar/index.vue";
 import TitleBar from "./title-bar/index.vue";
-import { useUpdateStore } from "@/stores/useUpdateStore";
 import vDrag from "@/hooks/useDrag";
 import { useDocStore } from "@/stores/useDocStore";
 import DragOverlay from "./drag-overlay .vue";
 //@ts-ignore
 import { panelRef } from ".";
 
-//修复进入必须进入设置界面才会检查更新的bug
-useUpdateStore();
 const { addDoc } = useDocStore();
 
 const isDragging = ref(false);

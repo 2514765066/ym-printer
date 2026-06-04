@@ -1,8 +1,13 @@
 <template>
   <section class="wh-full flex flex-col relative">
-    <DocHeader class="p-1" v-if="hasDocs" />
+    <DocHeader class="p-1 z-10" />
 
-    <DocEmpty v-if="!hasDocs" />
+    <div
+      class="wh-full absolute left-50 top-50 -translate-x-50 -translate-y-50"
+      v-if="!hasDocs"
+    >
+      <DocEmpty />
+    </div>
 
     <ElScrollbar class="flex-1" v-else>
       <DocContent />

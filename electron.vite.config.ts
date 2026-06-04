@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { defineConfig, externalizeDepsPlugin } from "electron-vite";
 import vue from "@vitejs/plugin-vue";
-import { version, name } from "./package.json";
+import { version, name, productName } from "./package.json";
 import AutoImport from "unplugin-auto-import/vite";
 import ElementPlus from "unplugin-element-plus/vite";
 import tailwindcss from "@tailwindcss/vite";
@@ -24,6 +24,7 @@ export default defineConfig({
     define: {
       __APP_VERSION__: JSON.stringify(version),
       __APP_NAME__: JSON.stringify(name),
+      __PRODUCT_NAME__: JSON.stringify(productName),
     },
     resolve: {
       alias: {
