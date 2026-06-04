@@ -17,6 +17,13 @@ export const checkAll = (ids: string[]) => {
   }
 };
 
+//取消选中
+export const cancelCheck = (ids: string[]) => {
+  for (const id of ids) {
+    checked.value.delete(id);
+  }
+};
+
 //取消全选
 export const cancelCheckAll = () => {
   checked.value.clear();

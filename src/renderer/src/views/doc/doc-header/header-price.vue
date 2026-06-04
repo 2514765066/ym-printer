@@ -6,7 +6,7 @@
       <span>全选文档</span>
     </Button>
 
-    <Button variant="ghost" @click="cancelCheckAll">
+    <Button variant="ghost" @click="handleCancelCheckAll">
       <SquareIcon />
 
       <span>取消全选</span>
@@ -21,10 +21,12 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
 import { SquareCheckIcon, SquareIcon } from "lucide-vue-next";
-import { cancelCheckAll, checkAll, checked } from "../check";
+import { cancelCheck, checkAll, checked } from "../check";
 import { useDocStore } from "@/stores/useDocStore";
 import { getPrice } from "@/utils/price";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 
+const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { docs } = storeToRefs(useDocStore());
 const { getDoc } = useDocStore();
 
@@ -48,10 +50,27 @@ const price = computed(() => {
 //全选
 const handleCheckAll = () => {
   const ids = docs.value
-    .filter(item => item.status == "printed")
+    .filter(
+      item =>
+        item.workspaceId == selectedWorkspaceID.value &&
+        item.status == "printed",
+    )
     .map(item => item.id);
 
   checkAll(ids);
+};
+
+//取消全选
+const handleCancelCheckAll = () => {
+  const ids = docs.value
+    .filter(
+      item =>
+        item.workspaceId == selectedWorkspaceID.value &&
+        item.status == "printed",
+    )
+    .map(item => item.id);
+
+  cancelCheck(ids);
 };
 </script>
 
