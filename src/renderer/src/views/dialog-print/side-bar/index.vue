@@ -182,12 +182,12 @@ const handlePrint = handleSubmit(async values => {
     printFinish() {
       doc.status = "printed";
 
-      eventEmitter.emit("success:show", "打印完成");
+      eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
     },
     printCancel() {
       doc.status = "init";
 
-      eventEmitter.emit("error:show", "取消打印");
+      eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
     },
     printBefore() {
       doc.status = "upload";
@@ -213,7 +213,7 @@ const handlePrintFinish = handleSubmit(async values => {
 
   doc.status = "printed";
 
-  eventEmitter.emit("success:show", `${doc.name} 标记为打印完成`);
+  eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
 });
 
 //打印单页
@@ -228,7 +228,7 @@ const handlePrintSimplex = handleSubmit(async values => {
 
   isPrinting.value = false;
 
-  eventEmitter.emit("success:show", "打印单页完成");
+  eventEmitter.emit("success:show", `打印单页完成 "${doc.name}"`);
 });
 
 //打印偶数页
@@ -243,7 +243,7 @@ const handlePrintEven = handleSubmit(async values => {
 
   isPrinting.value = false;
 
-  eventEmitter.emit("success:show", "打印偶数页完成");
+  eventEmitter.emit("success:show", `打印偶数页完成 "${doc.name}"`);
 });
 
 //打印奇数页
@@ -254,11 +254,11 @@ const handlePrintOdd = handleSubmit(async values => {
 
   isPrinting.value = true;
 
-  await printOdd(toRaw(doc));
+  await printOdd(doc);
 
   isPrinting.value = false;
 
-  eventEmitter.emit("success:show", "打印奇数页完成");
+  eventEmitter.emit("success:show", `打印奇数页完成 "${doc.name}"`);
 });
 </script>
 

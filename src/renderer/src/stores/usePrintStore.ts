@@ -20,8 +20,6 @@ export const printPromise = (config: Doc) => {
 };
 
 export const printNext = (id: string) => {
-  console.log(map, id, map.get(id));
-
   map.get(id)?.next();
 };
 

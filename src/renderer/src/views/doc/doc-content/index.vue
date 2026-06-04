@@ -17,7 +17,10 @@
         </ContextMenuTrigger>
 
         <ContextMenuContent class="w-52">
-          <ContextMenuItem @select="handlePrint(item.id)">
+          <ContextMenuItem
+            :disabled="status != 'default'"
+            @select="handlePrint(item.id)"
+          >
             <PrinterIcon />
 
             <span> 打印 "当前文档"</span>
@@ -126,7 +129,7 @@ const handlePrint = (id: string) => {
 const handleRemove = (id: string) => {
   removeDoc(id);
 
-  eventEmitter.emit("success:show", "已删除文档");
+  eventEmitter.emit("success:show", `已删除文档`);
 };
 </script>
 
