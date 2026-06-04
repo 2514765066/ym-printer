@@ -8,6 +8,11 @@ const api = {
     shell.openExternal(url);
   },
 
+  //打开文件
+  startApp(path: string) {
+    shell.openPath(path);
+  },
+
   //获取文件路径
   getFilePath(files: File[]) {
     const res: string[] = [];

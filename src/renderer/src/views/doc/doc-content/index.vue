@@ -16,7 +16,7 @@
           />
         </ContextMenuTrigger>
 
-        <ContextMenuContent class="w-52">
+        <ContextMenuContent class="min-w-60">
           <ContextMenuItem
             :disabled="status != 'default'"
             @select="handlePrint(item.id)"
@@ -24,6 +24,15 @@
             <PrinterIcon />
 
             <span> 打印 "当前文档"</span>
+          </ContextMenuItem>
+
+          <ContextMenuItem
+            :disabled="status != 'default'"
+            @select="handleOpen(item.path)"
+          >
+            <PlayIcon />
+
+            <span> 用默认方式打开 "当前文档"</span>
           </ContextMenuItem>
 
           <ContextMenuSub>
@@ -82,7 +91,12 @@ import { useDocStore } from "@/stores/useDocStore";
 import ItemLoading from "./item-loading.vue";
 import { VueDraggable } from "vue-draggable-plus";
 import { status } from "..";
-import { CornerUpRightIcon, PrinterIcon, Trash2Icon } from "lucide-vue-next";
+import {
+  CornerUpRightIcon,
+  PrinterIcon,
+  Trash2Icon,
+  PlayIcon,
+} from "lucide-vue-next";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { Doc } from "@type";
@@ -123,6 +137,11 @@ const handlePrint = (id: string) => {
   selectDoc(id);
 
   eventEmitter.emit("dialog-print:show");
+};
+
+//打开文档
+const handleOpen = (path: string) => {
+  api.startApp(path);
 };
 
 //删除文档
