@@ -1,6 +1,10 @@
 <template>
   <Sheet v-model:open="open">
-    <SheetContent side="bottom" class="h-[calc(100vh-44px)] p-0!">
+    <SheetContent
+      side="bottom"
+      class="h-[calc(100vh-44px)] p-0!"
+      @open-auto-focus.prevent
+    >
       <VisuallyHidden as-child>
         <SheetTitle>
           <SheetDescription />

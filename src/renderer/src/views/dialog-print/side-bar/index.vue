@@ -1,38 +1,17 @@
 <template>
-  <form class="flex flex-col border-r">
-    <ElScrollbar view-class="p-3">
-      <FieldGroup>
-        <Remark />
-
-        <Printer />
-
-        <Count />
-
-        <Mode />
-
-        <Range />
-
-        <Cardridge />
-
-        <Orientation />
-      </FieldGroup>
-    </ElScrollbar>
+  <fieldset :disabled="disabled" class="flex flex-col">
+    <PrintConfig />
 
     <ButtonGroup class="w-full mt-auto p-3">
-      <Button
-        type="button"
-        class="flex-1"
-        :disabled="isPrinting"
-        @click="handlePrint"
-      >
-        <Spinner v-if="isPrinting" />
+      <Button type="button" class="flex-1" @click="handlePrint">
+        <Spinner v-if="disabled" />
 
-        {{ isPrinting ? "正在上传" : "开始打印" }}
+        {{ disabled ? "正在打印" : "开始打印" }}
       </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <Button size="icon" :disabled="isPrinting">
+          <Button size="icon">
             <MoreHorizontalIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -66,10 +45,11 @@
         </DropdownMenuContent>
       </DropdownMenu>
     </ButtonGroup>
-  </form>
+  </fieldset>
 </template>
 
 <script setup lang="ts">
+import PrintConfig from "./print-config/index.vue";
 import { Spinner } from "@/components/ui/spinner";
 import { CheckIcon, MoreHorizontalIcon, PrinterIcon } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
@@ -81,15 +61,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import Remark from "./config/remark.vue";
-import Printer from "./config/printer.vue";
-import Count from "./config/count.vue";
-import Mode from "./config/mode.vue";
-import Range from "./config/range.vue";
-import Cardridge from "./config/cardridge.vue";
-import Orientation from "./config/orientation.vue";
-import { FieldGroup } from "@/components/ui/field";
-import { ElScrollbar } from "element-plus";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
@@ -157,13 +128,20 @@ const { handleSubmit, values } = useForm({
   },
 });
 
-console.log(values);
-
 //是否再打印
 const isPrinting = ref(false);
 
 //是否是单打
 const isSimplex = computed(() => values.mode == "simplex");
+
+//是否禁用sidebar
+const disabled = computed(() => {
+  return (
+    isPrinting.value ||
+    selectedDoc.value.status == "printing" ||
+    selectedDoc.value.status == "upload"
+  );
+});
 
 //打印
 const handlePrint = handleSubmit(async values => {

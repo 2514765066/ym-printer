@@ -70,7 +70,7 @@ export type Doc = {
   remark: string;
 
   //打印机id
-  printer?: string;
+  printer: string;
 
   //打印数量
   count: number;

@@ -4,7 +4,6 @@
       <FieldLabel> 打印机 </FieldLabel>
 
       <Select
-        :name="field.name"
         :model-value="field.value"
         @update:model-value="
           e => {

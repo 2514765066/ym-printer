@@ -136,3 +136,7 @@
 .wh-full {
   @apply w-full h-full;
 }
+
+.disabled {
+  @apply opacity-60 pointer-events-none!;
+}

@@ -2,7 +2,7 @@
   <Item
     class="dark:hover:bg-accent/30 rounded-none"
     :class="{
-      'pointer-events-none! opacity-60': status == 'price',
+      disabled: status == 'price',
     }"
     size="sm"
     @click="$emit('print', data.id)"
