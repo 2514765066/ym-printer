@@ -83,8 +83,10 @@ const { handleSubmit, values } = useForm({
     z.object({
       remark: z.string(),
       printer: z.string().min(1, "请选择打印机"),
-      count: z.number().min(1, "最少1份").max(999, "最大999份"),
-      mode: z.string("请选择打印模式"),
+      count: z.number({ message: "" }).min(1, "最少1份").max(999, "最大999份"),
+      mode: z.string({
+        message: "请选择打印模式",
+      }),
       range: z.string().superRefine((value, ctx) => {
         //允许空值
         if (value === "") {
@@ -95,7 +97,10 @@ const { handleSubmit, values } = useForm({
         const reg = /^(\d*?-\d*?|\d+)([,，](\d*?-\d*?|\d+))*$/;
 
         if (!reg.test(value)) {
-          ctx.addIssue("格式有误");
+          ctx.addIssue({
+            code: "custom",
+            message: "格式有误",
+          });
           return;
         }
 
@@ -113,7 +118,10 @@ const { handleSubmit, values } = useForm({
         });
 
         if (isOutOfRange) {
-          ctx.addIssue("超出打印范围");
+          ctx.addIssue({
+            code: "custom",
+            message: "超出打印范围",
+          });
         }
       }),
       cartridge: z.string().min(1, "请选择墨盒颜色"),

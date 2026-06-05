@@ -1,34 +1,39 @@
 <template>
-  <VeeField v-slot="{ field, errors }" name="orientation">
-    <Field :data-invalid="!!errors.length">
-      <FieldLabel> 方向 </FieldLabel>
+  <FormField v-slot="{ componentField }" name="orientation">
+    <FormItem>
+      <FormLabel>方向</FormLabel>
 
-      <ToggleGroup
-        class="w-full"
-        variant="outline"
-        type="single"
-        :model-value="field.value"
-        @update:model-value="val => val && field.onChange(val)"
-        :aria-invalid="!!errors.length"
-      >
-        <ToggleGroupItem
-          class="flex-1"
-          v-for="item in Object.keys(orientationMap)"
-          :key="item"
-          :value="item"
+      <FormControl>
+        <ToggleGroup
+          class="w-full"
+          variant="outline"
+          type="single"
+          v-bind="componentField"
         >
-          {{ orientationMap[item] }}
-        </ToggleGroupItem>
-      </ToggleGroup>
+          <ToggleGroupItem
+            class="flex-1"
+            v-for="item in Object.keys(orientationMap)"
+            :key="item"
+            :value="item"
+          >
+            {{ orientationMap[item] }}
+          </ToggleGroupItem>
+        </ToggleGroup>
+      </FormControl>
 
-      <FieldError :errors="errors" />
-    </Field>
-  </VeeField>
+      <FormMessage />
+    </FormItem>
+  </FormField>
 </template>
 
 <script setup lang="ts">
-import { Field as VeeField } from "vee-validate";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { orientationMap } from "@/map";
 </script>

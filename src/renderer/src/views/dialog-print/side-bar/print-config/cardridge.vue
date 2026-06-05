@@ -1,34 +1,39 @@
 <template>
-  <VeeField v-slot="{ field, errors }" name="cartridge">
-    <Field :data-invalid="!!errors.length">
-      <FieldLabel> 墨盒颜色 </FieldLabel>
+  <FormField v-slot="{ componentField }" name="cartridge">
+    <FormItem>
+      <FormLabel>墨盒颜色</FormLabel>
 
-      <ToggleGroup
-        class="w-full"
-        variant="outline"
-        type="single"
-        :model-value="field.value"
-        @update:model-value="val => val && field.onChange(val)"
-        :aria-invalid="!!errors.length"
-      >
-        <ToggleGroupItem
-          class="flex-1"
-          v-for="item in Object.keys(cartridgeMap)"
-          :key="item"
-          :value="item"
+      <FormControl>
+        <ToggleGroup
+          class="w-full"
+          variant="outline"
+          type="single"
+          v-bind="componentField"
         >
-          {{ cartridgeMap[item] }}
-        </ToggleGroupItem>
-      </ToggleGroup>
+          <ToggleGroupItem
+            class="flex-1"
+            v-for="item in Object.keys(cartridgeMap)"
+            :key="item"
+            :value="item"
+          >
+            {{ cartridgeMap[item] }}
+          </ToggleGroupItem>
+        </ToggleGroup>
+      </FormControl>
 
-      <FieldError :errors="errors" />
-    </Field>
-  </VeeField>
+      <FormMessage />
+    </FormItem>
+  </FormField>
 </template>
 
 <script setup lang="ts">
-import { Field as VeeField } from "vee-validate";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cartridgeMap } from "@/map";
 </script>

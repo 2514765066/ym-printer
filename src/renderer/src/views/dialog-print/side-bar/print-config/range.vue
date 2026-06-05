@@ -1,23 +1,29 @@
 <template>
-  <VeeField v-slot="{ field, errors }" name="range">
-    <Field :data-invalid="!!errors.length">
-      <FieldLabel> 打印范围 </FieldLabel>
+  <FormField v-slot="{ componentField }" name="range">
+    <FormItem>
+      <FormLabel>打印范围</FormLabel>
 
-      <Input
-        class="bg-transparent!"
-        placeholder="格式 1,1-,-10,-"
-        :model-value="field.value"
-        @update:model-value="field.onChange"
-      />
-    </Field>
+      <FormControl>
+        <Input
+          class="bg-transparent!"
+          placeholder="格式 1,1-,-10,-"
+          v-bind="componentField"
+        />
+      </FormControl>
 
-    <FieldError :errors="errors" />
-  </VeeField>
+      <FormMessage />
+    </FormItem>
+  </FormField>
 </template>
 
 <script setup lang="ts">
-import { Field as VeeField } from "vee-validate";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 </script>
 

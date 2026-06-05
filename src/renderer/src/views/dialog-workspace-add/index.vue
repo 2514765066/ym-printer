@@ -1,31 +1,24 @@
 <template>
   <Dialog v-model:open="open">
-    <DialogContent @close-auto-focus="handleClose">
+    <DialogContent
+      :aria-describedby="undefined"
+      @close-auto-focus="handleClose"
+    >
       <DialogHeader>
         <DialogTitle>新建工作空间</DialogTitle>
       </DialogHeader>
 
-      <Field>
-        <FieldLabel>工作空间名称</FieldLabel>
-
-        <Input v-model="name" placeholder="请输入工作空间名称(最大10字符)" />
-      </Field>
-
-      <Field>
-        <FieldLabel>工作空间打印机</FieldLabel>
-
-        <Printer variant="outline" :iconVisible="false" v-model="printer" />
-      </Field>
+      <Form />
 
       <DialogFooter>
-        <Button @click="handleSubmit">确定</Button>
+        <Button @click="handleClick">确定</Button>
       </DialogFooter>
     </DialogContent>
   </Dialog>
 </template>
 
 <script setup lang="ts">
-import { Field, FieldLabel } from "@/components/ui/field";
+import Form from "./form/index.vue";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -34,38 +27,47 @@ import {
   DialogHeader,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import Printer from "@/components/printer.vue";
+import { useForm } from "vee-validate";
+import * as z from "zod";
+import { toTypedSchema } from "@vee-validate/zod";
 
 const { addWorkspace } = useWorkspaceStore();
 
 const open = ref(false);
 
-const name = ref("");
-
-const printer = ref("");
+const { handleSubmit } = useForm({
+  validationSchema: toTypedSchema(
+    z.object({
+      name: z
+        .string({
+          message: "请输入名称",
+        })
+        .min(1, "请输入名称"),
+      printer: z
+        .string({
+          message: "请选择打印机",
+        })
+        .min(1, "请选择打印机"),
+    }),
+  ),
+  initialValues: {
+    name: "",
+    printer: "",
+  },
+});
 
 const handleClose = () => {
   open.value = false;
-  name.value = "";
-  printer.value = "";
 };
 
 //处理提交
-const handleSubmit = () => {
-  if (name.value == "") {
-    return;
-  }
-
-  addWorkspace({
-    name: name.value,
-    printer: printer.value,
-  });
+const handleClick = handleSubmit(values => {
+  addWorkspace(values);
 
   handleClose();
-};
+});
 
 eventEmitter.on("dialog-workspace-add:show", () => {
   open.value = true;

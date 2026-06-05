@@ -1,31 +1,37 @@
 <template>
-  <VeeField v-slot="{ field, errors }" name="count">
-    <Field :data-invalid="!!errors.length">
-      <FieldLabel> 打印份数 </FieldLabel>
+  <FormField v-slot="{ componentField }" name="count">
+    <FormItem>
+      <FormLabel>打印份数</FormLabel>
 
-      <NumberField
-        class="w-full"
-        :default-value="1"
-        :min="1"
-        :max="999"
-        :model-value="field.value"
-        @update:model-value="field.onChange"
-      >
-        <NumberFieldContent class="bg-transparent!">
-          <NumberFieldDecrement />
-          <NumberFieldInput />
-          <NumberFieldIncrement />
-        </NumberFieldContent>
-      </NumberField>
+      <FormControl>
+        <NumberField
+          class="w-full"
+          :default-value="1"
+          :min="1"
+          :max="999"
+          v-bind="componentField"
+        >
+          <NumberFieldContent class="bg-transparent!">
+            <NumberFieldDecrement />
+            <NumberFieldInput />
+            <NumberFieldIncrement />
+          </NumberFieldContent>
+        </NumberField>
+      </FormControl>
 
-      <FieldError :errors="errors" />
-    </Field>
-  </VeeField>
+      <FormMessage />
+    </FormItem>
+  </FormField>
 </template>
 
 <script setup lang="ts">
-import { Field as VeeField } from "vee-validate";
-import { Field, FieldLabel, FieldError } from "@/components/ui/field";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   NumberField,
   NumberFieldContent,

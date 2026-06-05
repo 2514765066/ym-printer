@@ -1,14 +1,13 @@
 <template>
   <Sheet v-model:open="open">
     <SheetContent
+      :aria-describedby="undefined"
       side="bottom"
       class="h-[calc(100vh-44px)] p-0!"
       @open-auto-focus.prevent
     >
       <VisuallyHidden as-child>
-        <SheetTitle>
-          <SheetDescription />
-        </SheetTitle>
+        <SheetTitle> </SheetTitle>
       </VisuallyHidden>
 
       <div class="print-preview wh-full grid bg-sidebar">
@@ -42,12 +41,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import TitleBar from "./title-bar/index.vue";
 import SideBar from "./side-bar/index.vue";
 import Preview from "./preview/index.vue";

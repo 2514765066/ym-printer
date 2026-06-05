@@ -1,22 +1,30 @@
 <template>
-  <VeeField v-slot="{ field }" name="remark">
-    <Field>
-      <FieldLabel> 备注 </FieldLabel>
+  <FormField v-slot="{ componentField }" name="remark">
+    <FormItem>
+      <FormLabel>备注</FormLabel>
 
-      <Input
-        class="bg-transparent!"
-        placeholder="当前打印任务的备注"
-        :model-value="field.value"
-        @update:model-value="field.onChange"
-      />
-    </Field>
-  </VeeField>
+      <FormControl>
+        <Input
+          class="bg-transparent!"
+          placeholder="当前打印任务的备注"
+          v-bind="componentField"
+        />
+      </FormControl>
+
+      <FormMessage />
+    </FormItem>
+  </FormField>
 </template>
 
 <script setup lang="ts">
-import { Field as VeeField } from "vee-validate";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Field, FieldLabel } from "@/components/ui/field";
 </script>
 
 <style scoped lang="scss"></style>
