@@ -84,9 +84,10 @@ import {
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
 } from "@/components/ui/context-menu";
-import Item from "./item.vue";
+import ItemInit from "./item-init.vue";
 import ItemPrinting from "./item-printing.vue";
 import ItemPrinted from "./item-printed.vue";
+import ItemPrepare from "./item-prepare.vue";
 import { useDocStore } from "@/stores/useDocStore";
 import ItemLoading from "./item-loading.vue";
 import { VueDraggable } from "vue-draggable-plus";
@@ -107,10 +108,11 @@ const { workspace, selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 const map = {
   loading: ItemLoading,
-  init: Item,
+  init: ItemInit,
   upload: ItemPrinting,
   printing: ItemPrinting,
   printed: ItemPrinted,
+  prepare: ItemPrepare,
 };
 
 const filterDocs = computed(() => {

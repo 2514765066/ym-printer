@@ -5,7 +5,7 @@
     @click="$emit('print', data.id)"
   >
     <ItemMedia variant="image">
-      <Spinner class="size-7 text-muted-foreground" />
+      <FileIcon :size="36" :ext="data.ext" />
     </ItemMedia>
 
     <ItemContent>
@@ -61,14 +61,10 @@
     </ItemContent>
 
     <ItemActions>
-      <span class="text-muted-foreground" v-if="data.status == 'upload'">
-        正在上传...
-      </span>
-
-      <ButtonGroup v-if="data.status == 'printing'">
-        <Tooltip label="继续打印奇数页">
+      <ButtonGroup>
+        <Tooltip label="准备就绪，开始打印">
           <Button variant="outline" size="sm" @click.stop="handleNext">
-            <PrinterIcon /> 继续
+            <PrinterIcon /> 开始
           </Button>
         </Tooltip>
 
@@ -93,7 +89,7 @@ import {
 } from "@/components/ui/item";
 import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
-import { Spinner } from "@/components/ui/spinner";
+import FileIcon from "@/components/file-icon.vue";
 import { Button } from "@/components/ui/button";
 import { PrinterIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";

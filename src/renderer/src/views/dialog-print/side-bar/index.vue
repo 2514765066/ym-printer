@@ -3,11 +3,13 @@
     <PrintConfig />
 
     <ButtonGroup class="w-full mt-auto px-3">
-      <Button type="button" class="flex-1" @click="handlePrint">
+      <Button class="flex-1" @click="handlePrint">
         <Spinner v-if="disabled" />
 
         {{ disabled ? "正在打印" : "开始打印" }}
       </Button>
+
+      <Button class="flex-1" @click="handlePrePrint"> 预备打印 </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
@@ -70,6 +72,7 @@ import { printAuto, printEven, printOdd } from "@/utils/print";
 import eventEmitter from "@/hooks/eventEmitter";
 import { close } from "../index";
 import { parserRange } from "@/utils/range";
+import { printPromise } from "@/stores/usePrintStore";
 
 const { selectedDoc, selectedDocID } = storeToRefs(useDocStore());
 const { getDoc } = useDocStore();
@@ -155,6 +158,52 @@ const handlePrint = handleSubmit(async values => {
   doc.formatRange = parserRange(selectedDoc.value);
 
   doc.status = "printing";
+
+  isPrinting.value = true;
+
+  await printAuto(toRaw(doc), {
+    printFinish() {
+      doc.status = "printed";
+
+      eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
+    },
+    printCancel() {
+      doc.status = "init";
+
+      eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
+    },
+    printBefore() {
+      doc.status = "upload";
+    },
+    printAfter() {
+      doc.status = "printing";
+    },
+  });
+
+  isPrinting.value = false;
+});
+
+//预备打印
+const handlePrePrint = handleSubmit(async values => {
+  //关闭弹窗
+  close();
+
+  const doc = getDoc(selectedDocID.value)!;
+
+  Object.assign(doc, values);
+
+  doc.formatRange = parserRange(selectedDoc.value);
+
+  doc.status = "prepare";
+
+  const result = await printPromise(doc);
+
+  if (!result) {
+    doc.status = "init";
+
+    eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
+    return;
+  }
 
   isPrinting.value = true;
 
