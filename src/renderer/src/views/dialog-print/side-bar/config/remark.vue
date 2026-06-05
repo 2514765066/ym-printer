@@ -6,7 +6,8 @@
       <Input
         class="bg-transparent!"
         placeholder="当前打印任务的备注"
-        v-bind="field"
+        :model-value="field.value"
+        @update:model-value="field.onChange"
       />
     </Field>
   </VeeField>

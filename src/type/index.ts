@@ -70,52 +70,25 @@ export type Doc = {
   remark: string;
 
   //打印机id
-  printer: string;
+  printer?: string;
 
   //打印数量
   count: number;
 
   //模式
-  mode: "simplex" | "duplex" | "mix";
+  mode: "simplex" | "duplex" | "mix" | "";
 
   //范围
   range: string;
 
   //墨盒类型
-  cartridge: "black" | "color";
+  cartridge: "black" | "color" | "";
 
   //方向
-  orientation: "portrait" | "landscape";
+  orientation: "portrait" | "landscape" | "";
 
   //格式化范围
   formatRange?: number[];
-};
-
-//完成的文档信息
-export type DocFinish = Doc & DocPrintConfig;
-
-//打印配置
-export type DocPrintConfig = {
-  //备注
-  remark: string;
-
-  //打印机id
-  printer: string;
-
-  //打印数量
-  count: number;
-
-  //模式
-  mode: "simplex" | "duplex" | "mix";
-
-  //范围
-  range: string;
-
-  //墨盒类型
-  cartridge: "black" | "color";
-
-  //方向
-  orientation: "portrait" | "landscape";
 };
 
 //打印任务

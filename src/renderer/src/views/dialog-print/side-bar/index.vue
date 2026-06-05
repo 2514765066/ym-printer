@@ -147,15 +147,17 @@ const { handleSubmit, values } = useForm({
     }),
   ),
   initialValues: {
-    remark: "",
-    printer: selectedWorkspace.value.printer || "",
-    count: 1,
-    mode: "mix",
-    range: "",
-    cartridge: "black",
-    orientation: "portrait",
+    remark: selectedDoc.value.remark || "",
+    printer: selectedDoc.value.printer || selectedWorkspace.value.printer || "",
+    count: selectedDoc.value.count || 1,
+    mode: selectedDoc.value.mode || "mix",
+    range: selectedDoc.value.range || "",
+    cartridge: selectedDoc.value.cartridge || "black",
+    orientation: selectedDoc.value.orientation || "portrait",
   },
 });
+
+console.log(values);
 
 //是否再打印
 const isPrinting = ref(false);

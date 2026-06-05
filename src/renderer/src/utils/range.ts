@@ -1,4 +1,4 @@
-import { DocFinish } from "@type";
+import { Doc } from "@type";
 
 //解析单独的范围
 const formatRange = (range: string, max: number) => {
@@ -71,7 +71,7 @@ const modeMap = {
 };
 
 //解析范围
-export const parserRange = (config: DocFinish) => {
+export const parserRange = (config: Doc) => {
   const range = config.range || "-";
 
   const parts = range

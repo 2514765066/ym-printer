@@ -6,8 +6,8 @@
       <Input
         class="bg-transparent!"
         placeholder="格式 1,1-,-10,-"
-        v-bind="field"
-        :aria-invalid="!!errors.length"
+        :model-value="field.value"
+        @update:model-value="field.onChange"
       />
     </Field>
 

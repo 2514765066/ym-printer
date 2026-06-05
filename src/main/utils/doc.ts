@@ -29,11 +29,11 @@ export const parseDoc = async (option: {
     status: "loading",
     remark: "",
     printer: "",
-    count: 0,
-    mode: "mix",
+    count: 1,
+    mode: "",
     range: "",
-    cartridge: "black",
-    orientation: "portrait",
+    cartridge: "",
+    orientation: "",
     workspaceId,
   };
 };
