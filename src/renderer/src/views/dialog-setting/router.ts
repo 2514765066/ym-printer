@@ -7,10 +7,12 @@ import Price from "./view/price.vue";
 import { Component } from "vue";
 import Update from "./view/update.vue";
 import About from "./view/about.vue";
+import { appVersion } from "@/services/info.js";
 
 export interface Route {
   id: string;
   name: string;
+  description?: string;
   icon: Component;
   component: Component;
 }
@@ -31,6 +33,7 @@ const router: Route[] = [
   {
     id: "about",
     name: "关于",
+    description: `v${appVersion}`,
     icon: CircleAlertIcon,
     component: About,
   },
