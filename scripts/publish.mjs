@@ -25,7 +25,7 @@ const githubRelease = useGithubReleases({
 
 //获取更新内容
 const getDoc = version => {
-  const url = join(__dirname, "../release-note.md");
+  const url = join(__dirname, "../docs/release-note.md");
 
   const doc = readFileSync(url).toString();
 

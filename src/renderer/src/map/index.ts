@@ -37,14 +37,14 @@ export const repoMap = {
     label: "Gitee",
     repoUrl: `https://gitee.com/yxingyus/${appName}`,
     updateUrl: `https://gitee.com/api/v5/repos/yxingyus/${appName}/releases/latest`,
-    updateContentUrl: `https://gitee.com/yxingyus/${appName}/blob/main/release-note.md`,
+    updateContentUrl: `https://gitee.com/yxingyus/${appName}/blob/main/docs/release-note.md`,
     issueUrl: `https://gitee.com/yxingyus/${appName}/issues`,
   },
   github: {
     label: "GitHub",
     repoUrl: `https://github.com/2514765066/${appName}`,
     updateUrl: `https://api.github.com/repos/2514765066/${appName}/releases/latest`,
-    updateContentUrl: `https://github.com/2514765066/${appName}/blob/main/release-note.md`,
+    updateContentUrl: `https://github.com/2514765066/${appName}/blob/main/docs/release-note.md`,
     issueUrl: `https://github.com/2514765066/${appName}/issues`,
   },
 };
