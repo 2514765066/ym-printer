@@ -16,7 +16,7 @@ const createConfig = () => {
     colorDuplexPrice: 0.35,
 
     //自动更新
-    autoUpdate: true,
+    autoUpdate: false,
 
     //选中的仓库
     repo: "gitee",

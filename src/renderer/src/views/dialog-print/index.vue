@@ -7,7 +7,7 @@
       @open-auto-focus.prevent
     >
       <VisuallyHidden as-child>
-        <SheetTitle> </SheetTitle>
+        <SheetTitle />
       </VisuallyHidden>
 
       <div class="print-preview wh-full grid bg-sidebar">

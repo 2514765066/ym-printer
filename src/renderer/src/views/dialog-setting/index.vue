@@ -1,34 +1,48 @@
 <template>
   <Dialog v-model:open="open">
     <DialogContent
+      :aria-describedby="undefined"
       class="max-w-none! w-[90vw] h-[calc(100vh-100px)] p-0! overflow-hidden border-[1.5px]"
     >
       <VisuallyHidden as-child>
-        <DialogTitle>
-          <DialogDescription />
-        </DialogTitle>
+        <DialogTitle />
       </VisuallyHidden>
 
-      <div class="dialog-content wh-full grid">
-        <SideBar class="col-start-1 col-end-2 row-start-1 row-end-3" />
+      <div class="settings wh-full grid bg-sidebar">
+        <TitleBar />
 
-        <component
-          class="col-start-2 col-end-3 row-start-2 row-end-3"
-          :is="selectedRoute?.component"
-        />
+        <ResizablePanelGroup
+          class="pb-2"
+          direction="horizontal"
+          autoSaveId="settings-layout"
+        >
+          <ResizablePanel :min-size="160" :default-size="260" size-unit="px">
+            <SideBar class="h-full" />
+          </ResizablePanel>
+
+          <ResizableHandle class="bg-transparent!" />
+
+          <ResizablePanel class="pr-2" :min-size="50">
+            <component
+              class="h-full bg-background border rounded-lg overflow-hidden"
+              :is="selectedRoute?.component"
+            />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </DialogContent>
   </Dialog>
 </template>
 
 <script setup lang="ts">
-import SideBar from "./side-bar/index.vue";
 import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import TitleBar from "./title-bar/index.vue";
+import SideBar from "./side-bar/index.vue";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import eventEmitter from "@/hooks/eventEmitter";
 import { VisuallyHidden } from "reka-ui";
 import { selectedRoute } from "./router";
@@ -41,8 +55,7 @@ eventEmitter.on("dialog-setting:show", () => {
 </script>
 
 <style scoped lang="scss">
-.dialog-content {
-  grid-template-columns: 220px calc(100% - 220px);
-  grid-template-rows: 44px calc(100% - 44px);
+.settings {
+  grid-template-rows: 40px calc(100% - 40px);
 }
 </style>
