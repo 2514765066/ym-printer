@@ -1,5 +1,5 @@
 <template>
-  <ElScrollbar view-class="p-3">
+  <ElScrollbar view-class="px-3">
     <FieldGroup>
       <Remark />
 

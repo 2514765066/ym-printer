@@ -1,8 +1,8 @@
 <template>
-  <fieldset :disabled="disabled" class="flex flex-col">
+  <fieldset :disabled="disabled" class="pt-3 pb-1 flex flex-col">
     <PrintConfig />
 
-    <ButtonGroup class="w-full mt-auto p-3">
+    <ButtonGroup class="w-full mt-auto px-3">
       <Button type="button" class="flex-1" @click="handlePrint">
         <Spinner v-if="disabled" />
 

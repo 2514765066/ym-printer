@@ -8,7 +8,12 @@ export const usePdfStore = defineStore("pdf", () => {
   const dpi = 2;
 
   //缩放倍率
-  const scale = useStorage("scale", 100 / dpi);
+  const scale = useStorage("scale", 50);
+
+  //设置缩放倍率
+  const setScale = (s: number) => {
+    scale.value = s;
+  };
 
   //增大倍率
   const addScale = () => {
@@ -32,5 +37,6 @@ export const usePdfStore = defineStore("pdf", () => {
     addScale,
     subScale,
     toggleTheme,
+    setScale,
   };
 });

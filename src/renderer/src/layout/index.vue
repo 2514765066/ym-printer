@@ -15,7 +15,7 @@
         :collapsedSize="0"
         size-unit="px"
       >
-        <SideBar />
+        <SideBar class="h-full" />
       </ResizablePanel>
 
       <ResizableHandle class="bg-transparent!" />
@@ -27,7 +27,9 @@
         }"
         :min-size="50"
       >
-        <RouterView class="bg-background border rounded-lg overflow-hidden" />
+        <RouterView
+          class="h-full bg-background border rounded-lg overflow-hidden"
+        />
       </ResizablePanel>
     </ResizablePanelGroup>
   </div>

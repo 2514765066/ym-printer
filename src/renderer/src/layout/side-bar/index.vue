@@ -1,5 +1,5 @@
 <template>
-  <section class="h-full flex flex-col bg-sidebar">
+  <section class="flex flex-col bg-sidebar">
     <Workspace />
 
     <div class="p-2">

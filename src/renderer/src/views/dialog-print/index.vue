@@ -11,18 +11,37 @@
         </SheetTitle>
       </VisuallyHidden>
 
-      <div class="dialog-print wh-full grid overflow-hidden">
-        <TitleBar class="col-start-1 col-end-3 row-start-1 row-end-2" />
+      <div class="print-preview wh-full grid bg-sidebar">
+        <TitleBar />
 
-        <SideBar class="col-start-1 col-end-2 row-start-2 row-end-3" />
+        <ResizablePanelGroup
+          class="pb-2"
+          direction="horizontal"
+          autoSaveId="print-preview-layout"
+        >
+          <ResizablePanel :min-size="160" :default-size="260" size-unit="px">
+            <SideBar class="h-full" />
+          </ResizablePanel>
 
-        <PreivewPdf class="col-start-2 col-end-3 row-start-2 row-end-3" />
+          <ResizableHandle class="bg-transparent!" />
+
+          <ResizablePanel class="pr-2" :min-size="50">
+            <Preview
+              class="h-full bg-background border rounded-lg overflow-hidden"
+            />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </SheetContent>
   </Sheet>
 </template>
 
 <script setup lang="ts">
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import {
   Sheet,
   SheetContent,
@@ -31,14 +50,13 @@ import {
 } from "@/components/ui/sheet";
 import TitleBar from "./title-bar/index.vue";
 import SideBar from "./side-bar/index.vue";
-import PreivewPdf from "@/components/preview-pdf/index.vue";
+import Preview from "./preview/index.vue";
 import { VisuallyHidden } from "reka-ui";
 import { open } from "./index";
 </script>
 
 <style scoped lang="scss">
-.dialog-print {
-  grid-template-columns: 260px calc(100% - 260px);
-  grid-template-rows: 44px calc(100% - 44px);
+.print-preview {
+  grid-template-rows: 40px calc(100% - 40px);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <section class="wh-full flex flex-col relative">
+  <section class="flex flex-col relative">
     <QueueHeader class="p-1 z-10" />
 
     <div
