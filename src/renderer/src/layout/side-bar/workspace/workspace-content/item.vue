@@ -80,6 +80,7 @@ import {
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useDocStore } from "@/stores/useDocStore";
+import { totalCount } from "@/utils/total";
 
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { selectWorkspace, removeWorkspace } = useWorkspaceStore();
@@ -94,9 +95,7 @@ const props = defineProps<{
 }>();
 
 const docCount = computed(() => {
-  return docs.value.reduce((previousValue, currentValue) => {
-    return previousValue + (currentValue.workspaceId === props.data.id ? 1 : 0);
-  }, 0);
+  return totalCount(docs.value, item => item.workspaceId === props.data.id);
 });
 
 //是否选中
@@ -133,6 +132,8 @@ const handleRemoveDocs = () => {
 
 //处理删除
 const handleRemove = () => {
+  clearDoc(props.data.id);
+
   removeWorkspace(props.data.id);
 
   eventEmitter.emit("success:show", `已删除工作空间 "${props.data.name}"`);

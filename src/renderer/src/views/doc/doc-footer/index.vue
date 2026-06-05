@@ -5,7 +5,8 @@
   >
     <Button variant="ghost" size="sm">
       <span class="text-xs">
-        打印完成文档: {{ finishCount }} / {{ docs.length }}
+        打印完成文档: {{ selectedWorkspaceFinishDocsCount }} /
+        {{ selectedWorkspaceDocsCount }}
       </span>
     </Button>
 
@@ -36,17 +37,25 @@ import { setStatus, status } from "../index";
 import { cancelCheckAll } from "../check";
 import { useDocStore } from "@/stores/useDocStore";
 import { Button } from "@/components/ui/button";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import { totalCount } from "@/utils/total";
 
+const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { docs } = storeToRefs(useDocStore());
 
-const finishCount = computed(() => {
-  return docs.value.reduce((previousValue, currentValue) => {
-    if (currentValue.status == "printed") {
-      previousValue++;
-    }
+const selectedWorkspaceDocsCount = computed(() => {
+  return totalCount(
+    docs.value,
+    item => item.workspaceId == selectedWorkspaceID.value,
+  );
+});
 
-    return previousValue;
-  }, 0);
+const selectedWorkspaceFinishDocsCount = computed(() => {
+  return totalCount(
+    docs.value,
+    item =>
+      item.workspaceId == selectedWorkspaceID.value && item.status == "printed",
+  );
 });
 
 //处理取消计价
