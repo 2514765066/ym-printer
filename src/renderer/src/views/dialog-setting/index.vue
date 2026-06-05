@@ -3,6 +3,7 @@
     <DialogContent
       :aria-describedby="undefined"
       class="max-w-none! w-[90vw] h-[calc(100vh-100px)] p-0! overflow-hidden border-[1.5px]"
+      @open-auto-focus.prevent
     >
       <VisuallyHidden as-child>
         <DialogTitle />
