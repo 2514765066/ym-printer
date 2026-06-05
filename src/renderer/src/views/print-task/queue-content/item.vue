@@ -52,9 +52,14 @@ const statusLabel = computed(() => {
 
 //删除
 const handleRemove = async () => {
-  await removePrinterTask(props.data.id);
-
-  eventEmitter.emit("success:show", "已删除当前任务");
+  eventEmitter.emit("loading:show", {
+    loadingMsg: `正在删除 "${props.data.name}"`,
+    successMsg: `已删除 "${props.data.name}"`,
+    errorMsg: `"${props.data.name}" 删除失败`,
+    cb: async () => {
+      await removePrinterTask(props.data.id);
+    },
+  });
 };
 </script>
 

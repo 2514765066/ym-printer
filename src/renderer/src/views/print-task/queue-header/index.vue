@@ -42,7 +42,7 @@
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem variant="destructive" @select="handleRemove">
+        <DropdownMenuItem variant="destructive" @select="handleRemoveAll">
           <Trash2Icon />
 
           <span>删除打印机所有任务</span>
@@ -77,24 +77,29 @@ import {
 const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { startPrinterTasks, removeAllPrinterTasks } = usePrinterTaskStore();
 
-//打印测试页
-const [printTestLock, handlePrintTest] = useLockFn(
-  async (cartridge: "color" | "black") => {
-    await ipcRenderer.invoke("printTest", selectedPrinter.value, cartridge);
-
-    eventEmitter.emit("success:show", "打印测试页完成");
-  },
-);
-
 //刷新打印任务列表
 const [reloadLock, handleReload] = useLockFn(startPrinterTasks);
 
+//打印测试页
+const [printTestLock, handlePrintTest] = useLockFn(
+  async (cartridge: "color" | "black") => {
+    eventEmitter.emit("loading:show", {
+      loadingMsg: `正在打印机测试页（${cartridge == "black" ? "黑白" : "彩色"}）`,
+      successMsg: "打印测试页完成",
+      errorMsg: "打印测试页失败",
+      cb: async () => {
+        await ipcRenderer.invoke("printTest", selectedPrinter.value, cartridge);
+      },
+    });
+  },
+);
+
 //删除所有任务
-const handleRemove = async () => {
+const handleRemoveAll = async () => {
   eventEmitter.emit("loading:show", {
-    loadingMsg: "正在删除...",
+    loadingMsg: "正在删除打印机所有任务",
     successMsg: "已删除打印机所有任务",
-    errorMsg: "删除失败",
+    errorMsg: "打印机所有任务删除失败",
     cb: removeAllPrinterTasks,
   });
 };
