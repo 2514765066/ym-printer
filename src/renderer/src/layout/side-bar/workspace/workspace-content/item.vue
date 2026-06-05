@@ -6,6 +6,7 @@
         :class="{
           'bg-accent/50': isSelected,
         }"
+        :title="data.name"
         @click="handleClick"
       >
         <span class="text-sm truncate">{{ data.name }}</span>

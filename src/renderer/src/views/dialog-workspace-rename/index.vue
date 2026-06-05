@@ -8,11 +8,7 @@
       <Field>
         <FieldLabel>工作空间名称</FieldLabel>
 
-        <Input
-          maxlength="10"
-          v-model="name"
-          placeholder="请输入新的工作空间名称"
-        />
+        <Input v-model="name" placeholder="请输入新的工作空间名称" />
       </Field>
 
       <DialogFooter>
