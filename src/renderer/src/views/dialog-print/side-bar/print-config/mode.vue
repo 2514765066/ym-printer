@@ -5,13 +5,13 @@
 
       <FormControl>
         <ToggleGroup
-          class="w-full"
+          class="w-full grid grid-cols-2 grid-rows-2"
           variant="outline"
           type="single"
           v-bind="componentField"
         >
           <ToggleGroupItem
-            class="flex-1"
+            class="flex-1 first:rounded-bl-none! first:border-b-0! nth-[2]:rounded-tr-md! nth-[2]:border-b-0! nth-[3]:rounded-bl-md! nth-[3]:border-l! last:rounded-tr-none!"
             v-for="item in Object.keys(modeMap)"
             :key="item"
             :value="item"

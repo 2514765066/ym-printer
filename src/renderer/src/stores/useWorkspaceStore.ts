@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 export interface Workspace {
   id: string;
   name: string;
-  printer?: string;
+  printer: string;
 }
 
 export const useWorkspaceStore = defineStore("workspace", () => {
@@ -13,6 +13,7 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     {
       id: "default",
       name: "默认空间",
+      printer: "",
     },
   ]);
 
@@ -42,7 +43,7 @@ export const useWorkspaceStore = defineStore("workspace", () => {
   };
 
   //添加工作空间
-  const addWorkspace = (option: { name: string; printer: string }) => {
+  const addWorkspace = (option: Omit<Workspace, "id">) => {
     const id = nanoid();
 
     workspace.value.push({

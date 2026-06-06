@@ -3,13 +3,15 @@
     <PrintConfig />
 
     <ButtonGroup class="w-full mt-auto px-3">
-      <Button class="flex-1" @click="handlePrint">
+      <Button class="flex-1 border-r" @click="handlePrint">
         <Spinner v-if="disabled" />
 
         {{ disabled ? "正在打印" : "开始打印" }}
       </Button>
 
-      <Button class="flex-1" @click="handlePrePrint"> 预备打印 </Button>
+      <Button class="flex-1 border-r" @click="handlePrePrint">
+        预备打印
+      </Button>
 
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
@@ -124,8 +126,12 @@ const { handleSubmit, values } = useForm({
           });
         }
       }),
-      cartridge: z.string().min(1, "请选择墨盒颜色"),
-      orientation: z.string().min(1, "请选择方向"),
+      cartridge: z.string({
+        message: "请选择墨盒颜色",
+      }),
+      orientation: z.string({
+        message: "请选择方向",
+      }),
     }),
   ),
   initialValues: {

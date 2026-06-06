@@ -31,6 +31,11 @@ const isOdd = (num: number) => {
   return num % 2 === 1;
 };
 
+//是不是范围
+const isRange = (part: number[]) => {
+  return part && part.length > 1;
+};
+
 //模式地图
 const modeMap = {
   //全单模式
@@ -67,6 +72,28 @@ const modeMap = {
     }
 
     return result;
+  },
+
+  //混合连接模式
+  mixConnect: (parts: number[][]) => {
+    const result = [parts[0]];
+
+    for (let i = 1; i < parts.length; i++) {
+      const part = parts[i];
+
+      const lastPart = result[result.length - 1];
+
+      //上一项和这一项都是范围
+      if (isRange(part) && isRange(lastPart)) {
+        lastPart.push(...part);
+        continue;
+      }
+
+      // 单独的数字
+      result.push(part);
+    }
+
+    return modeMap.mix(result);
   },
 };
 

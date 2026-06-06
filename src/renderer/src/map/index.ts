@@ -4,6 +4,7 @@ export const modeMap = {
   simplex: "单打",
   duplex: "双打",
   mix: "混合",
+  mixConnect: "混合(范围连接)",
 };
 
 export const cartridgeMap = {

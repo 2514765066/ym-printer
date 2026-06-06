@@ -76,7 +76,7 @@ export type Doc = {
   count: number;
 
   //模式
-  mode: "simplex" | "duplex" | "mix" | "";
+  mode: "simplex" | "duplex" | "mix" | "mixConnect" | "";
 
   //范围
   range: string;
