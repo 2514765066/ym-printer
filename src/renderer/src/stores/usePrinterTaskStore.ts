@@ -11,6 +11,10 @@ export const usePrinterTaskStore = defineStore("printer-task", () => {
 
   //获取打印机任务
   const getPrinterTasks = async () => {
+    if (!selectedPrinter.value) {
+      return;
+    }
+
     printerTasks.value = await ipcRenderer.invoke(
       "getPrinterTask",
       selectedPrinter.value,
