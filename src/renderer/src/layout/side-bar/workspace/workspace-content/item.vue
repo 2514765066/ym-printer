@@ -29,21 +29,21 @@
     </ContextMenuTrigger>
 
     <ContextMenuContent class="min-w-60">
-      <ContextMenuItem @select="handleAdd">
+      <ContextMenuItem @click="handleAdd">
         <PlusIcon />
 
         <span> 添加文档 </span>
       </ContextMenuItem>
 
-      <ContextMenuItem :disabled="data.id == 'default'" @select="handleRename">
+      <ContextMenuItem :disabled="data.id == 'default'" @click="handleEdit">
         <PencilLineIcon />
 
-        <span> 重命名 </span>
+        <span> 编辑 </span>
       </ContextMenuItem>
 
       <ContextMenuSeparator />
 
-      <ContextMenuItem variant="destructive" @select="handleRemoveDocs">
+      <ContextMenuItem variant="destructive" @click="handleRemoveDocs">
         <Trash2Icon />
 
         <span> 删除 "工作区中所有文档"</span>
@@ -52,7 +52,7 @@
       <ContextMenuItem
         :disabled="data.id == 'default'"
         variant="destructive"
-        @select="handleRemove"
+        @click="handleRemove"
       >
         <Trash2Icon />
 
@@ -119,9 +119,12 @@ const handleAdd = () => {
   });
 };
 
-//处理重命名
-const handleRename = () => {
-  eventEmitter.emit("dialog-workspace-rename:show", props.data);
+//处理编辑
+const handleEdit = () => {
+  eventEmitter.emit("dialog-workspace:show", {
+    type: "edit",
+    data: props.data,
+  });
 };
 
 //删除工作区中所有文档
@@ -137,7 +140,7 @@ const handleRemove = () => {
 
   removeWorkspace(props.data.id);
 
-  eventEmitter.emit("success:show", `已删除工作空间 "${props.data.name}"`);
+  eventEmitter.emit("success:show", `已删除 "${props.data.name}"`);
 };
 </script>
 

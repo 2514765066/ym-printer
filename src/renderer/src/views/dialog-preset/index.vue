@@ -5,7 +5,9 @@
       @close-auto-focus="handleClose"
     >
       <DialogHeader>
-        <DialogTitle>新建工作空间</DialogTitle>
+        <DialogTitle>
+          {{ dialogType == "add" ? "新建预设" : "编辑预设" }}
+        </DialogTitle>
       </DialogHeader>
 
       <Form />
@@ -28,35 +30,53 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import eventEmitter from "@/hooks/eventEmitter";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { useForm } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-import { usePrinterStore } from "@/stores/usePrinterStore.js";
+import { usePresetStore } from "@/stores/usePresetStore.js";
 
-const { selectedPrinter } = storeToRefs(usePrinterStore());
-const { addWorkspace } = useWorkspaceStore();
+const { addPreset, editPreset } = usePresetStore();
 
 const open = ref(false);
+
+//dialog类型
+const dialogType = ref<"add" | "edit">("add");
 
 const { handleSubmit, setValues } = useForm({
   validationSchema: toTypedSchema(
     z.object({
+      id: z.string(),
       name: z
         .string({
           message: "请输入名称",
         })
         .min(1, "请输入名称"),
-      printer: z
-        .string({
-          message: "请选择打印机",
-        })
-        .min(1, "请选择打印机"),
+      value: z
+        .string()
+        .min(1, "请输入打印范围")
+        .superRefine((value, ctx) => {
+          //允许空值
+          if (value === "") {
+            return;
+          }
+
+          //验证格式
+          const reg = /^(\d*?-\d*?|\d+)([,，](\d*?-\d*?|\d+))*$/;
+
+          if (!reg.test(value)) {
+            ctx.addIssue({
+              code: "custom",
+              message: "格式有误",
+            });
+            return;
+          }
+        }),
     }),
   ),
   initialValues: {
+    id: "",
     name: "",
-    printer: "",
+    value: "",
   },
 });
 
@@ -67,15 +87,26 @@ const handleClose = () => {
 
 //处理提交
 const handleClick = handleSubmit(values => {
-  addWorkspace(values);
+  switch (dialogType.value) {
+    case "add":
+      addPreset(values);
+      break;
+    case "edit":
+      editPreset(values);
+      break;
+  }
 
   handleClose();
 });
 
-eventEmitter.on("dialog-workspace-add:show", () => {
-  setValues({
-    printer: selectedPrinter.value,
-  });
+eventEmitter.on("dialog-preset:show", option => {
+  dialogType.value = option.type;
+
+  switch (dialogType.value) {
+    case "edit":
+      setValues(option.data!);
+      break;
+  }
 
   open.value = true;
 });

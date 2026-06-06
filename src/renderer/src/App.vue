@@ -6,9 +6,9 @@
 
     <DialogSetting />
 
-    <DialogWorkspaceRename />
+    <DialogWorkspace />
 
-    <DialogWorkspaceAdd />
+    <DialogPreset />
   </TooltipProvider>
 
   <Toaster />
@@ -18,8 +18,8 @@
 import Layout from "@/layout/index.vue";
 import DialogPrint from "@/views/dialog-print/index.vue";
 import DialogSetting from "@/views/dialog-setting/index.vue";
-import DialogWorkspaceRename from "@/views/dialog-workspace-rename/index.vue";
-import DialogWorkspaceAdd from "@/views/dialog-workspace-add/index.vue";
+import DialogWorkspace from "@/views/dialog-workspace/index.vue";
+import DialogPreset from "@/views/dialog-preset/index.vue";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import eventEmitter from "@/hooks/eventEmitter";
 import { Toaster } from "@/components/ui/sonner";

@@ -4,11 +4,36 @@
       <FormLabel>打印范围</FormLabel>
 
       <FormControl>
-        <Input
-          class="bg-transparent!"
-          placeholder="格式 1,1-,-10,-"
-          v-bind="componentField"
-        />
+        <InputGroup class="bg-transparent!">
+          <InputGroupInput
+            placeholder="格式 1,1-,-10,-"
+            v-bind="componentField"
+          />
+
+          <InputGroupAddon align="inline-end">
+            <DropdownMenu>
+              <DropdownMenuTrigger as-child>
+                <InputGroupButton variant="ghost" size="icon-xs">
+                  <ClipboardIcon class="text-foreground" />
+                </InputGroupButton>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent class="min-w-60" side="right">
+                <DropdownMenuItem
+                  v-for="item of presets"
+                  :key="item.id"
+                  @click="componentField['onUpdate:modelValue']!(item.value)"
+                >
+                  <span>
+                    {{ item.name }}
+                  </span>
+
+                  <span class="text-muted-foreground">{{ item.value }}</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </InputGroupAddon>
+        </InputGroup>
       </FormControl>
 
       <FormMessage />
@@ -18,13 +43,28 @@
 
 <script setup lang="ts">
 import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { ClipboardIcon } from "lucide-vue-next";
+import { usePresetStore } from "@/stores/usePresetStore";
+
+const { presets } = storeToRefs(usePresetStore());
 </script>
 
 <style scoped lang="scss"></style>

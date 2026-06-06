@@ -39,7 +39,9 @@ export const useWorkspaceStore = defineStore("workspace", () => {
   const removeWorkspace = (id: string) => {
     workspace.value = workspace.value.filter(item => item.id != id);
 
-    selectWorkspace(workspace.value[0].id);
+    if (id == selectedWorkspaceID.value) {
+      selectWorkspace(workspace.value[0].id);
+    }
   };
 
   //添加工作空间
@@ -47,20 +49,22 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     const id = nanoid();
 
     workspace.value.push({
-      id,
       ...option,
+      id,
     });
 
     selectWorkspace(id);
   };
 
-  //重命名工作空间
-  const renameWorkspace = (id: string, name: string) => {
-    const item = getWorkspace(id);
+  //编辑工作空间
+  const editWorkspace = (data: Workspace) => {
+    const item = getWorkspace(data.id);
 
-    if (item) {
-      item.name = name;
+    if (!item) {
+      return;
     }
+
+    Object.assign(item, data);
   };
 
   return {
@@ -71,6 +75,6 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     selectWorkspace,
     removeWorkspace,
     addWorkspace,
-    renameWorkspace,
+    editWorkspace,
   };
 });

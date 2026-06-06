@@ -20,7 +20,9 @@ import { useEventListener } from "@vueuse/core";
 import { PlusIcon } from "lucide-vue-next";
 
 const handleAdd = () => {
-  eventEmitter.emit("dialog-workspace-add:show");
+  eventEmitter.emit("dialog-workspace:show", {
+    type: "add",
+  });
 };
 
 useEventListener("keydown", e => {

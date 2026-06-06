@@ -19,7 +19,7 @@
         <ContextMenuContent class="min-w-60">
           <ContextMenuItem
             :disabled="status != 'default'"
-            @select="handlePrint(item.id)"
+            @click="handlePrint(item.id)"
           >
             <PrinterIcon />
 
@@ -28,7 +28,7 @@
 
           <ContextMenuItem
             :disabled="status != 'default'"
-            @select="handleOpen(item.path)"
+            @click="handleOpen(item.path)"
           >
             <PlayIcon />
 
@@ -57,10 +57,7 @@
 
           <ContextMenuSeparator />
 
-          <ContextMenuItem
-            variant="destructive"
-            @select="handleRemove(item.id)"
-          >
+          <ContextMenuItem variant="destructive" @click="handleRemove(item)">
             <Trash2Icon />
 
             <span> 删除 "当前文档"</span>
@@ -147,10 +144,10 @@ const handleOpen = (path: string) => {
 };
 
 //删除文档
-const handleRemove = (id: string) => {
-  removeDoc(id);
+const handleRemove = (data: Doc) => {
+  removeDoc(data.id);
 
-  eventEmitter.emit("success:show", `已删除文档`);
+  eventEmitter.emit("success:show", `已删除 "${data.name}"`);
 };
 </script>
 

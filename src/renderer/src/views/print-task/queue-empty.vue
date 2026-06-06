@@ -11,13 +11,19 @@
     </EmptyHeader>
 
     <EmptyContent>
-      <Button :disabled="reloadLock" @click="handleReload">
+      <Button
+        :disabled="reloadLock"
+        @click="handleReload"
+        v-if="selectedPrinter"
+      >
         <Spinner v-if="reloadLock" />
 
         <RotateCwIcon v-else />
 
         <span>刷新</span>
       </Button>
+
+      <Button v-else> 请选择打印机 </Button>
     </EmptyContent>
   </Empty>
 </template>
@@ -36,8 +42,10 @@ import {
 import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
 import { useLockFn } from "@/hooks/useLock";
 import { Spinner } from "@/components/ui/spinner";
+import { usePrinterStore } from "@/stores/usePrinterStore";
 
 const { startPrinterTasks } = usePrinterTaskStore();
+const { selectedPrinter } = storeToRefs(usePrinterStore());
 
 const [reloadLock, handleReload] = useLockFn(startPrinterTasks);
 </script>

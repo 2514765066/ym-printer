@@ -1,3 +1,4 @@
+import { Preset } from "@/stores/usePresetStore";
 import { Workspace } from "@/stores/useWorkspaceStore";
 
 // 定义事件到函数类型的映射
@@ -13,8 +14,16 @@ type EventMap = {
 
   "dialog-print:show": () => void;
   "dialog-setting:show": () => void;
-  "dialog-workspace-add:show": () => void;
-  "dialog-workspace-rename:show": (workspace: Workspace) => void;
+
+  "dialog-workspace:show": (option: {
+    type: "add" | "edit";
+    data?: Workspace;
+  }) => void;
+
+  "dialog-preset:show": (option: {
+    type: "add" | "edit";
+    data?: Preset;
+  }) => void;
 };
 
 type EventNames = keyof EventMap;

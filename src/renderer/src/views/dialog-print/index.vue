@@ -18,7 +18,7 @@
           direction="horizontal"
           autoSaveId="print-preview-layout"
         >
-          <ResizablePanel :min-size="160" :default-size="260" size-unit="px">
+          <ResizablePanel :min-size="240" :default-size="260" size-unit="px">
             <SideBar class="h-full" />
           </ResizablePanel>
 

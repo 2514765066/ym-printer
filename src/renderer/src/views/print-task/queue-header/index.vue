@@ -10,7 +10,7 @@
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="center" class="w-52">
-        <DropdownMenuItem :disabled="reloadLock" @select="handleReload">
+        <DropdownMenuItem :disabled="reloadLock" @click="handleReload">
           <Spinner v-if="reloadLock" />
 
           <RotateCwIcon v-else />
@@ -20,7 +20,7 @@
 
         <DropdownMenuItem
           :disabled="printTestLock"
-          @select="handlePrintTest('black')"
+          @click="handlePrintTest('black')"
         >
           <Spinner v-if="printTestLock" />
 
@@ -31,7 +31,7 @@
 
         <DropdownMenuItem
           :disabled="printTestLock"
-          @select="handlePrintTest('color')"
+          @click="handlePrintTest('color')"
         >
           <Spinner v-if="printTestLock" />
 
@@ -42,7 +42,7 @@
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem variant="destructive" @select="handleRemoveAll">
+        <DropdownMenuItem variant="destructive" @click="handleRemoveAll">
           <Trash2Icon />
 
           <span>删除打印机所有任务</span>
