@@ -16,50 +16,82 @@ const port = parentPort!;
 
 if (!port) throw new Error("IllegalState");
 
-let word: winax.Object;
+let word: winax.Object | null = null;
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+//转pdf
+const toPdf = (option: SaveOption) => {
+  const { md5, inputPath, outputPath } = option;
+
+  if (!word) {
+    return;
+  }
+
+  const doc = word.Documents.Open(inputPath, false, true, false);
+
+  try {
+    doc.ExportAsFixedFormat(outputPath, 17);
+
+    port.postMessage(md5);
+  } finally {
+    if (doc) {
+      doc.Close(false);
+    }
+  }
+};
 
 //退出word
 const exit = () => {
+  if (!word) return;
+
   try {
     word.Quit();
   } catch (e) {
-    console.error(e);
+    console.error("退出Word失败:", e);
+  } finally {
+    word = null; // 释放引用
   }
 };
 
 //开启word
 const open = () => {
-  word = new winax.Object("Word.Application");
+  try {
+    if (word) {
+      exit();
+    }
 
-  //关闭一些占用启动速度的配置
-  word.Visible = false;
-  word.DisplayAlerts = 0;
+    word = new winax.Object("Word.Application");
+
+    //关闭一些占用启动速度的配置
+    word.Visible = false;
+    word.DisplayAlerts = 0;
+  } catch (e) {
+    console.error("创建 Word 实例失败:", e);
+
+    // 此时通常说明底层 COM 被锁死
+    throw e;
+  }
 };
 
 //保存为pdf
-const save = (option: SaveOption) => {
-  const { md5, inputPath, outputPath } = option;
-
-  const toPdf = () => {
-    const doc = word.Documents.Open(inputPath, false, true, false);
-
-    doc.ExportAsFixedFormat(outputPath, 17);
-
-    port.postMessage(md5);
-
-    doc.Close(false);
-  };
-
+const save = async (option: SaveOption) => {
   try {
-    toPdf();
+    toPdf(option);
   } catch (e) {
-    console.error("worker报错", e);
+    console.error("尝试重启 Word 服务...", e);
 
-    exit();
+    try {
+      exit();
+      await sleep(1000);
 
-    open();
+      open();
+      await sleep(500);
 
-    toPdf();
+      toPdf(option);
+    } catch (e) {
+      console.error("重试失败", e);
+    }
   }
 };
 
