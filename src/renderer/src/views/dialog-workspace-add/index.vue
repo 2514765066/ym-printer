@@ -32,12 +32,14 @@ import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { useForm } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
+import { usePrinterStore } from "@/stores/usePrinterStore.js";
 
+const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { addWorkspace } = useWorkspaceStore();
 
 const open = ref(false);
 
-const { handleSubmit } = useForm({
+const { handleSubmit, setValues } = useForm({
   validationSchema: toTypedSchema(
     z.object({
       name: z
@@ -58,6 +60,7 @@ const { handleSubmit } = useForm({
   },
 });
 
+//关闭
 const handleClose = () => {
   open.value = false;
 };
@@ -70,6 +73,10 @@ const handleClick = handleSubmit(values => {
 });
 
 eventEmitter.on("dialog-workspace-add:show", () => {
+  setValues({
+    printer: selectedPrinter.value,
+  });
+
   open.value = true;
 });
 </script>
