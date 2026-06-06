@@ -8,7 +8,7 @@
     @click="$emit('print', data.id)"
   >
     <ItemMedia variant="image">
-      <FileIcon :size="36" :ext="data.ext" />
+      <FileIcon :size="38" :ext="data.ext" />
     </ItemMedia>
 
     <ItemContent>

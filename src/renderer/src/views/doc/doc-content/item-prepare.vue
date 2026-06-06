@@ -4,8 +4,14 @@
     size="sm"
     @click="$emit('print', data.id)"
   >
-    <ItemMedia variant="image">
-      <FileIcon :size="36" :ext="data.ext" />
+    <ItemMedia class="overflow-visible" variant="image">
+      <div class="relative">
+        <FileIcon :size="38" :ext="data.ext" />
+
+        <Clock
+          class="size-5 absolute right-0 bottom-0 translate-1/3 text-yellow-500"
+        />
+      </div>
     </ItemMedia>
 
     <ItemContent>
@@ -91,7 +97,7 @@ import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
 import FileIcon from "@/components/file-icon.vue";
 import { Button } from "@/components/ui/button";
-import { PrinterIcon, XIcon } from "lucide-vue-next";
+import { Clock, PrinterIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";
 import { printNext, printCancel } from "@/stores/usePrintStore";
 import { ButtonGroup } from "@/components/ui/button-group";

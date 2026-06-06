@@ -6,7 +6,7 @@
     :for="data.id"
     @click="$emit('print', data.id)"
   >
-    <ItemMedia variant="image">
+    <ItemMedia class="overflow-visible" variant="image">
       <Checkbox
         :id="data.id"
         v-if="status == 'price'"
@@ -14,7 +14,13 @@
         @update:model-value="toggleCheck(data.id)"
       />
 
-      <FileIcon :size="36" :ext="data.ext" v-else />
+      <div class="relative" v-else>
+        <FileIcon :size="38" :ext="data.ext" />
+
+        <CheckIcon
+          class="size-6 absolute right-0 bottom-0 translate-1/3 text-green-500"
+        />
+      </div>
     </ItemMedia>
 
     <ItemContent>
@@ -92,6 +98,7 @@ import { getPrice } from "@/utils/price";
 import { status } from "../index";
 import { checked, toggleCheck } from "../check";
 import FileIcon from "@/components/file-icon.vue";
+import { CheckIcon } from "lucide-vue-next";
 
 const props = defineProps<{
   data: Doc;
