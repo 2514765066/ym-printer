@@ -4,14 +4,8 @@
     size="sm"
     @click="$emit('print', data.id)"
   >
-    <ItemMedia class="overflow-visible" variant="image">
-      <div class="relative">
-        <FileIcon :size="38" :ext="data.ext" />
-
-        <Clock
-          class="size-5 absolute right-0 bottom-0 translate-1/3 text-yellow-500"
-        />
-      </div>
+    <ItemMedia variant="image">
+      <FileIcon :size="38" :ext="data.ext" />
     </ItemMedia>
 
     <ItemContent>
@@ -70,7 +64,7 @@
       <ButtonGroup>
         <Tooltip label="准备就绪，开始打印">
           <Button variant="outline" size="sm" @click.stop="handleNext">
-            <PrinterIcon /> 开始
+            <ClockIcon /> 开始
           </Button>
         </Tooltip>
 
@@ -97,7 +91,7 @@ import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
 import FileIcon from "@/components/file-icon.vue";
 import { Button } from "@/components/ui/button";
-import { Clock, PrinterIcon, XIcon } from "lucide-vue-next";
+import { ClockIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";
 import { printNext, printCancel } from "@/stores/usePrintStore";
 import { ButtonGroup } from "@/components/ui/button-group";

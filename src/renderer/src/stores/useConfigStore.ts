@@ -3,6 +3,9 @@ import { useStorage } from "@vueuse/core";
 //创建配置
 const createConfig = () => {
   return {
+    //计价模式开关
+    price: true,
+
     //单面价格
     blackSimplexPrice: 0.2,
 

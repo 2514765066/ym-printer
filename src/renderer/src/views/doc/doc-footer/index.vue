@@ -10,7 +10,7 @@
       </span>
     </Button>
 
-    <div class="ml-auto">
+    <div class="ml-auto" v-if="config.price">
       <Button size="sm" @click="setStatus('price')" v-if="status == 'default'">
         <DollarSignIcon />
 
@@ -39,7 +39,9 @@ import { useDocStore } from "@/stores/useDocStore";
 import { Button } from "@/components/ui/button";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { totalCount } from "@/utils/total";
+import { useConfigStore } from "@/stores/useConfigStore";
 
+const { config } = storeToRefs(useConfigStore());
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { docs } = storeToRefs(useDocStore());
 

@@ -19,6 +19,7 @@
 
         <CheckIcon
           class="size-6 absolute right-0 bottom-0 translate-1/3 text-green-500"
+          v-if="config.price"
         />
       </div>
     </ItemMedia>
@@ -76,7 +77,11 @@
     </ItemContent>
 
     <ItemActions>
-      <span class="text-sm text-green-500">{{ price }} 元</span>
+      <span class="text-sm text-green-500" v-if="config.price">
+        {{ price }} 元
+      </span>
+
+      <CheckIcon class="size-6 text-green-500" v-else />
     </ItemActions>
   </Item>
 </template>
@@ -99,6 +104,9 @@ import { status } from "../index";
 import { checked, toggleCheck } from "../check";
 import FileIcon from "@/components/file-icon.vue";
 import { CheckIcon } from "lucide-vue-next";
+import { useConfigStore } from "@/stores/useConfigStore";
+
+const { config } = storeToRefs(useConfigStore());
 
 const props = defineProps<{
   data: Doc;
