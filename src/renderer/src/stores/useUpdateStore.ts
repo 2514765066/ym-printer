@@ -66,7 +66,7 @@ export const useUpdateStore = defineStore("update", () => {
 
       installUpdate();
     } catch (e) {
-      eventEmitter.emit("error:show", "出错了,请重试");
+      eventEmitter.emit("error:show", "更新失败,请检查网络");
 
       status.value = "init";
 

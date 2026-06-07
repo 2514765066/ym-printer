@@ -35,7 +35,7 @@
         <span> 添加文档 </span>
       </ContextMenuItem>
 
-      <ContextMenuItem :disabled="data.id == 'default'" @click="handleEdit">
+      <ContextMenuItem @click="handleEdit">
         <PencilLineIcon />
 
         <span> 编辑 </span>

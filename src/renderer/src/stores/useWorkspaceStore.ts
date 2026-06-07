@@ -9,13 +9,7 @@ export interface Workspace {
 
 export const useWorkspaceStore = defineStore("workspace", () => {
   //所有工作空间
-  const workspace = useStorage<Workspace[]>("workspace", [
-    {
-      id: "default",
-      name: "默认空间",
-      printer: "",
-    },
-  ]);
+  const workspace = useStorage<Workspace[]>("workspace", []);
 
   //当前选中的工作空间id
   const selectedWorkspaceID = ref("default");
@@ -39,9 +33,19 @@ export const useWorkspaceStore = defineStore("workspace", () => {
   const removeWorkspace = (id: string) => {
     workspace.value = workspace.value.filter(item => item.id != id);
 
-    if (id == selectedWorkspaceID.value) {
+    if (id == selectedWorkspaceID.value && id != "default") {
       selectWorkspace(workspace.value[0].id);
     }
+  };
+
+  //第一次添加工作空间
+  const firstAddWorkspace = (option: Omit<Workspace, "id">) => {
+    removeWorkspace("default");
+
+    workspace.value.push({
+      ...option,
+      id: "default",
+    });
   };
 
   //添加工作空间
@@ -76,5 +80,6 @@ export const useWorkspaceStore = defineStore("workspace", () => {
     removeWorkspace,
     addWorkspace,
     editWorkspace,
+    firstAddWorkspace,
   };
 });

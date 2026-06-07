@@ -1,6 +1,6 @@
 <template>
   <TooltipProvider>
-    <Layout />
+    <RouterView />
 
     <DialogPrint />
 
@@ -15,7 +15,6 @@
 </template>
 
 <script setup lang="ts">
-import Layout from "@/layout/index.vue";
 import DialogPrint from "@/views/dialog-print/index.vue";
 import DialogSetting from "@/views/dialog-setting/index.vue";
 import DialogWorkspace from "@/views/dialog-workspace/index.vue";

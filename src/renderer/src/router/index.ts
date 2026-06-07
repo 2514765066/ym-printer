@@ -1,21 +1,35 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Doc from "@/views/doc/index.vue";
-import PrintTask from "@/views/print-task/index.vue";
+import Layout from "@/layout/index.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
       path: "",
-      redirect: "/doc",
+      redirect: "/onboarding",
     },
     {
-      path: "/doc",
-      component: Doc,
+      path: "/onboarding",
+      component: () => import("@/onboarding/index.vue"),
     },
     {
-      path: "/print-task",
-      component: PrintTask,
+      path: "/",
+      component: Layout,
+      children: [
+        {
+          path: "",
+          redirect: "/doc",
+        },
+        {
+          path: "doc",
+          component: Doc,
+        },
+        {
+          path: "print-task",
+          component: () => import("@/views/print-task/index.vue"),
+        },
+      ],
     },
   ],
 });
