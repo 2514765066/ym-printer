@@ -4,7 +4,12 @@
 
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
-        <Button class="ml-auto" variant="ghost" size="icon">
+        <Button
+          class="ml-auto"
+          variant="ghost"
+          size="icon"
+          :disabled="selectedPrinter"
+        >
           <MoreHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>
