@@ -1,12 +1,10 @@
 <template>
-  <fieldset :disabled="disabled" class="pt-3 pb-1 flex flex-col">
+  <fieldset :disabled="isPrinting" class="pt-3 pb-1 flex flex-col">
     <PrintConfig />
 
     <ButtonGroup class="w-full mt-auto px-3">
       <Button class="flex-1 border-r" @click="handlePrint">
-        <Spinner v-if="disabled" />
-
-        {{ disabled ? "正在打印" : "开始打印" }}
+        {{ isPrinting ? "正在打印" : "开始打印" }}
       </Button>
 
       <Button class="flex-1 border-r" @click="handlePrePrint">
@@ -54,7 +52,6 @@
 
 <script setup lang="ts">
 import PrintConfig from "./print-config/index.vue";
-import { Spinner } from "@/components/ui/spinner";
 import { CheckIcon, MoreHorizontalIcon, PrinterIcon } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
@@ -151,15 +148,6 @@ const isPrinting = ref(false);
 //是否是单打
 const isSimplex = computed(() => values.mode == "simplex");
 
-//是否禁用sidebar
-const disabled = computed(() => {
-  return (
-    isPrinting.value ||
-    selectedDoc.value.status == "printing" ||
-    selectedDoc.value.status == "upload"
-  );
-});
-
 //打印
 const handlePrint = handleSubmit(async values => {
   //关闭弹窗
@@ -172,8 +160,6 @@ const handlePrint = handleSubmit(async values => {
   doc.formatRange = parserRange(selectedDoc.value);
 
   doc.status = "printing";
-
-  isPrinting.value = true;
 
   await printAuto(toRaw(doc), {
     printFinish() {
@@ -193,8 +179,6 @@ const handlePrint = handleSubmit(async values => {
       doc.status = "printing";
     },
   });
-
-  isPrinting.value = false;
 });
 
 //预备打印
@@ -219,8 +203,6 @@ const handlePrePrint = handleSubmit(async values => {
     return;
   }
 
-  isPrinting.value = true;
-
   await printAuto(toRaw(doc), {
     printFinish() {
       doc.status = "printed";
@@ -239,8 +221,6 @@ const handlePrePrint = handleSubmit(async values => {
       doc.status = "printing";
     },
   });
-
-  isPrinting.value = false;
 });
 
 //标记为已完成
@@ -267,11 +247,16 @@ const handlePrintSimplex = handleSubmit(async values => {
 
   isPrinting.value = true;
 
-  await printOdd(doc);
+  eventEmitter.emit("loading:show", {
+    loadingMsg: "正在打印单页",
+    successMsg: `打印单页完成 "${doc.name}"`,
+    errorMsg: "打印单页失败",
+    async cb() {
+      await printOdd(doc);
+    },
+  });
 
   isPrinting.value = false;
-
-  eventEmitter.emit("success:show", `打印单页完成 "${doc.name}"`);
 });
 
 //打印偶数页
@@ -282,11 +267,18 @@ const handlePrintEven = handleSubmit(async values => {
 
   isPrinting.value = true;
 
+  eventEmitter.emit("loading:show", {
+    loadingMsg: "正在打印偶数页",
+    successMsg: `打印偶数页完成 "${doc.name}"`,
+    errorMsg: "打印偶数页失败",
+    async cb() {
+      await printEven(doc);
+    },
+  });
+
   await printEven(doc);
 
   isPrinting.value = false;
-
-  eventEmitter.emit("success:show", `打印偶数页完成 "${doc.name}"`);
 });
 
 //打印奇数页
@@ -297,11 +289,16 @@ const handlePrintOdd = handleSubmit(async values => {
 
   isPrinting.value = true;
 
-  await printOdd(doc);
+  eventEmitter.emit("loading:show", {
+    loadingMsg: "正在打印奇数页",
+    successMsg: `打印奇数页完成 "${doc.name}"`,
+    errorMsg: "打印奇数页失败",
+    async cb() {
+      await printOdd(doc);
+    },
+  });
 
   isPrinting.value = false;
-
-  eventEmitter.emit("success:show", `打印奇数页完成 "${doc.name}"`);
 });
 </script>
 
