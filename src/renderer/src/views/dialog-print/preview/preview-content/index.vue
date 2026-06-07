@@ -2,11 +2,9 @@
   <ElScrollbar
     ref="scrollbarRef"
     :wrap-class="`${panning ? 'cursor-grabbing' : 'cursor-grab'}`"
-    view-class="pb-10"
+    view-class="min-h-full pb-10 flex items-center"
   >
-    <div @mousedown="handleMousedown" @mousemove="handleMousemove">
-      <PdfView />
-    </div>
+    <PdfView @mousedown="handleMousedown" @mousemove="handleMousemove" />
   </ElScrollbar>
 </template>
 

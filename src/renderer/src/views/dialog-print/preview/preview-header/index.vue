@@ -1,17 +1,20 @@
 <template>
-  <section class="p-2 relative flex items-center gap-2">
-    <span class="text-sm">共{{ selectedDoc.pageCount }}页</span>
+  <section
+    class="p-2 relative flex justify-between items-center gap-1 border-b"
+  >
+    <Button class="mr-auto" variant="ghost" size="sm">
+      <span class="text-sm">共{{ selectedDoc.pageCount }}页</span>
+    </Button>
 
     <NumberField
       class="absolute left-1/2 -translate-x-1/2"
-      :step="0.1"
-      :min="0.1"
+      :step="0.05"
+      :min="0.05"
       :max="2"
       :format-options="{
         style: 'percent',
       }"
-      :model-value="scale * 0.01"
-      @update:model-value="val => setScale(val * 100)"
+      v-model="scale"
     >
       <NumberFieldContent class="bg-transparent">
         <NumberFieldDecrement />
@@ -22,11 +25,15 @@
       </NumberFieldContent>
     </NumberField>
 
-    <Button class="ml-auto" variant="ghost" size="icon-sm" @click="toggleTheme">
-      <MoonIcon v-if="theme == 'dark'" />
-
-      <SunIcon v-else />
-    </Button>
+    <ToggleGroup variant="outline" type="single" v-model="viewMode">
+      <ToggleGroupItem
+        v-for="item in Object.keys(viewMap)"
+        :key="item"
+        :value="item"
+      >
+        <span>{{ viewMap[item] }}</span>
+      </ToggleGroupItem>
+    </ToggleGroup>
   </section>
 </template>
 
@@ -39,13 +46,14 @@ import {
   NumberFieldInput,
 } from "@/components/ui/number-field";
 import { usePdfStore } from "@/stores/usePdfStore";
-import { MoonIcon, SunIcon } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { useDocStore } from "@/stores/useDocStore";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { viewMap } from "@/map";
 
 const { selectedDoc } = storeToRefs(useDocStore());
-const { scale, theme } = storeToRefs(usePdfStore());
-const { setScale, toggleTheme } = usePdfStore();
+const { scale } = storeToRefs(usePdfStore());
+const { viewMode } = storeToRefs(usePdfStore());
 </script>
 
 <style scoped lang="scss"></style>

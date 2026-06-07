@@ -62,94 +62,26 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { toTypedSchema } from "@vee-validate/zod";
-import { useForm } from "vee-validate";
-import * as z from "zod";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { useDocStore } from "@/stores/useDocStore";
 import { printAuto, printEven, printOdd } from "@/utils/print";
 import eventEmitter from "@/hooks/eventEmitter";
-import { close } from "../index";
+import { close, Form } from "../index";
 import { parserRange } from "@/utils/range";
 import { printPromise } from "@/stores/usePrintStore";
 
 const { selectedDoc, selectedDocID } = storeToRefs(useDocStore());
 const { getDoc } = useDocStore();
-const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
 
-const { handleSubmit, values } = useForm({
-  validationSchema: toTypedSchema(
-    z.object({
-      remark: z.string(),
-      printer: z.string().min(1, "请选择打印机"),
-      count: z.number({ message: "" }).min(1, "最少1份").max(999, "最大999份"),
-      mode: z.string({
-        message: "请选择打印模式",
-      }),
-      range: z.string().superRefine((value, ctx) => {
-        //允许空值
-        if (value === "") {
-          return;
-        }
-
-        //验证格式
-        const reg = /^(\d*?-\d*?|\d+)([,，](\d*?-\d*?|\d+))*$/;
-
-        if (!reg.test(value)) {
-          ctx.addIssue({
-            code: "custom",
-            message: "格式有误",
-          });
-          return;
-        }
-
-        // 打印范围验证
-        const pages = value.split(/[,，-]/);
-
-        const isOutOfRange = pages.some(item => {
-          if (item === "") {
-            return;
-          }
-
-          const page = Number(item);
-
-          return page > selectedDoc.value!.pageCount || page < 1;
-        });
-
-        if (isOutOfRange) {
-          ctx.addIssue({
-            code: "custom",
-            message: "超出打印范围",
-          });
-        }
-      }),
-      cartridge: z.string({
-        message: "请选择墨盒颜色",
-      }),
-      orientation: z.string({
-        message: "请选择方向",
-      }),
-    }),
-  ),
-  initialValues: {
-    remark: selectedDoc.value.remark || "",
-    printer: selectedDoc.value.printer || selectedWorkspace.value.printer || "",
-    count: selectedDoc.value.count || 1,
-    mode: selectedDoc.value.mode || "mix",
-    range: selectedDoc.value.range || "",
-    cartridge: selectedDoc.value.cartridge || "black",
-    orientation: selectedDoc.value.orientation || "portrait",
-  },
-});
+const form: Form = inject("form")!;
 
 //是否再打印
 const isPrinting = ref(false);
 
 //是否是单打
-const isSimplex = computed(() => values.mode == "simplex");
+const isSimplex = computed(() => form.values.mode == "simplex");
 
 //打印
-const handlePrint = handleSubmit(async values => {
+const handlePrint = form.handleSubmit(async values => {
   //关闭弹窗
   close();
 
@@ -182,7 +114,7 @@ const handlePrint = handleSubmit(async values => {
 });
 
 //预备打印
-const handlePrePrint = handleSubmit(async values => {
+const handlePrePrint = form.handleSubmit(async values => {
   //关闭弹窗
   close();
 
@@ -224,7 +156,7 @@ const handlePrePrint = handleSubmit(async values => {
 });
 
 //标记为已完成
-const handlePrintFinish = handleSubmit(async values => {
+const handlePrintFinish = form.handleSubmit(async values => {
   //关闭弹窗
   close();
 
@@ -240,7 +172,7 @@ const handlePrintFinish = handleSubmit(async values => {
 });
 
 //打印单页
-const handlePrintSimplex = handleSubmit(async values => {
+const handlePrintSimplex = form.handleSubmit(async values => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);
@@ -260,7 +192,7 @@ const handlePrintSimplex = handleSubmit(async values => {
 });
 
 //打印偶数页
-const handlePrintEven = handleSubmit(async values => {
+const handlePrintEven = form.handleSubmit(async values => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);
@@ -282,7 +214,7 @@ const handlePrintEven = handleSubmit(async values => {
 });
 
 //打印奇数页
-const handlePrintOdd = handleSubmit(async values => {
+const handlePrintOdd = form.handleSubmit(async values => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);

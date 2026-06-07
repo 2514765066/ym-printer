@@ -19,6 +19,10 @@
               </DropdownMenuTrigger>
 
               <DropdownMenuContent class="min-w-60" side="right">
+                <DropdownMenuLabel v-if="presets.length == 0">
+                  暂无预设
+                </DropdownMenuLabel>
+
                 <DropdownMenuItem
                   v-for="item of presets"
                   :key="item.id"
@@ -47,6 +51,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 import {
   InputGroup,

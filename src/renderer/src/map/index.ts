@@ -55,3 +55,8 @@ export const updateMap = {
   updateNotAvailable: "已是最新版",
   downloading: (value: number | string) => `下载中: ${value}%`,
 };
+
+export const viewMap = {
+  raw: "原始",
+  preview: "预览",
+};
