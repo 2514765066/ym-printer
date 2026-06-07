@@ -4,19 +4,43 @@
       <PrinterIcon class="size-4.5" />
     </NavItem>
 
-    <NavItem label="设置" @click="handleDialog">
+    <NavItem label="打印范围预设" @click="handlePreset">
+      <ClipboardIcon class="size-4.5" />
+    </NavItem>
+
+    <NavItem label="价格" @click="handlePrice">
+      <CircleDollarSignIcon class="size-4.5" />
+    </NavItem>
+
+    <NavItem label="设置" @click="handleSettings">
       <SettingsIcon class="size-4.5" />
     </NavItem>
   </section>
 </template>
 
 <script setup lang="ts">
-import { PrinterIcon, SettingsIcon } from "lucide-vue-next";
+import {
+  CircleDollarSignIcon,
+  ClipboardIcon,
+  PrinterIcon,
+  SettingsIcon,
+} from "lucide-vue-next";
 import NavItem from "./nav-item.vue";
 import eventEmitter from "@/hooks/eventEmitter";
 
-const handleDialog = () => {
-  eventEmitter.emit("dialog-setting:show");
+//打开打印范围预设
+const handlePreset = () => {
+  eventEmitter.emit("dialog-setting:show", "preset");
+};
+
+//打开打印范围预设
+const handlePrice = () => {
+  eventEmitter.emit("dialog-setting:show", "price");
+};
+
+//打开设置
+const handleSettings = () => {
+  eventEmitter.emit("dialog-setting:show", "about");
 };
 </script>
 

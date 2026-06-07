@@ -46,11 +46,15 @@ import SideBar from "./side-bar/index.vue";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import eventEmitter from "@/hooks/eventEmitter";
 import { VisuallyHidden } from "reka-ui";
-import { selectedRoute } from "./router";
+import { selectedRoute, selectRouteID } from "./router";
 
 const open = ref(false);
 
-eventEmitter.on("dialog-setting:show", () => {
+eventEmitter.on("dialog-setting:show", id => {
+  if (id) {
+    selectRouteID(id);
+  }
+
   open.value = true;
 });
 </script>

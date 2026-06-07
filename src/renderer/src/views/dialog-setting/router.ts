@@ -32,7 +32,6 @@ const router: Route[] = [
     icon: CircleDollarSignIcon,
     component: Price,
   },
-
   {
     id: "update",
     name: "更新",
@@ -55,5 +54,10 @@ export const selectedRouteID = ref(router[0].id);
 export const selectedRoute = computed(() => {
   return router.find(r => r.id == selectedRouteID.value);
 });
+
+//选择路由id
+export const selectRouteID = (id: string) => {
+  selectedRouteID.value = id;
+};
 
 export default router;
