@@ -24,12 +24,14 @@ import eventEmitter from "@/hooks/eventEmitter";
 import { Toaster } from "@/components/ui/sonner";
 import { toast } from "vue-sonner";
 import { useUpdateStore } from "@/stores/useUpdateStore";
-import { usePrinterStore } from "./stores/usePrinterStore";
+import { usePrinterStore } from "@/stores/usePrinterStore";
+import { useThemeStore } from "@/stores/useThemeStore";
 import "vue-sonner/style.css";
 
 //初始化pinia
 useUpdateStore();
 usePrinterStore();
+useThemeStore();
 
 eventEmitter.on("success:show", message => {
   toast.success(message, {
