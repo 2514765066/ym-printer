@@ -53,19 +53,24 @@ export const useUpdateStore = defineStore("update", () => {
       //更新地址
       const updateUrl = repoMap[config.value.repo].updateUrl;
 
-      const res = await ipcRenderer.invoke("checkUpdata", updateUrl);
+      const checkRes = await ipcRenderer.invoke("checkUpdata", updateUrl);
 
       //没有更新
-      if (res == false) {
+      if (checkRes == false) {
         status.value = "updateNotAvailable";
         return;
       }
 
-      latestVersion.value = res;
+      latestVersion.value = checkRes;
 
       status.value = "downloading";
 
-      await ipcRenderer.invoke("downloadUpdate");
+      const downloadRes = await ipcRenderer.invoke("downloadUpdate");
+
+      if (!downloadRes) {
+        eventEmitter.emit("error:show", "下载更新失败,请检查网络");
+        return;
+      }
 
       status.value = "downloaded";
 

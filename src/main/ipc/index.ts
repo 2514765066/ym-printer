@@ -292,11 +292,11 @@ ipcMain.handle("removePrinterTask", (_, option) => {
 
 //切换主题色
 ipcMain.handle("toggleTheme", ({ sender }, theme) => {
-  const win = BrowserWindow.fromWebContents(sender);
+  const win = BrowserWindow.fromWebContents(sender)!;
 
   nativeTheme.themeSource = theme as "light" | "dark";
 
-  win?.setTitleBarOverlay({
+  win.setTitleBarOverlay({
     symbolColor: theme == "light" ? "#000000" : "#d4d4d4",
   });
 });
