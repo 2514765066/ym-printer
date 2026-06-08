@@ -38,6 +38,9 @@ export type IpcEvent = {
 
   //删除打印机任务
   removePrinterTask: (option: { printer: string; id?: number }) => boolean;
+
+  //切换主题色
+  toggleTheme: (theme: string) => void;
 };
 
 //文档信息

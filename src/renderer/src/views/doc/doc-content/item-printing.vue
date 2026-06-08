@@ -1,6 +1,6 @@
 <template>
   <Item
-    class="hover:bg-accent/30 rounded-none!"
+    class="hover:bg-accent dark:hover:bg-accent/30 rounded-none!"
     size="sm"
     @click="$emit('print', data.id)"
   >

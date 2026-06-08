@@ -5,7 +5,7 @@
     </NavItem>
 
     <NavItem label="打印范围预设" @click="handlePreset">
-      <ClipboardIcon class="size-4.5" />
+      <ClipboardListIcon class="size-4.5" />
     </NavItem>
 
     <NavItem label="价格" @click="handlePrice">
@@ -21,7 +21,7 @@
 <script setup lang="ts">
 import {
   CircleDollarSignIcon,
-  ClipboardIcon,
+  ClipboardListIcon,
   PrinterIcon,
   SettingsIcon,
 } from "lucide-vue-next";

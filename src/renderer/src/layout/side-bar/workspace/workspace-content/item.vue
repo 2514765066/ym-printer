@@ -2,9 +2,9 @@
   <ContextMenu>
     <ContextMenuTrigger as-child>
       <section
-        class="h-13 px-3 flex flex-col justify-center gap-1 rounded-[6px] hover:bg-accent/50 transition-colors"
+        class="h-13 px-3 flex flex-col justify-center gap-1 rounded-[6px] hover:bg-accent dark:hover:bg-accent/50 transition-colors"
         :class="{
-          'bg-accent/50': isSelected,
+          'bg-accent dark:bg-accent/50': isSelected,
         }"
         :title="data.name"
         @click="handleClick"

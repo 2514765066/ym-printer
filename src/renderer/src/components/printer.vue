@@ -1,6 +1,7 @@
 <template>
   <Select v-model="model">
     <SelectTrigger
+      class="shadow-none"
       :class="`${variant == 'default' && 'border-none! ring-0! bg-transparent! hover:bg-accent/50! transition-colors'} ${$props.class}`"
     >
       <div class="flex items-center gap-2">

@@ -11,7 +11,7 @@ const props = defineProps<{
   <div
     :class="
       cn(
-        'relative bg-input/30 [&>[data-slot=input]]:has-[[data-slot=increment]]:pr-5 [&>[data-slot=input]]:has-[[data-slot=decrement]]:pl-5',
+        'relative bg-transparent dark:bg-input/30 [&>[data-slot=input]]:has-[[data-slot=increment]]:pr-5 [&>[data-slot=input]]:has-[[data-slot=decrement]]:pl-5',
         props.class,
       )
     "

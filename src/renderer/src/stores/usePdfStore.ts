@@ -4,9 +4,6 @@ export const usePdfStore = defineStore("pdf", () => {
   //选择模式
   const viewMode = ref("raw");
 
-  //暗色主题
-  const theme = useStorage("theme", "light");
-
   //缩放倍率
   const scale = useStorage("scale", 0.5);
 
@@ -20,11 +17,6 @@ export const usePdfStore = defineStore("pdf", () => {
     scale.value = Math.max(scale.value - 0.05, 0.05);
   };
 
-  //切换主题
-  const toggleTheme = () => {
-    theme.value = theme.value == "dark" ? "light" : "dark";
-  };
-
   //选择模式
   const setViewMode = (data: string) => {
     viewMode.value = data;
@@ -32,11 +24,9 @@ export const usePdfStore = defineStore("pdf", () => {
 
   return {
     viewMode,
-    theme,
     scale,
     addScale,
     subScale,
-    toggleTheme,
     setViewMode,
   };
 });

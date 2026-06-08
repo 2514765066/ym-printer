@@ -9,11 +9,11 @@
         class="ml-auto text-muted-foreground"
         variant="ghost"
         size="icon-sm"
-        @click="toggleTheme"
+        @click="togglePreviewTheme"
       >
-        <MoonIcon v-if="theme == 'dark'" />
+        <MoonIcon class="size-4.5" v-if="previewTheme == 'dark'" />
 
-        <SunIcon v-else />
+        <SunIcon class="size-4.5" v-else />
       </Button>
     </Tooltip>
 
@@ -24,7 +24,7 @@
           variant="ghost"
           size="icon-sm"
         >
-          <XIcon class="size-5.5" />
+          <XIcon class="size-5" />
         </Button>
       </SheetClose>
     </Tooltip>
@@ -36,13 +36,13 @@ import { SheetClose } from "@/components/ui/sheet";
 import FileIcon from "@/components/file-icon.vue";
 import { useDocStore } from "@/stores/useDocStore";
 import { Button } from "@/components/ui/button";
-import { usePdfStore } from "@/stores/usePdfStore";
 import { MoonIcon, SunIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";
+import { useThemeStore } from "@/stores/useThemeStore";
 
 const { selectedDoc } = storeToRefs(useDocStore());
-const { theme } = storeToRefs(usePdfStore());
-const { toggleTheme } = usePdfStore();
+const { previewTheme } = storeToRefs(useThemeStore());
+const { togglePreviewTheme } = useThemeStore();
 </script>
 
 <style scoped lang="scss"></style>

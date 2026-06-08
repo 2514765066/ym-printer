@@ -1,6 +1,6 @@
 <template>
   <Item
-    class="hover:bg-accent/30 has-aria-checked:bg-primary/15 rounded-none"
+    class="hover:bg-accent dark:hover:bg-accent/30 has-aria-checked:bg-primary/15 rounded-none"
     size="sm"
     as="label"
     :for="data.id"
@@ -18,7 +18,7 @@
         <FileIcon :size="38" :ext="data.ext" />
 
         <CheckIcon
-          class="size-6 absolute right-0 bottom-0 translate-1/3 text-green-500"
+          class="size-6 absolute right-0 bottom-0 translate-1/3 text-green-500 drop-shadow-2xl"
           v-if="config.price"
         />
       </div>
@@ -77,11 +77,14 @@
     </ItemContent>
 
     <ItemActions>
-      <span class="text-sm text-green-500" v-if="config.price">
+      <span
+        class="text-sm text-green-700 dark:text-green-500"
+        v-if="config.price"
+      >
         {{ price }} 元
       </span>
 
-      <CheckIcon class="size-6 text-green-500" v-else />
+      <CheckIcon class="size-6 text-green-700 dark:text-green-500" v-else />
     </ItemActions>
   </Item>
 </template>

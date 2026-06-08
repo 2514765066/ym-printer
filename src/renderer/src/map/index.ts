@@ -60,3 +60,8 @@ export const viewMap = {
   raw: "原始",
   preview: "预览",
 };
+
+export const themeMap = {
+  dark: "深色",
+  light: "浅色",
+};

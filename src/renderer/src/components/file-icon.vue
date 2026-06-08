@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="flex-center rounded-md aspect-square">
-      <span class="font-bold">{{ info.label }}</span>
+      <span class="font-bold text-white">{{ info.label }}</span>
     </div>
   </section>
 </template>
@@ -14,7 +14,7 @@ const props = withDefaults(
   }>(),
   {
     size: 32,
-  }
+  },
 );
 
 const map = {

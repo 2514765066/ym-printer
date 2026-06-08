@@ -16,10 +16,10 @@
       }"
       v-model="scale"
     >
-      <NumberFieldContent class="bg-transparent">
+      <NumberFieldContent class="bg-transparent!">
         <NumberFieldDecrement />
 
-        <NumberFieldInput class="border-none ring-0!" />
+        <NumberFieldInput class="border-none ring-0! shadow-none" />
 
         <NumberFieldIncrement />
       </NumberFieldContent>

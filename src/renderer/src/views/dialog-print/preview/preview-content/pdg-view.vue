@@ -2,7 +2,7 @@
   <VuePdfEmbed
     ref="container"
     class="pdf-view m-auto"
-    :class="{ 'invert-[0.8] hue-rotate-180': theme == 'dark' }"
+    :class="{ 'invert-[0.8] hue-rotate-180': previewTheme == 'dark' }"
     annotation-layer
     :source="buffer"
     :width="500"
@@ -21,8 +21,10 @@ import VuePdfEmbed from "@/components/vue-pdf-embed";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { Form } from "../../index";
 import { parserRange } from "@/utils/range";
+import { useThemeStore } from "@/stores/useThemeStore";
 
-const { scale, theme, viewMode } = storeToRefs(usePdfStore());
+const { previewTheme } = storeToRefs(useThemeStore());
+const { scale, viewMode } = storeToRefs(usePdfStore());
 const { selectedDoc } = storeToRefs(useDocStore());
 
 const form: Form = inject("form")!;

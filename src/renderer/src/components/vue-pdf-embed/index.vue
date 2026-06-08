@@ -355,7 +355,7 @@ onBeforeUnmount(() => {
       <div
         :data-pageNum="pageNum"
         :id="id && `${id}-${pageNum}`"
-        class="vue-pdf-embed__page relative"
+        class="vue-pdf-embed__page relative shadow-sm"
         :class="{
           pageNum: pageNum != 0,
         }"

@@ -12,7 +12,7 @@
       <span>取消全选</span>
     </Button>
 
-    <span class="ml-auto mr-2 text-sm text-green-500">
+    <span class="ml-auto mr-2 text-sm text-green-700 dark:text-green-500">
       总价: {{ price }} 元
     </span>
   </section>

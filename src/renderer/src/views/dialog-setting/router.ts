@@ -2,14 +2,16 @@ import {
   CircleAlertIcon,
   CircleArrowUpIcon,
   CircleDollarSignIcon,
-  ClipboardIcon,
+  ClipboardListIcon,
+  PaletteIcon,
 } from "lucide-vue-next";
-import Price from "./view/price.vue";
 import { Component } from "vue";
-import Update from "./view/update.vue";
-import About from "./view/about.vue";
-import { appVersion } from "@/services/info.js";
+import Appearance from "./view/appearance/index.vue";
+import Price from "./view/price/index.vue";
+import Update from "./view/update/index.vue";
+import About from "./view/about/index.vue";
 import Preset from "./view/preset/index.vue";
+import { appVersion } from "@/services/info";
 
 export interface Route {
   id: string;
@@ -23,8 +25,14 @@ const router: Route[] = [
   {
     id: "preset",
     name: "打印范围预设",
-    icon: ClipboardIcon,
+    icon: ClipboardListIcon,
     component: Preset,
+  },
+  {
+    id: "appearance",
+    name: "外观",
+    icon: PaletteIcon,
+    component: Appearance,
   },
   {
     id: "price",

@@ -13,7 +13,7 @@
         >
           <NumberFieldContent class="bg-transparent!">
             <NumberFieldDecrement />
-            <NumberFieldInput />
+            <NumberFieldInput class="shadow-xs" />
             <NumberFieldIncrement />
           </NumberFieldContent>
         </NumberField>

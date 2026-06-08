@@ -5,7 +5,7 @@
 
       <FormControl>
         <ToggleGroup
-          class="w-full"
+          class="w-full shadow-xs"
           variant="outline"
           type="single"
           v-bind="componentField"

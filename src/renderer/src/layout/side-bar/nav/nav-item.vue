@@ -1,6 +1,6 @@
 <template>
   <section
-    class="h-8 px-2 flex items-center gap-2 rounded hover:bg-accent/50 transition-colors"
+    class="h-8 px-2 flex items-center gap-2 rounded hover:bg-accent dark:hover:bg-accent/50 transition-colors"
     :class="{
       'bg-accent dark:bg-accent/50': active,
     }"

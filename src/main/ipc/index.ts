@@ -13,7 +13,7 @@ import { copyFile, mkdir, readFile } from "fs/promises";
 import { toPdf } from "@/service/doc";
 import { existsSync } from "fs";
 import { Doc, PrinterTask } from "@type";
-import { BrowserWindow, dialog } from "electron";
+import { BrowserWindow, dialog, nativeTheme } from "electron";
 import { parseDoc } from "@/utils/doc";
 import { exec, execFile } from "child_process";
 import { checkUpdate, downloadUpdate, installUpdate } from "ym-publish";
@@ -288,4 +288,15 @@ ipcMain.handle("removePrinterTask", (_, option) => {
   });
 
   return promise;
+});
+
+//切换主题色
+ipcMain.handle("toggleTheme", ({ sender }, theme) => {
+  const win = BrowserWindow.fromWebContents(sender);
+
+  nativeTheme.themeSource = theme as "light" | "dark";
+
+  win?.setTitleBarOverlay({
+    symbolColor: theme == "light" ? "#000000" : "#d4d4d4",
+  });
 });

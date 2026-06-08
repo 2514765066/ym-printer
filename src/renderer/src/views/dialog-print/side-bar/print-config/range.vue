@@ -14,7 +14,7 @@
             <DropdownMenu>
               <DropdownMenuTrigger as-child>
                 <InputGroupButton variant="ghost" size="icon-xs">
-                  <ClipboardIcon class="text-foreground" />
+                  <ClipboardListIcon class="text-foreground" />
                 </InputGroupButton>
               </DropdownMenuTrigger>
 
@@ -66,7 +66,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ClipboardIcon } from "lucide-vue-next";
+import { ClipboardListIcon } from "lucide-vue-next";
 import { usePresetStore } from "@/stores/usePresetStore";
 
 const { presets } = storeToRefs(usePresetStore());
