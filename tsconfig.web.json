@@ -3,7 +3,6 @@
   "include": ["src/renderer/**/*", "src/preload/*.d.ts", "src/type/*.ts"],
   "compilerOptions": {
     "composite": true,
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/renderer/src/*"],
