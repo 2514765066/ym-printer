@@ -2,6 +2,8 @@ import { useConfigStore } from "@/stores/useConfigStore";
 import eventEmitter from "@/hooks/eventEmitter";
 import MessageBox from "@/components/ui/message-box";
 import { repoMap } from "@/map";
+import { useStorage } from "@vueuse/core";
+import { isOverOneDay } from "@/utils/date";
 
 type Status =
   | "init"
@@ -17,6 +19,9 @@ export const useUpdateStore = defineStore("update", () => {
 
   //状态
   const status = ref<Status>("init");
+
+  //上次更新时间
+  const lastUpdateTime = useStorage("lastUpdateTime", 0);
 
   //最新版本
   const latestVersion = ref("");
@@ -77,7 +82,12 @@ export const useUpdateStore = defineStore("update", () => {
   //初始化
   const init = () => {
     if (config.value.autoUpdate) {
-      checkUpdate();
+      const now = Date.now();
+
+      if (isOverOneDay(lastUpdateTime.value, now)) {
+        checkUpdate();
+        lastUpdateTime.value = now;
+      }
     }
   };
 
