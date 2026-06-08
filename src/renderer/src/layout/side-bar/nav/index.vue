@@ -40,7 +40,7 @@ const handlePrice = () => {
 
 //打开设置
 const handleSettings = () => {
-  eventEmitter.emit("dialog-setting:show", "about");
+  eventEmitter.emit("dialog-setting:show");
 };
 </script>
 
