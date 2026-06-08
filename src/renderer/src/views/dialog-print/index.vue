@@ -56,6 +56,18 @@ import { useWorkspaceStore } from "@/stores/useWorkspaceStore.js";
 const { selectedDoc } = storeToRefs(useDocStore());
 const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
 
+const createInitialValues = () => {
+  return {
+    remark: selectedDoc.value.remark || "",
+    printer: selectedDoc.value.printer || selectedWorkspace.value.printer || "",
+    count: selectedDoc.value.count || 1,
+    mode: selectedDoc.value.mode || "mix",
+    range: selectedDoc.value.range || "",
+    cartridge: selectedDoc.value.cartridge || "black",
+    orientation: selectedDoc.value.orientation || "portrait",
+  };
+};
+
 const form = useForm({
   validationSchema: toTypedSchema(
     z.object({
@@ -110,16 +122,18 @@ const form = useForm({
       }),
     }),
   ),
-  initialValues: {
-    remark: selectedDoc.value.remark || "",
-    printer: selectedDoc.value.printer || selectedWorkspace.value.printer || "",
-    count: selectedDoc.value.count || 1,
-    mode: selectedDoc.value.mode || "mix",
-    range: selectedDoc.value.range || "",
-    cartridge: selectedDoc.value.cartridge || "black",
-    orientation: selectedDoc.value.orientation || "portrait",
-  },
 });
+
+//打开就设置值
+watch(
+  open,
+  () => {
+    form.setValues(createInitialValues());
+  },
+  {
+    immediate: true,
+  },
+);
 
 provide("form", form);
 </script>
