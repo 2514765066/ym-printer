@@ -3,7 +3,7 @@
     <SheetContent
       :aria-describedby="undefined"
       side="bottom"
-      class="h-[calc(100vh-44px)] p-0!"
+      class="h-[calc(100vh-40px)] p-0!"
       @open-auto-focus.prevent
     >
       <VisuallyHidden as-child>

@@ -1,5 +1,5 @@
 <template>
-  <section class="title-bar pl-1.5 flex items-center bg-sidebar">
+  <section class="title-bar pl-1.5 flex items-center bg-sidebar app-drag">
     <Tooltip label="切换侧边栏可见性">
       <Button variant="ghost" size="icon-xs" @click="toggleSilderbar">
         <PanelLeftCloseIcon v-if="panelRef?.isExpanded" />
@@ -48,7 +48,7 @@
 
       <HoverCardContent class="py-2 flex flex-col gap-2">
         <div class="flex items-center gap-4">
-          <img src="@/assets/icon.png" class="size-10" />
+          <img src="@/assets/icon.png" class="size-12" />
 
           <div class="flex flex-col">
             <span class="text-sm">{{ productName }}</span>
@@ -124,7 +124,6 @@ watch(
   grid-area: title-bar;
   padding-right: 148px;
 
-  -webkit-app-region: drag;
   * {
     -webkit-app-region: no-drag;
   }
