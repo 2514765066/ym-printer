@@ -4,15 +4,19 @@
       <PrinterIcon class="size-4.5" />
     </NavItem>
 
-    <NavItem label="打印范围预设" @click="handlePreset">
+    <NavItem
+      label="打印范围预设"
+      description="打开打印范围预设"
+      @click="handlePreset"
+    >
       <ClipboardListIcon class="size-4.5" />
     </NavItem>
 
-    <NavItem label="价格" @click="handlePrice">
+    <NavItem label="价格" description="打开价格设置" @click="handlePrice">
       <CircleDollarSignIcon class="size-4.5" />
     </NavItem>
 
-    <NavItem label="设置" @click="handleSettings">
+    <NavItem label="设置" description="打开设置 Ctrl+," @click="handleSettings">
       <SettingsIcon class="size-4.5" />
     </NavItem>
   </section>

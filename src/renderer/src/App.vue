@@ -26,12 +26,15 @@ import { toast } from "vue-sonner";
 import { useUpdateStore } from "@/stores/useUpdateStore";
 import { usePrinterStore } from "@/stores/usePrinterStore";
 import { useThemeStore } from "@/stores/useThemeStore";
+import { useEventListener } from "@vueuse/core";
 import "vue-sonner/style.css";
+import { useWorkspaceStore } from "./stores/useWorkspaceStore";
 
 //初始化pinia
 useUpdateStore();
 usePrinterStore();
 useThemeStore();
+const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 eventEmitter.on("success:show", message => {
   toast.success(message, {
@@ -55,6 +58,40 @@ eventEmitter.on("error:show", message => {
     duration: 1500,
     position: "top-center",
   });
+});
+
+//快捷键
+useEventListener("keydown", e => {
+  //添加工作区
+  if (e.ctrlKey && e.key == "n") {
+    eventEmitter.emit("dialog-workspace:show", {
+      type: "add",
+    });
+
+    return;
+  }
+
+  //打开设置
+  if (e.ctrlKey && e.key == ",") {
+    eventEmitter.emit("dialog-setting:show");
+    return;
+  }
+
+  //添加文档
+  if (e.ctrlKey && e.key == "o") {
+    ipcRenderer.invoke("addDoc", {
+      workspaceId: selectedWorkspaceID.value,
+    });
+    return;
+  }
+
+  //添加文档
+  if (e.ctrlKey && e.key == "e") {
+    eventEmitter.emit("dialog-workspace:show", {
+      type: "edit",
+    });
+    return;
+  }
 });
 </script>
 

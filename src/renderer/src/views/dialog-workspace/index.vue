@@ -5,7 +5,9 @@
       @close-auto-focus="handleClose"
     >
       <DialogHeader>
-        <DialogTitle>新建工作空间</DialogTitle>
+        <DialogTitle>
+          {{ workspaceTypeMap[dialogType] }}
+        </DialogTitle>
       </DialogHeader>
 
       <Form />
@@ -33,8 +35,10 @@ import { useForm } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { usePrinterStore } from "@/stores/usePrinterStore";
+import { workspaceTypeMap } from "@/map/index";
 
 const { selectedPrinter } = storeToRefs(usePrinterStore());
+const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
 const { addWorkspace, editWorkspace } = useWorkspaceStore();
 
 const open = ref(false);
@@ -74,8 +78,6 @@ const handleClose = () => {
 const handleClick = handleSubmit(values => {
   switch (dialogType.value) {
     case "add":
-      console.log(values);
-
       addWorkspace(values);
       break;
     case "edit":
@@ -96,7 +98,12 @@ eventEmitter.on("dialog-workspace:show", option => {
       });
       break;
     case "edit":
-      setValues(option.data!);
+      if (!option.data) {
+        setValues(selectedWorkspace.value);
+        break;
+      }
+
+      setValues(option.data);
       break;
   }
 

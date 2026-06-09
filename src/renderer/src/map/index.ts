@@ -71,3 +71,13 @@ export const previewThemeMap = {
   light: "浅色",
   auto: "跟随基础主题",
 };
+
+export const presetTypeMap = {
+  add: "新建预设",
+  edit: "编辑预设",
+};
+
+export const workspaceTypeMap = {
+  add: "新建工作空间",
+  edit: "编辑工作空间",
+};

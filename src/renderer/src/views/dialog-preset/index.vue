@@ -6,7 +6,7 @@
     >
       <DialogHeader>
         <DialogTitle>
-          {{ dialogType == "add" ? "新建预设" : "编辑预设" }}
+          {{ presetTypeMap[dialogType] }}
         </DialogTitle>
       </DialogHeader>
 
@@ -33,7 +33,8 @@ import eventEmitter from "@/hooks/eventEmitter";
 import { useForm } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
-import { usePresetStore } from "@/stores/usePresetStore.js";
+import { usePresetStore } from "@/stores/usePresetStore";
+import { presetTypeMap } from "@/map/index";
 
 const { addPreset, editPreset } = usePresetStore();
 

@@ -14,11 +14,13 @@
     </EmptyHeader>
 
     <EmptyContent>
-      <Button @click="handleAdd">
-        <PlusIcon />
+      <Tooltip label="在当前工作空间下新增文档 Ctrl+O">
+        <Button @click="handleAdd">
+          <PlusIcon />
 
-        <span>新增文档</span>
-      </Button>
+          <span>新增文档 </span>
+        </Button>
+      </Tooltip>
     </EmptyContent>
   </Empty>
 </template>
@@ -35,6 +37,7 @@ import {
   EmptyTitle,
 } from "@/components/ui/empty";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import Tooltip from "@/components/tooltip.vue";
 
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 

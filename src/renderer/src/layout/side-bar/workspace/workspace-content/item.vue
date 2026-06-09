@@ -32,13 +32,17 @@
       <ContextMenuItem @click="handleAdd">
         <PlusIcon />
 
-        <span> 添加文档 </span>
+        <span> 新增文档 </span>
+
+        <ContextMenuShortcut>Ctrl+O</ContextMenuShortcut>
       </ContextMenuItem>
 
       <ContextMenuItem @click="handleEdit">
         <PencilLineIcon />
 
         <span> 编辑 </span>
+
+        <ContextMenuShortcut>Ctrl+E</ContextMenuShortcut>
       </ContextMenuItem>
 
       <ContextMenuSeparator />
@@ -69,6 +73,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuTrigger,
+  ContextMenuShortcut,
 } from "@/components/ui/context-menu";
 import { Workspace } from "@/stores/useWorkspaceStore";
 import {

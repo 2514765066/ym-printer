@@ -1,5 +1,5 @@
 <template>
-  <Tooltip :disabled="disabled">
+  <Tooltip :disabled="!label || disabled">
     <TooltipTrigger as-child>
       <slot></slot>
     </TooltipTrigger>
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/tooltip";
 
 defineProps<{
-  label: string;
+  label?: string;
   side?: "right" | "left" | "top" | "bottom";
   disabled?: boolean;
 }>();

@@ -26,7 +26,7 @@ import DocFooter from "./doc-footer/index.vue";
 import { useDocStore } from "@/stores/useDocStore";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { useConfigStore } from "@/stores/useConfigStore";
-import { setStatus } from "./index.js";
+import { setStatus } from "./index";
 
 const { config } = storeToRefs(useConfigStore());
 const { docs } = storeToRefs(useDocStore());

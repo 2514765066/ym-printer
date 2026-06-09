@@ -1,3 +1,4 @@
+import { presetTypeMap, workspaceTypeMap } from "@/map";
 import { Preset } from "@/stores/usePresetStore";
 import { Workspace } from "@/stores/useWorkspaceStore";
 
@@ -16,12 +17,12 @@ type EventMap = {
   "dialog-setting:show": (id?: string) => void;
 
   "dialog-workspace:show": (option: {
-    type: "add" | "edit";
+    type: keyof typeof workspaceTypeMap;
     data?: Workspace;
   }) => void;
 
   "dialog-preset:show": (option: {
-    type: "add" | "edit";
+    type: keyof typeof presetTypeMap;
     data?: Preset;
   }) => void;
 };
