@@ -2,6 +2,8 @@ import { Doc } from "@type";
 import { parserRange } from "./range";
 import { printPromise } from "@/stores/usePrintStore";
 
+let printQueue = Promise.resolve();
+
 //是否是全单
 const isSimplex = (range: number[]) => {
   return range.every((value, index) =>
@@ -11,7 +13,20 @@ const isSimplex = (range: number[]) => {
 
 //打印范围中的内容
 const print = async (config: Doc, range: number[]) => {
-  await ipcRenderer.invoke("print", config, range);
+  return new Promise<void>((resolve, reject) => {
+    printQueue = printQueue
+      .then(async () => {
+        await ipcRenderer.invoke("print", config, range);
+
+        console.log("发送到打印机", config.name);
+      })
+      .then(() => {
+        resolve();
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
 };
 
 //获取偶数范围

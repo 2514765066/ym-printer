@@ -79,7 +79,7 @@
       <ButtonGroup v-if="data.status == 'printing'">
         <Tooltip label="继续打印奇数页">
           <Button variant="outline" size="sm" @click.stop="handleNext">
-            <Spinner /> 继续
+            <ArrowRightIcon /> 继续
           </Button>
         </Tooltip>
 
@@ -107,7 +107,7 @@ import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
 import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-vue-next";
+import { ArrowRightIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";
 import { printNext, printCancel } from "@/stores/usePrintStore";
 import { ButtonGroup } from "@/components/ui/button-group";
