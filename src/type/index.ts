@@ -40,8 +40,11 @@ export type IpcEvent = {
   removePrinterTask: (option: { printer: string; id?: number }) => boolean;
 
   //切换主题色
-  toggleTheme: (theme: string) => void;
+  toggleTheme: (theme: Theme) => void;
 };
+
+//主题
+export type Theme = "light" | "dark";
 
 //文档信息
 export type Doc = {

@@ -1,6 +1,6 @@
 import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/assets/tailwind.css";
-import "@/assets/global.scss";
+import "@/assets/global.css";
 
 import { createApp } from "vue";
 import App from "./App.vue";

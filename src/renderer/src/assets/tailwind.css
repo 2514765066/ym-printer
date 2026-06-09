@@ -3,6 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@custom-variant preview-dark (&:is(.preview-dark *));
+
 :root {
   --background: oklch(0.99 0 0);
 
@@ -116,20 +118,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.flex-center {
-  @apply flex justify-center items-center;
-}
-
-.wh-screen {
-  @apply w-screen h-screen;
-}
-
-.wh-full {
-  @apply w-full h-full;
-}
-
-.disabled {
-  @apply opacity-60 pointer-events-none!;
 }

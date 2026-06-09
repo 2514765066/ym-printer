@@ -16,18 +16,18 @@
           </ItemContent>
 
           <ItemActions>
-            <Select v-model="theme">
+            <Select v-model="baseTheme">
               <SelectTrigger class="w-40">
                 <SelectValue placeholder="请选择基础主题" />
               </SelectTrigger>
 
               <SelectContent>
                 <SelectItem
-                  v-for="item in Object.keys(themeMap)"
+                  v-for="item in Object.keys(baseThemeMap)"
                   :key="item"
                   :value="item"
                 >
-                  {{ themeMap[item] }}
+                  {{ baseThemeMap[item] }}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -42,18 +42,18 @@
           </ItemContent>
 
           <ItemActions>
-            <Select v-model="previewTheme">
+            <Select v-model="previewThemeRaw">
               <SelectTrigger class="w-40">
                 <SelectValue placeholder="请选择文档主题" />
               </SelectTrigger>
 
               <SelectContent>
                 <SelectItem
-                  v-for="item in Object.keys(themeMap)"
+                  v-for="item in Object.keys(previewThemeMap)"
                   :key="item"
                   :value="item"
                 >
-                  {{ themeMap[item] }}
+                  {{ previewThemeMap[item] }}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -82,11 +82,11 @@ import {
   ItemGroup,
 } from "@/components/ui/item";
 import Container from "@/components/container/index.vue";
-import { themeMap } from "@/map";
+import { previewThemeMap, baseThemeMap } from "@/map";
 import { productName } from "@/services/info";
 import { useThemeStore } from "@/stores/useThemeStore";
 
-const { theme, previewTheme } = storeToRefs(useThemeStore());
+const { baseTheme, previewThemeRaw } = storeToRefs(useThemeStore());
 </script>
 
 <style scoped lang="scss"></style>

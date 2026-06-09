@@ -294,7 +294,7 @@ ipcMain.handle("removePrinterTask", (_, option) => {
 ipcMain.handle("toggleTheme", ({ sender }, theme) => {
   const win = BrowserWindow.fromWebContents(sender)!;
 
-  nativeTheme.themeSource = theme as "light" | "dark";
+  nativeTheme.themeSource = theme;
 
   win.setTitleBarOverlay({
     symbolColor: theme == "light" ? "#000000" : "#d4d4d4",

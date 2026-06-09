@@ -61,7 +61,13 @@ export const viewMap = {
   preview: "预览",
 };
 
-export const themeMap = {
+export const baseThemeMap = {
   dark: "深色",
   light: "浅色",
+};
+
+export const previewThemeMap = {
+  dark: "深色",
+  light: "浅色",
+  auto: "跟随基础主题",
 };
