@@ -1,22 +1,21 @@
 <template>
   <VuePdfEmbed
-    ref="container"
     class="pdf-view m-auto preview-dark:invert-[0.8] preview-dark:hue-rotate-180"
-    annotation-layer
-    :source="buffer"
+    :source="doc"
     :width="500"
     :scale="2"
     :page="page"
     @loaded="handleLoaded"
     @loading-failed="handleError"
     @rendering-failed="handleError"
+    v-if="visible"
   />
 </template>
 
 <script setup lang="ts">
 import { usePdfStore } from "@/stores/usePdfStore";
 import { useDocStore } from "@/stores/useDocStore";
-import VuePdfEmbed from "@/components/vue-pdf-embed";
+import VuePdfEmbed, { useVuePdfEmbed } from "@/components/vue-pdf-embed";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import { Form } from "../../index";
 import { parserRange } from "@/utils/range";
@@ -26,8 +25,14 @@ const { selectedDoc } = storeToRefs(useDocStore());
 
 const form: Form = inject("form")!;
 
+const visible = ref(false);
+
 //pdf数据
 const buffer = shallowRef<Buffer<ArrayBuffer>>();
+
+const { doc } = useVuePdfEmbed({
+  source: buffer,
+});
 
 //显示的页面
 const page = computed(() => {
@@ -62,6 +67,11 @@ onMounted(async () => {
   }
 
   buffer.value = await ipcRenderer.invoke("getPdf", selectedDoc.value.md5);
+
+  //等待400ms在渲染防止动画卡顿
+  setTimeout(() => {
+    visible.value = true;
+  }, 400);
 });
 </script>
 

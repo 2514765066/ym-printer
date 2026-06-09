@@ -1,30 +1,21 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref, shallowRef, toRef, watch } from "vue";
-import { AnnotationLayer, TextLayer } from "pdfjs-dist/legacy/build/pdf.mjs";
-import { PDFLinkService } from "pdfjs-dist/legacy/web/pdf_viewer.mjs";
 import type {
   OnProgressParameters,
   PDFDocumentProxy,
   PDFPageProxy,
   PageViewport,
 } from "pdfjs-dist";
-
 import type { PasswordRequestParams, Source } from "./types";
-import { emptyElement, releaseChildCanvases } from "./utils";
+import { releaseChildCanvases } from "./utils";
 import { useVuePdfEmbed } from "./composables";
 
 const props = withDefaults(
   defineProps<{
-    annotationLayer?: boolean;
     height?: number;
-    id?: string;
-    imageResourcesPath?: string;
-    linkService?: PDFLinkService;
     page?: number | number[];
     rotation?: number;
     scale?: number;
     source: Source;
-    textLayer?: boolean;
     width?: number;
   }>(),
   {
@@ -64,22 +55,17 @@ const { doc } = useVuePdfEmbed({
   source: toRef(props, "source"),
 });
 
-const linkService = computed(() => {
-  if (!doc.value || !props.annotationLayer) {
-    return null;
-  } else if (props.linkService) {
-    return props.linkService;
+const getPageNums = () => {
+  if (!doc.value) {
+    return [];
   }
 
-  const service = new PDFLinkService();
-  service.setDocument(doc.value);
-  service.setViewer({
-    scrollPageIntoView: ({ pageNumber }: { pageNumber: number }) => {
-      emit("internal-link-clicked", pageNumber);
-    },
-  });
-  return service;
-});
+  return props.page
+    ? Array.isArray(props.page)
+      ? props.page
+      : [props.page]
+    : [...Array(doc.value.numPages + 1).keys()].slice(1);
+};
 
 const getPageDimensions = (ratio: number): [number, number] => {
   let width: number;
@@ -105,11 +91,7 @@ const render = async () => {
   }
 
   try {
-    pageNums.value = props.page
-      ? Array.isArray(props.page)
-        ? props.page
-        : [props.page]
-      : [...Array(doc.value.numPages + 1).keys()].slice(1);
+    pageNums.value = getPageNums();
 
     pageScales.value = Array(pageNums.value.length).fill(1);
 
@@ -121,28 +103,37 @@ const render = async () => {
         }
 
         const page = await doc.value!.getPage(pageNum);
+
         if (renderingController?.isAborted) {
           return;
         }
+
         const pageRotation =
           ((props.rotation % 90 === 0 ? props.rotation : 0) + page.rotate) %
           360;
-        const [canvas, div1, div2] = Array.from(
+
+        const [canvas] = Array.from(
           root.value!.getElementsByClassName("vue-pdf-embed__page")[i].children,
-        ) as [HTMLCanvasElement, HTMLDivElement, HTMLDivElement];
+        ) as [HTMLCanvasElement];
 
         const isTransposed = !!((pageRotation / 90) % 2);
+
         const viewWidth = page.view[2] - page.view[0];
         const viewHeight = page.view[3] - page.view[1];
+
         const ratio = isTransposed
           ? viewWidth / viewHeight
           : viewHeight / viewWidth;
 
         const [actualWidth, actualHeight] = getPageDimensions(ratio);
+
         const cssWidth = `${Math.floor(actualWidth)}px`;
         const cssHeight = `${Math.floor(actualHeight)}px`;
+
         const pageWidth = isTransposed ? viewHeight : viewWidth;
+
         const pageScale = actualWidth / pageWidth;
+
         const viewport = page.getViewport({
           scale: pageScale,
           rotation: pageRotation,
@@ -154,46 +145,9 @@ const render = async () => {
         canvas.style.width = cssWidth;
         canvas.style.height = cssHeight;
 
-        const renderTasks = [
-          renderPage(
-            page,
-            viewport.clone({
-              scale: viewport.scale * window.devicePixelRatio * props.scale,
-            }),
-            canvas,
-          ),
-        ];
+        const scale = viewport.scale * window.devicePixelRatio * props.scale;
 
-        if (props.textLayer) {
-          renderTasks.push(
-            renderPageTextLayer(
-              page,
-              viewport.clone({
-                dontFlip: true,
-              }),
-              div1,
-            ),
-          );
-        }
-
-        if (props.annotationLayer) {
-          renderTasks.push(
-            renderPageAnnotationLayer(
-              page,
-              viewport.clone({
-                dontFlip: true,
-              }),
-              div2 || div1,
-            ),
-          );
-        }
-
-        //如果下一页是空白
-        if (pageNums.value[i + 1] === 0) {
-          await renderBlankPage(i + 1, ratio);
-        }
-
-        return Promise.all(renderTasks);
+        return renderPage(page, viewport.clone({ scale }), canvas);
       }),
     );
 
@@ -210,38 +164,6 @@ const render = async () => {
   }
 };
 
-/**
- * 渲染白屏
- */
-const renderBlankPage = async (index: number, ratio: number) => {
-  const [canvas] = Array.from(
-    root.value!.getElementsByClassName("vue-pdf-embed__page")[index].children,
-  ) as [HTMLCanvasElement];
-
-  const [actualWidth, actualHeight] = getPageDimensions(ratio);
-
-  const cssWidth = `${Math.floor(actualWidth)}px`;
-  const cssHeight = `${Math.floor(actualHeight)}px`;
-
-  pageScales.value[index] = 1;
-
-  // 3. 设定 Canvas 的样式宽高
-  canvas.style.display = "block";
-  canvas.style.width = cssWidth;
-  canvas.style.height = cssHeight;
-
-  // 4. 设定 Canvas 的绘图分辨率宽高并涂白
-  const dpr = window.devicePixelRatio * props.scale;
-  canvas.width = actualWidth * dpr;
-  canvas.height = actualHeight * dpr;
-
-  const ctx = canvas.getContext("2d");
-  if (ctx) {
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }
-};
-
 const renderPage = async (
   page: PDFPageProxy,
   viewport: PageViewport,
@@ -253,44 +175,6 @@ const renderPage = async (
     canvasContext: canvas.getContext("2d")!,
     viewport,
   }).promise;
-};
-
-const renderPageAnnotationLayer = async (
-  page: PDFPageProxy,
-  viewport: PageViewport,
-  container: HTMLDivElement,
-) => {
-  emptyElement(container);
-  await new AnnotationLayer({
-    accessibilityManager: null,
-    annotationCanvasMap: null,
-    annotationEditorUIManager: null,
-    div: container,
-    page,
-    structTreeLayer: null,
-    viewport,
-  }).render({
-    annotations: await page.getAnnotations(),
-    div: container,
-    imageResourcesPath: props.imageResourcesPath,
-    linkService: linkService.value!,
-    page,
-    renderForms: false,
-    viewport,
-  });
-};
-
-const renderPageTextLayer = async (
-  page: PDFPageProxy,
-  viewport: PageViewport,
-  container: HTMLElement,
-) => {
-  emptyElement(container);
-  await new TextLayer({
-    container,
-    textContentSource: await page.getTextContent(),
-    viewport,
-  }).render();
 };
 
 watch(
@@ -306,13 +190,10 @@ watch(
 watch(
   () => [
     doc.value,
-    props.annotationLayer,
     props.height,
-    props.imageResourcesPath,
     props.page,
     props.rotation,
     props.scale,
-    props.textLayer,
     props.width,
   ],
   async ([newDoc]) => {
@@ -342,29 +223,25 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    :id="id"
     ref="root"
     class="vue-pdf-embed w-fit grid gap-2"
     :class="{
       'cols-2': pageNums.length > 1,
     }"
   >
-    <div v-for="(pageNum, i) in pageNums" :key="i">
+    <div
+      v-for="(pageNum, i) in pageNums"
+      :key="i"
+      class="relative bg-white shadow-sm"
+      :class="{
+        pageNum: pageNum != 0,
+      }"
+      :data-pageNum="pageNum"
+    >
       <slot name="before-page" :page="pageNum" />
 
-      <div
-        :data-pageNum="pageNum"
-        :id="id && `${id}-${pageNum}`"
-        class="vue-pdf-embed__page relative shadow-sm"
-        :class="{
-          pageNum: pageNum != 0,
-        }"
-      >
-        <canvas />
-
-        <div v-if="textLayer && pageNum !== 0" class="textLayer" />
-
-        <div v-if="annotationLayer && pageNum !== 0" class="annotationLayer" />
+      <div class="vue-pdf-embed__page">
+        <canvas v-if="pageNum != 0" />
       </div>
 
       <slot name="after-page" :page="pageNum" />

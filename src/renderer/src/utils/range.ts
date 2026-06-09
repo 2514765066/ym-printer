@@ -97,15 +97,26 @@ const modeMap = {
   },
 };
 
+//缓存
+const cache = new Map<string, number[]>();
+
 //解析范围
 export const parserRange = (config: Doc) => {
+  const key = `${config.mode}-${config.pageCount}-${config.range}`;
+
+  if (cache.has(key)) {
+    return cache.get(key);
+  }
+
   const range = config.range || "-";
 
   const parts = range
     .split(/[,，]/)
     .map(item => formatRange(item, config.pageCount));
 
-  const fn = modeMap[config.mode];
+  const result = modeMap[config.mode](parts);
 
-  return fn(parts);
+  cache.set(key, result);
+
+  return result;
 };

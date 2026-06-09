@@ -50,11 +50,13 @@ import { open } from "./index";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
-import { useDocStore } from "@/stores/useDocStore.js";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore.js";
+import { useDocStore } from "@/stores/useDocStore";
+import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import { usePdfStore } from "@/stores/usePdfStore";
 
 const { selectedDoc } = storeToRefs(useDocStore());
 const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
+const { setViewMode } = usePdfStore();
 
 const createInitialValues = () => {
   return {
@@ -127,8 +129,13 @@ const form = useForm({
 //打开就设置值
 watch(
   open,
-  () => {
+  val => {
+    if (!val) return;
+
     form.setValues(createInitialValues());
+
+    //重置预览
+    setViewMode("raw");
   },
   {
     immediate: true,
