@@ -8,13 +8,13 @@
           class="ml-auto"
           variant="ghost"
           size="icon"
-          :disabled="selectedPrinter"
+          :disabled="!selectedPrinter"
         >
           <MoreHorizontalIcon />
         </Button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="center" class="w-52">
+      <DropdownMenuContent align="end" class="min-w-52">
         <DropdownMenuItem :disabled="reloadLock" @click="handleReload">
           <Spinner v-if="reloadLock" />
 
