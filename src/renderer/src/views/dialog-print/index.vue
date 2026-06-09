@@ -46,13 +46,14 @@ import TitleBar from "./title-bar/index.vue";
 import SideBar from "./side-bar/index.vue";
 import Preview from "./preview/index.vue";
 import { VisuallyHidden } from "reka-ui";
-import { open } from "./index";
+import { open, close } from "./index";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 import * as z from "zod";
 import { useDocStore } from "@/stores/useDocStore";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { usePdfStore } from "@/stores/usePdfStore";
+import { useEventListener } from "@vueuse/core";
 
 const { selectedDoc } = storeToRefs(useDocStore());
 const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
@@ -141,6 +142,14 @@ watch(
     immediate: true,
   },
 );
+
+//防止误触关闭应用按钮
+useEventListener(window, "beforeunload", e => {
+  if (open.value) {
+    e.preventDefault();
+    close();
+  }
+});
 
 provide("form", form);
 </script>
