@@ -1,6 +1,6 @@
 <template>
   <Item
-    class="hover:bg-accent dark:hover:bg-accent/30 has-aria-checked:bg-primary/15 rounded-none"
+    class="hover:bg-accent dark:hover:bg-accent/30 has-aria-checked:bg-primary/15 has-aria-checked:hover:bg-primary/20! rounded-none"
     size="sm"
     as="label"
     :for="data.id"
@@ -102,12 +102,12 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
 import { cartridgeMap, modeMap, orientationMap } from "@/map";
-import { getPrice } from "@/utils/price";
 import { status } from "../index";
 import { checked, toggleCheck } from "../check";
 import FileIcon from "@/components/file-icon.vue";
 import { CheckIcon } from "lucide-vue-next";
 import { useConfigStore } from "@/stores/useConfigStore";
+import { usePrice } from "@/hooks/usePrice";
 
 const { config } = storeToRefs(useConfigStore());
 
@@ -115,13 +115,11 @@ const props = defineProps<{
   data: Doc;
 }>();
 
+const price = usePrice(props.data);
+
 defineEmits<{
   print: [id: string];
 }>();
-
-const price = computed(() => {
-  return getPrice(props.data).toFixed(2);
-});
 </script>
 
 <style scoped lang="scss"></style>

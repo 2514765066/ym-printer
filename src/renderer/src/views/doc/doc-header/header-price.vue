@@ -6,6 +6,12 @@
       <span>全选文档</span>
     </Button>
 
+    <Button variant="ghost" @click="handleCheckFinishAll">
+      <SquareCheckIcon />
+
+      <span>全选打印完成文档</span>
+    </Button>
+
     <Button variant="ghost" @click="handleCancelCheckAll">
       <SquareIcon />
 
@@ -49,6 +55,25 @@ const price = computed(() => {
 
 //全选
 const handleCheckAll = () => {
+  handleCancelCheckAll();
+
+  const ids = docs.value
+    .filter(
+      item =>
+        item.workspaceId == selectedWorkspaceID.value &&
+        (item.status == "printed" ||
+          item.status == "prepare" ||
+          item.status == "printing"),
+    )
+    .map(item => item.id);
+
+  checkAll(ids);
+};
+
+//全选
+const handleCheckFinishAll = () => {
+  handleCancelCheckAll();
+
   const ids = docs.value
     .filter(
       item =>
@@ -63,11 +88,7 @@ const handleCheckAll = () => {
 //取消全选
 const handleCancelCheckAll = () => {
   const ids = docs.value
-    .filter(
-      item =>
-        item.workspaceId == selectedWorkspaceID.value &&
-        item.status == "printed",
-    )
+    .filter(item => item.workspaceId == selectedWorkspaceID.value)
     .map(item => item.id);
 
   cancelCheck(ids);

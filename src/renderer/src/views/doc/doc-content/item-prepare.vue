@@ -1,11 +1,20 @@
 <template>
   <Item
-    class="hover:bg-accent hover:bg-accent/30 rounded-none!"
+    class="hover:bg-accent dark:hover:bg-accent/30 has-aria-checked:bg-primary/15 has-aria-checked:hover:bg-primary/20! rounded-none!"
     size="sm"
+    as="label"
+    :for="data.id"
     @click="$emit('print', data.id)"
   >
     <ItemMedia variant="image">
-      <FileIcon :size="38" :ext="data.ext" />
+      <Checkbox
+        :id="data.id"
+        v-if="status == 'price'"
+        :model-value="checked.has(data.id)"
+        @update:model-value="toggleCheck(data.id)"
+      />
+
+      <FileIcon :size="38" :ext="data.ext" v-else />
     </ItemMedia>
 
     <ItemContent>
@@ -18,6 +27,8 @@
       </ItemTitle>
 
       <ItemDescription class="flex gap-4">
+        <Badge class="rounded"> {{ price }} 元 </Badge>
+
         <div class="flex items-center gap-1">
           <span class="text-sm">份数:</span>
 
@@ -64,7 +75,7 @@
       <ButtonGroup>
         <Tooltip label="准备就绪，开始打印">
           <Button variant="outline" size="sm" @click.stop="handleNext">
-            <ClockIcon /> 开始
+            <PrinterIcon /> 开始
           </Button>
         </Tooltip>
 
@@ -79,6 +90,7 @@
 </template>
 
 <script setup lang="ts">
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Item,
   ItemActions,
@@ -91,15 +103,20 @@ import { Badge } from "@/components/ui/badge";
 import { Doc } from "@type";
 import FileIcon from "@/components/file-icon.vue";
 import { Button } from "@/components/ui/button";
-import { ClockIcon, XIcon } from "lucide-vue-next";
+import { PrinterIcon, XIcon } from "lucide-vue-next";
 import Tooltip from "@/components/tooltip.vue";
 import { printNext, printCancel } from "@/stores/usePrintStore";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { cartridgeMap, modeMap, orientationMap } from "@/map";
+import { usePrice } from "@/hooks/usePrice";
+import { status } from "../index";
+import { checked, toggleCheck } from "../check";
 
 const props = defineProps<{
   data: Doc;
 }>();
+
+const price = usePrice(props.data);
 
 const handleNext = () => {
   printNext(props.data.id);
