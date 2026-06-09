@@ -18,7 +18,7 @@
         <FileIcon :size="38" :ext="data.ext" />
 
         <CheckIcon
-          class="size-6 absolute right-0 bottom-0 translate-1/3 text-green-500 drop-shadow-2xl"
+          class="size-8 absolute right-0 bottom-0 translate-1/3 text-green-500 drop-shadow-2xl"
           v-if="config.price"
         />
       </div>
