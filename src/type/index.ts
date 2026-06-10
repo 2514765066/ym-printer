@@ -49,7 +49,14 @@ export type Theme = "light" | "dark";
 //文档信息
 export type Doc = {
   //状态
-  status: "loading" | "init" | "prepare" | "upload" | "printing" | "printed";
+  status:
+    | "loading"
+    | "error"
+    | "init"
+    | "prepare"
+    | "upload"
+    | "printing"
+    | "printed";
 
   //工作空间id
   workspaceId: string;

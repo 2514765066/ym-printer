@@ -28,16 +28,28 @@ const toPdf = (option: SaveOption) => {
     return;
   }
 
-  const doc = word.Documents.Open(inputPath, false, true, false);
-
   try {
-    doc.ExportAsFixedFormat(outputPath, 17);
+    const doc = word.Documents.Open(inputPath, false, true, false);
 
-    port.postMessage(md5);
-  } finally {
-    if (doc) {
-      doc.Close(false);
+    try {
+      doc.ExportAsFixedFormat(outputPath, 17);
+
+      port.postMessage({
+        type: "success",
+        data: md5,
+      });
+    } finally {
+      if (doc) {
+        doc.Close(false);
+      }
     }
+  } catch (e) {
+    port.postMessage({
+      type: "error",
+      data: md5,
+    });
+
+    console.error(e);
   }
 };
 

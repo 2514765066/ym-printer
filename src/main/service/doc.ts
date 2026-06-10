@@ -22,13 +22,13 @@ export const exitWord = async () => {
 export const toPdf = async (
   inputPath: string,
   outputPath: string,
-  md5: string
+  md5: string,
 ) => {
-  const { promise, resolve } = Promise.withResolvers();
+  const { promise, resolve, reject } = Promise.withResolvers();
 
-  const handle = (_md5: string) => {
-    if (md5 == _md5) {
-      resolve(true);
+  const handle = ({ type, data }) => {
+    if (md5 == data) {
+      type == "error" ? reject(false) : resolve(true);
 
       worker.removeListener("message", handle);
     }
