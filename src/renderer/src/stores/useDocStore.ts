@@ -26,10 +26,10 @@ export const useDocStore = defineStore("doc", () => {
         remark: "",
         printer: "",
         count: 0,
-        mode: "mix",
+        mode: "",
         range: "",
-        cartridge: "black",
-        orientation: "portrait",
+        cartridge: "",
+        orientation: "",
       }
     );
   });
@@ -80,9 +80,16 @@ export const useDocStore = defineStore("doc", () => {
 
       docs.value.push(item);
 
-      ipcRenderer.invoke("parserDoc", item).then(() => {
-        getDoc(item.id)!.status = "init";
-      });
+      const doc = getDoc(item.id)!;
+
+      ipcRenderer
+        .invoke("parserDoc", item)
+        .then(() => {
+          doc.status = "init";
+        })
+        .catch(() => {
+          doc.status = "error";
+        });
     }
   });
 

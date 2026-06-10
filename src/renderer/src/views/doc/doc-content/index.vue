@@ -1,74 +1,68 @@
 <template>
-  <VueDraggable
-    class="flex flex-col"
-    :animation="200"
-    :model-value="filterDocs"
-    @update:model-value="handleSort"
-    :disabled="status != 'default'"
-  >
-    <template v-for="(item, index) in filterDocs" :key="item.id">
-      <ContextMenu>
-        <ContextMenuTrigger as-child>
-          <component
-            :is="map[item.status]"
-            @print="handlePrint"
+  <ContextMenu>
+    <ContextMenuTrigger as-child :disabled="status != 'default'">
+      <VueDraggable
+        class="flex flex-col"
+        :animation="200"
+        :model-value="filterDocs"
+        @update:model-value="handleSort"
+        :disabled="status != 'default'"
+      >
+        <template v-for="(item, index) in filterDocs" :key="item.id">
+          <ContentItem
             :data="filterDocs[index]"
+            @contextmenu="handleContextmenu(item)"
           />
-        </ContextMenuTrigger>
+        </template>
+      </VueDraggable>
+    </ContextMenuTrigger>
 
-        <ContextMenuContent class="min-w-60">
-          <ContextMenuItem
-            :disabled="status != 'default'"
-            @click="handlePrint(item.id)"
-          >
-            <PrinterIcon />
+    <ContextMenuContent class="min-w-60">
+      <ContextMenuItem @click="handlePrint">
+        <PrinterIcon />
 
-            <span> 打印 "当前文档"</span>
-          </ContextMenuItem>
+        <span> 打印 "当前文档"</span>
+      </ContextMenuItem>
 
-          <ContextMenuItem
-            :disabled="status != 'default'"
-            @click="handleOpen(item.path)"
-          >
-            <PlayIcon />
+      <ContextMenuItem @click="handleOpen">
+        <PlayIcon />
 
-            <span> 用默认方式打开 "当前文档"</span>
-          </ContextMenuItem>
+        <span> 用默认方式打开 "当前文档"</span>
+      </ContextMenuItem>
 
-          <ContextMenuSub>
-            <ContextMenuSubTrigger>
-              <CornerUpRightIcon class="mr-2" />
+      <ContextMenuSub>
+        <ContextMenuSubTrigger>
+          <CornerUpRightIcon class="mr-2" />
 
-              <span> 移动 "当前文档"</span>
-            </ContextMenuSubTrigger>
+          <span> 移动 "当前文档"</span>
+        </ContextMenuSubTrigger>
 
-            <ContextMenuSubContent class="min-w-40">
-              <ContextMenuRadioGroup v-model="item.workspaceId">
-                <ContextMenuRadioItem
-                  v-for="item in workspace"
-                  :key="item.id"
-                  :value="item.id"
-                >
-                  {{ item.name }}
-                </ContextMenuRadioItem>
-              </ContextMenuRadioGroup>
-            </ContextMenuSubContent>
-          </ContextMenuSub>
+        <ContextMenuSubContent class="min-w-40">
+          <ContextMenuRadioGroup v-model="selectedItem!.workspaceId">
+            <ContextMenuRadioItem
+              v-for="item in workspace"
+              :key="item.id"
+              :value="item.id"
+            >
+              {{ item.name }}
+            </ContextMenuRadioItem>
+          </ContextMenuRadioGroup>
+        </ContextMenuSubContent>
+      </ContextMenuSub>
 
-          <ContextMenuSeparator />
+      <ContextMenuSeparator />
 
-          <ContextMenuItem variant="destructive" @click="handleRemove(item)">
-            <Trash2Icon />
+      <ContextMenuItem variant="destructive" @click="handleRemove">
+        <Trash2Icon />
 
-            <span> 删除 "当前文档"</span>
-          </ContextMenuItem>
-        </ContextMenuContent>
-      </ContextMenu>
-    </template>
-  </VueDraggable>
+        <span> 删除 "当前文档"</span>
+      </ContextMenuItem>
+    </ContextMenuContent>
+  </ContextMenu>
 </template>
 
 <script setup lang="ts">
+import ContentItem from "./content-item/index.vue";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -81,14 +75,9 @@ import {
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
 } from "@/components/ui/context-menu";
-import ItemInit from "./item-init.vue";
-import ItemPrinting from "./item-printing.vue";
-import ItemPrinted from "./item-printed.vue";
-import ItemPrepare from "./item-prepare.vue";
 import { useDocStore } from "@/stores/useDocStore";
-import ItemLoading from "./item-loading.vue";
 import { VueDraggable } from "vue-draggable-plus";
-import { status } from "..";
+import { status } from "../index";
 import {
   CornerUpRightIcon,
   PrinterIcon,
@@ -103,13 +92,10 @@ const { docs } = storeToRefs(useDocStore());
 const { selectDoc, removeDoc } = useDocStore();
 const { workspace, selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
-const map = {
-  loading: ItemLoading,
-  init: ItemInit,
-  upload: ItemPrinting,
-  printing: ItemPrinting,
-  printed: ItemPrinted,
-  prepare: ItemPrepare,
+const selectedItem = shallowRef<Doc>();
+
+const handleContextmenu = (item: Doc) => {
+  selectedItem.value = item;
 };
 
 const filterDocs = computed(() => {
@@ -128,27 +114,37 @@ const handleSort = (data: Doc[]) => {
 };
 
 //打印文档
-const handlePrint = (id: string) => {
+const handlePrint = (id?: string) => {
   if (status.value == "price") {
     return;
   }
 
-  selectDoc(id);
+  selectDoc(id ?? selectedItem.value!.id);
 
   eventEmitter.emit("dialog-print:show");
 };
 
 //打开文档
-const handleOpen = (path: string) => {
-  api.startApp(path);
+const handleOpen = () => {
+  if (!selectedItem.value) {
+    return;
+  }
+
+  api.startApp(selectedItem.value.path);
 };
 
 //删除文档
-const handleRemove = (data: Doc) => {
-  removeDoc(data.id);
+const handleRemove = () => {
+  if (!selectedItem.value) {
+    return;
+  }
 
-  eventEmitter.emit("success:show", `已删除 "${data.name}"`);
+  removeDoc(selectedItem.value.id);
+
+  eventEmitter.emit("success:show", `已删除 "${selectedItem.value.name}"`);
 };
+
+provide("handlePrint", handlePrint);
 </script>
 
 <style scoped lang="scss"></style>
