@@ -1,9 +1,12 @@
 <template>
-  <section class="h-5.25 flex flex-wrap items-center gap-2 overflow-hidden">
+  <section
+    class="h-5.25 flex flex-wrap items-center gap-2 overflow-hidden"
+    :class="{
+      'pointer-events-none': status == 'price',
+    }"
+  >
     <Tooltip label="打印价格">
-      <Badge class="rounded dark:bg-primary/40 dark:border-primary">
-        {{ price }} 元
-      </Badge>
+      <Badge class="rounded" variant="outline-primary"> {{ price }} 元 </Badge>
     </Tooltip>
 
     <Tooltip label="打印所需纸张数量">
@@ -46,6 +49,7 @@ import { Badge } from "@/components/ui/badge";
 import { usePaper } from "@/hooks/paper";
 import { usePrice } from "@/hooks/usePrice";
 import { cartridgeMap, modeMap, orientationMap } from "@/map";
+import { status } from "@/views/doc";
 import { Doc } from "@type";
 
 const props = defineProps<{

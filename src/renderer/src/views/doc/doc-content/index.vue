@@ -18,12 +18,6 @@
     </ContextMenuTrigger>
 
     <ContextMenuContent class="min-w-60">
-      <ContextMenuItem @click="handlePrint">
-        <PrinterIcon />
-
-        <span> 打印 "当前文档"</span>
-      </ContextMenuItem>
-
       <ContextMenuItem @click="handleOpen">
         <PlayIcon />
 
@@ -78,12 +72,7 @@ import {
 import { useDocStore } from "@/stores/useDocStore";
 import { VueDraggable } from "vue-draggable-plus";
 import { status } from "../index";
-import {
-  CornerUpRightIcon,
-  PrinterIcon,
-  Trash2Icon,
-  PlayIcon,
-} from "lucide-vue-next";
+import { CornerUpRightIcon, Trash2Icon, PlayIcon } from "lucide-vue-next";
 import eventEmitter from "@/hooks/eventEmitter";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { Doc } from "@type";
@@ -114,12 +103,12 @@ const handleSort = (data: Doc[]) => {
 };
 
 //打印文档
-const handlePrint = (id?: string) => {
+const handlePrint = (id: string) => {
   if (status.value == "price") {
     return;
   }
 
-  selectDoc(id ?? selectedItem.value!.id);
+  selectDoc(id);
 
   eventEmitter.emit("dialog-print:show");
 };

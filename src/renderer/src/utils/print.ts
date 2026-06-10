@@ -17,8 +17,6 @@ const print = async (config: Doc, range: number[]) => {
     printQueue = printQueue
       .then(async () => {
         await ipcRenderer.invoke("print", config, range);
-
-        console.log("发送到打印机", config.name);
       })
       .then(() => {
         resolve();

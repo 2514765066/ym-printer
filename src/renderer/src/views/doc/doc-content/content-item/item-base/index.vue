@@ -15,7 +15,12 @@
     </ItemMedia>
 
     <ItemContent>
-      <ItemTitle :title="data.name">
+      <ItemTitle
+        :title="data.name"
+        :class="{
+          'text-destructive-foreground': variant == 'destructive',
+        }"
+      >
         <slot name="before-title">
           {{ data.name }}
         </slot>
@@ -25,7 +30,11 @@
         </slot>
       </ItemTitle>
 
-      <ItemDescription :title="data.path">
+      <ItemDescription
+        :class="{
+          'text-destructive-foreground/80': variant == 'destructive',
+        }"
+      >
         <slot name="description">
           <ItemBaseDescription :data="data" />
         </slot>
@@ -54,6 +63,7 @@ import { Doc } from "@type";
 defineProps<{
   data: Doc;
   disabled?: boolean;
+  variant?: "destructive";
 }>();
 </script>
 

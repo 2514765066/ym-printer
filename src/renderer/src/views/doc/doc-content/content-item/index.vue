@@ -11,7 +11,7 @@ import ItemError from "./item-error.vue";
 import ItemLoading from "./item-loading.vue";
 import { Doc } from "@type";
 
-const props = defineProps<{
+defineProps<{
   data: Doc;
 }>();
 

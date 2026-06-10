@@ -15,7 +15,7 @@
     </template>
 
     <template #actions>
-      <CheckIcon class="size-6 text-green-700 dark:text-green-500" />
+      <CheckIcon class="size-6 text-green-500" />
     </template>
   </ItemBase>
 </template>
@@ -25,10 +25,10 @@ import ItemBase from "./item-base/index.vue";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Doc } from "@type";
 import { status } from "../../index";
-import { checked, toggleCheck } from "../../check.js";
+import { checked, toggleCheck } from "../../check";
 import { CheckIcon } from "lucide-vue-next";
 
-const props = defineProps<{
+defineProps<{
   data: Doc;
 }>();
 

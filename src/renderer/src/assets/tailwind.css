@@ -10,7 +10,7 @@
 
   --foreground: oklch(0.1 0 0);
 
-  --card: oklch(1 0 0);
+  --card: var(--background);
   --card-foreground: var(--foreground);
 
   --popover: var(--background);
@@ -31,8 +31,8 @@
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
 
-  --border: oklch(0.86 0 0);
-  --input: oklch(0.86 0 0);
+  --border: oklch(0.84 0 0);
+  --input: var(--border);
   --ring: oklch(0.8 0 0);
 
   --radius: 0.625rem;

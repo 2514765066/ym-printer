@@ -11,7 +11,12 @@
     </Button>
 
     <div class="ml-auto" v-if="config.price">
-      <Button size="sm" @click="setStatus('price')" v-if="status == 'default'">
+      <Button
+        size="sm"
+        variant="outline-primary"
+        @click="setStatus('price')"
+        v-if="status == 'default'"
+      >
         <DollarSignIcon />
 
         <span class="text-xs"> 计价</span>
