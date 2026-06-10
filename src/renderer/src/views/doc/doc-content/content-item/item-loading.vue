@@ -3,6 +3,8 @@
     <template #icon>
       <Spinner class="size-7 text-muted-foreground" />
     </template>
+
+    <template #description>{{ data.path }}</template>
   </ItemBase>
 </template>
 
