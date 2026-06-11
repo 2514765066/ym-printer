@@ -1,15 +1,15 @@
 <template>
-  <div class="stepper-window wh-screen grid">
+  <div class="onboarding wh-screen grid bg-sidebar dark:bg-background">
     <TitleBar />
 
     <main
-      class="w-[80vw] h-[70vh] absolute top-1/2 left-1/2 -translate-1/2 bg-sidebar rounded-2xl shadow-xl"
+      class="w-[80vw] h-[70vh] absolute top-1/2 left-1/2 -translate-1/2 rounded-2xl shadow-xl bg-background border dark:bg-sidebar dark:border-none"
     >
       <section class="wh-full flex" v-if="currentRoute">
         <div class="w-1/2 flex-center">
           <component
             :is="currentRoute.icon"
-            class="size-1/2 text-muted-foreground"
+            class="size-1/2 text-gray-400 dark:text-muted-foreground"
           />
         </div>
 
@@ -75,7 +75,7 @@ const handleNext = async () => {
 </script>
 
 <style scoped lang="scss">
-.stepper-window {
+.onboarding {
   grid-template-rows: 40px calc(100vh - 40px);
 }
 </style>
