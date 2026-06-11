@@ -1,31 +1,37 @@
-## Ym Printer
+<div align="center">
+  <img src="./docs/images/icon.png" width="80" height="80"/>
 
-ym-printer 是一款专门为喷墨打印机做的打印桌面应用<br>
-让只能单面打印的喷墨打印机也能实现双面打印的功能<br>
-通过分别打印偶数页和奇数页实现双面打印<br>
+  <h3 align="center">Ym Printer</h3>
+
+  <p align="center">
+    ym-printer 是一款专门为喷墨打印机做的打印桌面应用。
+    <br>
+    <br>
+    <a href="https://gitee.com/yxingyus/ym-printer/releases">
+    Gitee
+    </a>
+    &middot;
+    <a href="https://github.com/2514765066/ym-printer">
+    Github
+    </a>
+    &middot;
+    <a href="https://github.com/2514765066/ym-printer/blob/main/docs/release-note.md">
+    更新内容
+    </a>
+  </p>
+</div>
 
 ## 功能与优势
 
-1. 简洁的UI设计
-2. 高效的打印效率
-3. 计算打印价格
-4. 支持doc，docx，wps，pdf
-5. 快速预览文档内容
-
-## 版本更新内容
-
-- [更新内容](./docs/release-note.md)
-
-## 安装
-
-从 Releases 页面下载最新的 ym-printer 安装包即可
-
-- [GitHub 下载](https://github.com/2514765066/ym-printer/releases)
-- [Gitee 下载](https://gitee.com/yxingyus/ym-printer/releases)
+简洁的UI设计、高效的打印效率、计算打印价格、支持导入doc，docx，wps，pdf、快速预览文档内容
 
 ## 界面展示
 
-![应用主界面](./docs/images/home.png)
+亮色主题展示
+![亮色主题](./docs/images/home-light.png)
+
+暗色主题展示
+![暗色主题](./docs/images/home-dark.png)
 
 ## 打印配置
 
