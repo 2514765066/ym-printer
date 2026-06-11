@@ -50,6 +50,7 @@ import { useDocStore } from "@/stores/useDocStore";
 import DragOverlay from "./drag-overlay .vue";
 //@ts-ignore
 import { panelRef } from ".";
+import { useEventListener } from "@vueuse/core";
 
 const { addDoc } = useDocStore();
 
@@ -64,11 +65,20 @@ const dragOption = {
   onDrop: (e: DragEvent) => {
     const files = e.dataTransfer?.files;
 
-    if (!files) return;
+    if (!files || files.length === 0) return;
 
     addDoc(Array.from(files));
   },
 };
+
+//监控粘贴文档
+useEventListener("paste", async e => {
+  const files = e.clipboardData?.files;
+
+  if (!files || files.length === 0) return;
+
+  addDoc(Array.from(files));
+});
 </script>
 
 <style lang="scss">
