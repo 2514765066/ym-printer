@@ -1,6 +1,6 @@
 <template>
   <section
-    class="h-5.25 flex flex-wrap items-center gap-2 overflow-hidden"
+    class="h-5.5 flex flex-wrap items-center gap-2 overflow-hidden"
     :class="{
       'pointer-events-none': status == 'price',
     }"
