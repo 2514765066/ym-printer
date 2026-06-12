@@ -5,8 +5,8 @@
       'pointer-events-none': status == 'price',
     }"
   >
-    <Tooltip label="打印价格">
-      <Badge class="rounded" variant="outline-primary"> {{ price }} 元 </Badge>
+    <Tooltip label="打印价格" v-if="config.price">
+      <Badge class="rounded"> {{ price }} 元 </Badge>
     </Tooltip>
 
     <Tooltip label="打印所需纸张数量">
@@ -49,8 +49,11 @@ import { Badge } from "@/components/ui/badge";
 import { usePaper } from "@/hooks/paper";
 import { usePrice } from "@/hooks/usePrice";
 import { cartridgeMap, modeMap, orientationMap } from "@/map";
+import { useConfigStore } from "@/stores/useConfigStore";
 import { status } from "@/views/doc";
 import { Doc } from "@type";
+
+const { config } = storeToRefs(useConfigStore());
 
 const props = defineProps<{
   data: Doc;
