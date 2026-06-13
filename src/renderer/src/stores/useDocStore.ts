@@ -1,6 +1,7 @@
 import eventEmitter from "@/hooks/eventEmitter";
 import { Doc } from "@type";
 import { useWorkspaceStore } from "./useWorkspaceStore";
+import { nanoid } from "nanoid";
 
 export const useDocStore = defineStore("doc", () => {
   const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
@@ -17,6 +18,7 @@ export const useDocStore = defineStore("doc", () => {
       getDoc(selectedDocID.value) || {
         status: "init",
         workspaceId: "",
+        groupId: "",
         id: "",
         name: "",
         path: "",
@@ -83,6 +85,22 @@ export const useDocStore = defineStore("doc", () => {
     });
   };
 
+  //设置分组id
+  const setDocGroupId = (
+    ids: string | string[],
+    groupId: string = nanoid(),
+  ) => {
+    ids = Array.isArray(ids) ? ids : [ids];
+
+    docs.value.forEach(doc => {
+      if (!ids.includes(doc.id)) {
+        return;
+      }
+
+      doc.groupId = groupId;
+    });
+  };
+
   //文件获取完成
   ipcRenderer.on("addDocFinish", (_, data) => {
     const paths = docs.value.map(item => item.path);
@@ -118,5 +136,6 @@ export const useDocStore = defineStore("doc", () => {
     selectDoc,
     getDoc,
     setDocWorkspaceId,
+    setDocGroupId,
   };
 });

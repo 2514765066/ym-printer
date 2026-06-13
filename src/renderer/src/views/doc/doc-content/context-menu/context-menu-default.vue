@@ -1,5 +1,11 @@
 <template>
   <ContextMenuContent class="min-w-60" v-if="status == 'default'">
+    <ContextMenuItem @click="handleUnCombine">
+      <LayersIcon />
+
+      <span>拆分出 "当前组"</span>
+    </ContextMenuItem>
+
     <ContextMenuItem @click="handleOpen">
       <PlayIcon />
 
@@ -53,18 +59,28 @@ import {
 import eventEmitter from "@/hooks/eventEmitter";
 import { useDocStore } from "@/stores/useDocStore";
 import { Doc } from "@type";
-import { CornerUpRightIcon, Trash2Icon, PlayIcon } from "lucide-vue-next";
+import {
+  CornerUpRightIcon,
+  Trash2Icon,
+  PlayIcon,
+  LayersIcon,
+} from "lucide-vue-next";
 import { status } from "../../index";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 
 const { workspace } = storeToRefs(useWorkspaceStore());
-const { setDocWorkspaceId } = useDocStore();
+const { setDocWorkspaceId, setDocGroupId } = useDocStore();
 
 const { removeDoc } = useDocStore();
 
 const props = defineProps<{
   data: Doc;
 }>();
+
+//拆分
+const handleUnCombine = () => {
+  setDocGroupId(props.data.id, props.data.id);
+};
 
 //打开文档
 const handleOpen = () => {

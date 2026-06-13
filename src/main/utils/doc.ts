@@ -19,8 +19,11 @@ export const parseDoc = async (option: {
   //md5
   const md5 = await getMd5(path);
 
+  //唯一id
+  const id = nanoid();
+
   return {
-    id: nanoid(),
+    id,
     name,
     path,
     md5,
@@ -35,5 +38,6 @@ export const parseDoc = async (option: {
     cartridge: "",
     orientation: "",
     workspaceId,
+    groupId: id,
   };
 };

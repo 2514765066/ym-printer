@@ -2,17 +2,26 @@
   <ContextMenu>
     <ContextMenuTrigger as-child :disabled="status == 'price'">
       <VueDraggable
-        class="flex flex-col"
+        class="px-0.5 flex flex-col"
         :animation="200"
         :model-value="filterDocs"
         @update:model-value="handleSort"
         :disabled="status != 'default'"
       >
-        <template v-for="(item, index) in filterDocs" :key="item.id">
-          <ContentItem
-            :data="filterDocs[index]"
-            @contextmenu="handleContextmenu(item)"
-          />
+        <template v-for="docs in filterDocs" :key="docs[0].groupId">
+          <div
+            class="flex flex-col"
+            :class="{
+              'border border-primary overflow-hidden': docs.length > 1,
+            }"
+          >
+            <template v-for="item in docs" :key="item.id">
+              <ContentItem
+                :data="item"
+                @contextmenu="handleContextmenu(item)"
+              />
+            </template>
+          </div>
         </template>
       </VueDraggable>
     </ContextMenuTrigger>
@@ -54,18 +63,33 @@ const handleContextmenu = (item: Doc) => {
 };
 
 const filterDocs = computed(() => {
-  return docs.value.filter(
+  const workspaceDocs = docs.value.filter(
     item => item.workspaceId == selectedWorkspaceID.value,
   );
+
+  const res = workspaceDocs.reduce(
+    (prev, cur) => {
+      if (!prev[cur.groupId]) {
+        prev[cur.groupId] = [];
+      }
+
+      prev[cur.groupId].push(cur);
+
+      return prev;
+    },
+    {} as Record<string, Doc[]>,
+  );
+
+  return Object.values(res);
 });
 
 //排序
-const handleSort = (data: Doc[]) => {
+const handleSort = (data: Doc[][]) => {
   const order = docs.value.filter(
     item => item.workspaceId != selectedWorkspaceID.value,
   );
 
-  docs.value = [...order, ...data];
+  docs.value = [...order, ...data.flat()];
 };
 
 //打印文档

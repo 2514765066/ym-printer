@@ -58,6 +58,9 @@ export type Doc = {
     | "printing"
     | "printed";
 
+  //组合id
+  groupId: string;
+
   //工作空间id
   workspaceId: string;
 
