@@ -1,6 +1,10 @@
 <template>
   <section class="px-2 flex flex-col gap-1">
-    <NavItem label="打印机任务队列" to="/print-task">
+    <NavItem
+      label="打印机任务队列"
+      description="打开打印机队列"
+      @click="handlePrintTask"
+    >
       <PrinterIcon class="size-4.5" />
     </NavItem>
 
@@ -31,6 +35,11 @@ import {
 } from "lucide-vue-next";
 import NavItem from "./nav-item.vue";
 import eventEmitter from "@/hooks/eventEmitter";
+
+//打开打印机任务队列
+const handlePrintTask = () => {
+  eventEmitter.emit("dialog-print-task:show");
+};
 
 //打开打印范围预设
 const handlePreset = () => {

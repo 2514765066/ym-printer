@@ -25,10 +25,6 @@ const router = createRouter({
           path: "doc",
           component: Doc,
         },
-        {
-          path: "print-task",
-          component: () => import("@/views/print-task/index.vue"),
-        },
       ],
     },
   ],

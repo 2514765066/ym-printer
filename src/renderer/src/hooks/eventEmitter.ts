@@ -14,6 +14,7 @@ type EventMap = {
   "error:show": (msg: string) => void;
 
   "dialog-print:show": () => void;
+  "dialog-print-task:show": () => void;
   "dialog-setting:show": (id?: string) => void;
 
   "dialog-workspace:show": (option: {

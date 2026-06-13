@@ -1,6 +1,17 @@
 <template>
   <section class="flex">
-    <Printer v-model="selectedPrinter" />
+    <Button
+      variant="ghost"
+      :disabled="reloadLock"
+      @click="handleReload"
+      v-if="selectedPrinter"
+    >
+      <Spinner v-if="reloadLock" />
+
+      <RotateCwIcon v-else />
+
+      <span>刷新</span>
+    </Button>
 
     <DropdownMenu>
       <DropdownMenuTrigger as-child>
@@ -15,14 +26,6 @@
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" class="min-w-52">
-        <DropdownMenuItem :disabled="reloadLock" @click="handleReload">
-          <Spinner v-if="reloadLock" />
-
-          <RotateCwIcon v-else />
-
-          <span>刷新</span>
-        </DropdownMenuItem>
-
         <DropdownMenuItem
           :disabled="printTestLock"
           @click="handlePrintTest('black')"
@@ -65,7 +68,6 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import Printer from "@/components/printer.vue";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import eventEmitter from "@/hooks/eventEmitter";

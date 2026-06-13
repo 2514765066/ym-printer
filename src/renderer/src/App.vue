@@ -9,6 +9,8 @@
     <DialogWorkspace />
 
     <DialogPreset />
+
+    <DialogPrintTask />
   </TooltipProvider>
 
   <Toaster />
@@ -29,6 +31,7 @@ import { useThemeStore } from "@/stores/useThemeStore";
 import { useEventListener } from "@vueuse/core";
 import "vue-sonner/style.css";
 import { useWorkspaceStore } from "./stores/useWorkspaceStore";
+import DialogPrintTask from "@/views/dialog-print-task/index.vue";
 
 //初始化pinia
 useUpdateStore();
