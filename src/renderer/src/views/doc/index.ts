@@ -1,4 +1,4 @@
-type Status = "default" | "price";
+type Status = "default" | "price" | "check";
 
 export const status = ref<Status>("default");
 

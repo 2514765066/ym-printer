@@ -2,6 +2,7 @@
   <ItemBase
     v-bind="$props"
     :disabled="status == 'price'"
+    :disabled-check="status == 'price'"
     @click="handlePrint(data.id)"
   >
     <template #description>

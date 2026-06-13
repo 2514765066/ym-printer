@@ -11,28 +11,36 @@
     </Button>
 
     <div class="ml-auto" v-if="config.price">
-      <Button size="sm" @click="setStatus('price')" v-if="status == 'default'">
-        <DollarSignIcon />
-
-        <span class="text-xs"> 计价</span>
-      </Button>
-
       <Button
         size="sm"
         variant="destructive"
-        @click="handleCancelPrice"
-        v-else-if="status == 'price'"
+        @click="handleCancel"
+        v-if="status != 'default'"
       >
         <XIcon />
 
-        <span class="text-xs"> 取消计价</span>
+        <span class="text-xs"> 取消</span>
       </Button>
+
+      <ButtonGroup v-else>
+        <Button class="border-r" size="sm" @click="setStatus('check')">
+          <SquareCheckIcon />
+
+          <span class="text-xs"> 多选</span>
+        </Button>
+
+        <Button size="sm" @click="setStatus('price')">
+          <DollarSignIcon />
+
+          <span class="text-xs"> 计价</span>
+        </Button>
+      </ButtonGroup>
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { DollarSignIcon, XIcon } from "lucide-vue-next";
+import { DollarSignIcon, XIcon, SquareCheckIcon } from "lucide-vue-next";
 import { setStatus, status } from "../index";
 import { cancelCheckAll } from "../check";
 import { useDocStore } from "@/stores/useDocStore";
@@ -40,6 +48,7 @@ import { Button } from "@/components/ui/button";
 import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
 import { totalCount } from "@/utils/total";
 import { useConfigStore } from "@/stores/useConfigStore";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 const { config } = storeToRefs(useConfigStore());
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
@@ -61,9 +70,8 @@ const selectedWorkspaceFinishDocsCount = computed(() => {
 });
 
 //处理取消计价
-const handleCancelPrice = () => {
+const handleCancel = () => {
   setStatus();
-
   cancelCheckAll();
 };
 </script>

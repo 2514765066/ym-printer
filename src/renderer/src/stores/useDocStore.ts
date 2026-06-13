@@ -45,8 +45,10 @@ export const useDocStore = defineStore("doc", () => {
   };
 
   //删除文件
-  const removeDoc = (id: string) => {
-    docs.value = docs.value.filter(doc => doc.id != id);
+  const removeDoc = (ids: string | string[]) => {
+    ids = Array.isArray(ids) ? ids : [ids];
+
+    docs.value = docs.value.filter(doc => !ids.includes(doc.id));
   };
 
   //添加文件
@@ -66,6 +68,19 @@ export const useDocStore = defineStore("doc", () => {
   //清空
   const clearDoc = (workspaceId: string) => {
     docs.value = docs.value.filter(doc => doc.workspaceId !== workspaceId);
+  };
+
+  //设置工作空间id
+  const setDocWorkspaceId = (ids: string | string[], workspaceId: string) => {
+    ids = Array.isArray(ids) ? ids : [ids];
+
+    docs.value.forEach(doc => {
+      if (!ids.includes(doc.id)) {
+        return;
+      }
+
+      doc.workspaceId = workspaceId;
+    });
   };
 
   //文件获取完成
@@ -102,5 +117,6 @@ export const useDocStore = defineStore("doc", () => {
     removeDoc,
     selectDoc,
     getDoc,
+    setDocWorkspaceId,
   };
 });

@@ -1,13 +1,5 @@
 <template>
   <ItemBase v-bind="$props" @click="handlePrint(data.id)">
-    <template #icon v-if="status == 'price'">
-      <Checkbox
-        :id="data.id"
-        :model-value="checked.has(data.id)"
-        @update:model-value="toggleCheck(data.id)"
-      />
-    </template>
-
     <template #before-title v-if="data.remark">
       <span> {{ data.remark }}</span>
 
@@ -22,10 +14,7 @@
 
 <script setup lang="ts">
 import ItemBase from "./item-base/index.vue";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Doc } from "@type";
-import { status } from "../../index";
-import { checked, toggleCheck } from "../../check";
 import { CheckIcon } from "lucide-vue-next";
 
 defineProps<{

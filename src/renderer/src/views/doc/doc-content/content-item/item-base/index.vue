@@ -10,7 +10,18 @@
   >
     <ItemMedia variant="image">
       <slot name="icon">
-        <FileIcon :size="38" :ext="data.ext" />
+        <FileIcon
+          :size="38"
+          :ext="data.ext"
+          v-if="disabledCheck || status == 'default'"
+        />
+
+        <Checkbox
+          :id="data.id"
+          :model-value="checked.has(data.id)"
+          @update:model-value="toggleCheck(data.id)"
+          v-else
+        />
       </slot>
     </ItemMedia>
 
@@ -48,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { Checkbox } from "@/components/ui/checkbox";
 import ItemBaseDescription from "./item-base-description.vue";
 import FileIcon from "@/components/file-icon.vue";
 import {
@@ -59,11 +71,14 @@ import {
   ItemActions,
 } from "@/components/ui/item";
 import { Doc } from "@type";
+import { checked, toggleCheck } from "@/views/doc/check";
+import { status } from "@/views/doc/index.js";
 
 defineProps<{
   data: Doc;
   disabled?: boolean;
   variant?: "destructive";
+  disabledCheck?: boolean;
 }>();
 </script>
 
