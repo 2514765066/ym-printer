@@ -61,6 +61,6 @@ eventEmitter.on("dialog-setting:show", id => {
 
 <style scoped lang="scss">
 .settings {
-  grid-template-rows: 40px calc(100% - 40px);
+  grid-template-rows: 40px calc(100vh - 140px);
 }
 </style>

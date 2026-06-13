@@ -1,52 +1,57 @@
 <template>
-  <fieldset :disabled="isPrinting" class="pt-3 pb-1 flex flex-col">
+  <fieldset :disabled="isPrinting" class="pt-3 pb-1 relative flex flex-col">
     <PrintConfig />
 
-    <ButtonGroup class="w-full mt-auto px-3">
-      <Button class="flex-1 border-r" @click="handlePrint">
-        {{ isPrinting ? "正在打印" : "开始打印" }}
-      </Button>
+    <footer class="w-full absolute left-0 bottom-0 px-3 pb-2">
+      <ButtonGroup class="w-full">
+        <Button class="flex-1 border-r" @click="handlePrint">
+          {{ isPrinting ? "正在打印" : "开始打印" }}
+        </Button>
 
-      <Button class="flex-1 border-r" @click="handlePrePrint">
-        预备打印
-      </Button>
+        <Button class="flex-1 border-r" @click="handlePrePrint">
+          预备打印
+        </Button>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger as-child>
-          <Button size="icon">
-            <MoreHorizontalIcon />
-          </Button>
-        </DropdownMenuTrigger>
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button size="icon">
+              <MoreHorizontalIcon />
+            </Button>
+          </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="center" class="w-52">
-          <DropdownMenuItem @click="handlePrintFinish">
-            <CheckIcon />
+          <DropdownMenuContent align="center" class="w-52">
+            <DropdownMenuItem @click="handlePrintFinish">
+              <CheckIcon />
 
-            <span>标记为打印完成</span>
-          </DropdownMenuItem>
+              <span>标记为打印完成</span>
+            </DropdownMenuItem>
 
-          <DropdownMenuSeparator />
+            <DropdownMenuSeparator />
 
-          <DropdownMenuItem :disabled="!isSimplex" @click="handlePrintSimplex">
-            <PrinterIcon />
+            <DropdownMenuItem
+              :disabled="!isSimplex"
+              @click="handlePrintSimplex"
+            >
+              <PrinterIcon />
 
-            <span>打印 "单页"</span>
-          </DropdownMenuItem>
+              <span>打印 "单页"</span>
+            </DropdownMenuItem>
 
-          <DropdownMenuItem :disabled="isSimplex" @click="handlePrintEven">
-            <PrinterIcon />
+            <DropdownMenuItem :disabled="isSimplex" @click="handlePrintEven">
+              <PrinterIcon />
 
-            <span>打印 "偶数页"</span>
-          </DropdownMenuItem>
+              <span>打印 "偶数页"</span>
+            </DropdownMenuItem>
 
-          <DropdownMenuItem :disabled="isSimplex" @click="handlePrintOdd">
-            <PrinterIcon />
+            <DropdownMenuItem :disabled="isSimplex" @click="handlePrintOdd">
+              <PrinterIcon />
 
-            <span>打印 "奇数页"</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </ButtonGroup>
+              <span>打印 "奇数页"</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </ButtonGroup>
+    </footer>
   </fieldset>
 </template>
 
@@ -234,4 +239,8 @@ const handlePrintOdd = form.handleSubmit(async values => {
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+footer {
+  background: linear-gradient(to top, var(--sidebar) 10%, transparent);
+}
+</style>

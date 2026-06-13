@@ -9,16 +9,16 @@
       <DocEmpty />
     </div>
 
-    <ElScrollbar class="flex-1" view-class="pb-12" v-else>
+    <ScrollArea class="min-h-0" view-class="pb-12" v-else>
       <DocContent />
-    </ElScrollbar>
+    </ScrollArea>
 
     <DocFooter v-if="hasDocs" />
   </section>
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from "element-plus";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import DocHeader from "./doc-header/index.vue";
 import DocContent from "./doc-content/index.vue";
 import DocEmpty from "./doc-empty.vue";

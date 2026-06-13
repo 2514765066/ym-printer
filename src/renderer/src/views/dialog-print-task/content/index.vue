@@ -9,14 +9,14 @@
       <ContentEmpty />
     </div>
 
-    <ElScrollbar class="flex-1" v-else>
+    <ScrollArea class="min-h-0" v-else>
       <ContentBody />
-    </ElScrollbar>
+    </ScrollArea>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from "element-plus";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import ContentHeader from "./content-header/index.vue";
 import ContentBody from "./content-body/index.vue";
 import ContentEmpty from "./content-empty.vue";

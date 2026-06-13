@@ -1,6 +1,6 @@
 <template>
   <Container :is-empty="presets.length == 0">
-    <div class="flex flex-col gap-8">
+    <div class="pt-8 flex flex-col gap-8">
       <ItemGroup>
         <div class="flex items-center">
           <p class="py-3 px-4">打印范围预设</p>

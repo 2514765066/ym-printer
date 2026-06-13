@@ -1,5 +1,5 @@
 <template>
-  <ElScrollbar view-class="px-2 ">
+  <ScrollArea class="min-h-0 h-full px-2">
     <ContextMenu>
       <ContextMenuTrigger as-child>
         <VueDraggable
@@ -52,7 +52,7 @@
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
-  </ElScrollbar>
+  </ScrollArea>
 </template>
 
 <script setup lang="ts">
@@ -65,7 +65,7 @@ import {
   ContextMenuShortcut,
 } from "@/components/ui/context-menu";
 import { PlusIcon, PencilLineIcon, Trash2Icon } from "lucide-vue-next";
-import { ElScrollbar } from "element-plus";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Item from "./item.vue";
 import { useWorkspaceStore, Workspace } from "@/stores/useWorkspaceStore";
 import { VueDraggable } from "vue-draggable-plus";

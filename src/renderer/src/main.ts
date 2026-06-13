@@ -1,4 +1,3 @@
-import "element-plus/theme-chalk/dark/css-vars.css";
 import "@/assets/tailwind.css";
 import "@/assets/global.css";
 
