@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import Tooltip from "@/components/tooltip.vue";
 
-const props = defineProps<{
+defineProps<{
   label: string;
   description?: string;
 }>();
