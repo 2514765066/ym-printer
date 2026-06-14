@@ -15,7 +15,12 @@ if (isSecondeInstanceStart()) {
 app.whenReady().then(async () => {
   createWord();
 
-  createMainWindow();
+  const mainWindow = createMainWindow();
+
+  //多开窗口
+  app.on("second-instance", () => {
+    mainWindow.show();
+  });
 
   //创建快捷键
   app.on("browser-window-created", (_, window) => {
