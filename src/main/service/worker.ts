@@ -24,33 +24,16 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const toPdf = (option: SaveOption) => {
   const { md5, inputPath, outputPath } = option;
 
-  if (!word) {
-    return;
-  }
+  const doc = word!.Documents.Open(inputPath, false, true, false);
 
-  try {
-    const doc = word.Documents.Open(inputPath, false, true, false);
+  doc.ExportAsFixedFormat(outputPath, 17);
 
-    try {
-      doc.ExportAsFixedFormat(outputPath, 17);
+  doc.Close(false);
 
-      port.postMessage({
-        type: "success",
-        data: md5,
-      });
-    } finally {
-      if (doc) {
-        doc.Close(false);
-      }
-    }
-  } catch (e) {
-    port.postMessage({
-      type: "error",
-      data: md5,
-    });
-
-    console.error(e);
-  }
+  port.postMessage({
+    type: "success",
+    data: md5,
+  });
 };
 
 //退出word
@@ -94,15 +77,17 @@ const save = async (option: SaveOption) => {
     console.error("尝试重启 Word 服务...", e);
 
     try {
-      exit();
-      await sleep(1000);
-
       open();
       await sleep(500);
 
       toPdf(option);
     } catch (e) {
       console.error("重试失败", e);
+
+      port.postMessage({
+        type: "error",
+        data: option.md5,
+      });
     }
   }
 };
