@@ -1,27 +1,32 @@
 <template>
-  <ElScrollbar
-    ref="scrollbarRef"
-    :wrap-class="`${panning ? 'cursor-grabbing' : 'cursor-grab'}`"
-    view-class="min-h-full pb-10 flex items-center"
+  <ScrollArea
+    ref="scrollAreaRef"
+    class="min-h-0"
+    :view-class="
+      cn('pb-10 *:flex *:items-center cursor-grab', {
+        'cursor-grabbing': panning,
+      })
+    "
   >
     <PdfView @mousedown="handleMousedown" @mousemove="handleMousemove" />
-  </ElScrollbar>
+  </ScrollArea>
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from 'element-plus';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import PdfView from './pdg-view.vue';
 import { usePdfStore } from '@/stores/usePdfStore';
 import { useEventListener } from '@vueuse/core';
 import useMove from '@/hooks/useMove';
+import { cn } from '@/lib/utils.js';
 
 const { addScale, subScale } = usePdfStore();
 
 //组件实例
-const scrollbarRef = useTemplateRef('scrollbarRef');
+const scrollAreaRef = useTemplateRef('scrollAreaRef');
 
 const { panning, handleMousedown, handleMousemove } = useMove(
-  () => scrollbarRef.value?.wrapRef,
+  () => scrollAreaRef.value?.viewportElement,
 );
 
 //处理鼠标滚轮

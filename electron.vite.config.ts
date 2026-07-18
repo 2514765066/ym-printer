@@ -3,7 +3,6 @@ import { defineConfig } from 'electron-vite';
 import vue from '@vitejs/plugin-vue';
 import { version, name, productName } from './package.json';
 import AutoImport from 'unplugin-auto-import/vite';
-import ElementPlus from 'unplugin-element-plus/vite';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
@@ -34,7 +33,6 @@ export default defineConfig({
 
     plugins: [
       vue(),
-      ElementPlus({}),
       tailwindcss(),
       AutoImport({
         imports: ['vue', 'pinia', 'vue-router'],

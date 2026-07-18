@@ -14,11 +14,20 @@ const props = defineProps<
 >();
 
 const delegatedProps = reactiveOmit(props, 'class');
+
+const viewRef = useTemplateRef('viewRef');
+
+defineExpose({
+  get viewportElement() {
+    return viewRef.value?.viewportElement;
+  },
+});
 </script>
 
 <template>
   <ScrollAreaRoot v-bind="delegatedProps" :class="cn('relative', props.class)">
     <ScrollAreaViewport
+      ref="viewRef"
       data-slot="scroll-area-viewport"
       class="focus-visible:ring-ring/50 size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:outline-1"
       :class="viewClass"

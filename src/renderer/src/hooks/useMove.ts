@@ -1,4 +1,4 @@
-export default (cb: () => HTMLDivElement | undefined) => {
+export default (cb: () => HTMLElement | undefined | null) => {
   const panning = ref(false);
   let startX = 0;
   let startY = 0;
