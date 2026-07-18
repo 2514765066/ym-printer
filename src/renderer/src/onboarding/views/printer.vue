@@ -28,12 +28,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import Printer from "@/components/printer.vue";
-import { useForm } from "vee-validate";
-import * as z from "zod";
-import { toTypedSchema } from "@vee-validate/zod";
-import { usePrinterStore } from "@/stores/usePrinterStore";
+} from '@/components/ui/form';
+import Printer from '@/components/printer.vue';
+import { useForm } from 'vee-validate';
+import * as z from 'zod';
+import { toTypedSchema } from '@vee-validate/zod';
+import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { selectPrinter } = usePrinterStore();
 
@@ -42,17 +42,17 @@ const form = useForm({
     z.object({
       defaultPrinter: z
         .string({
-          message: "请选择打印机",
+          message: '请选择打印机',
         })
-        .min(1, "请选择打印机"),
+        .min(1, '请选择打印机'),
     }),
   ),
   initialValues: {
-    defaultPrinter: "",
+    defaultPrinter: '',
   },
 });
 
-const handleSubmit = form.handleSubmit(values => {
+const handleSubmit = form.handleSubmit((values) => {
   selectPrinter(values.defaultPrinter!);
 
   return true;

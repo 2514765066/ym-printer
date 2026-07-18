@@ -19,7 +19,7 @@ export type IpcEvent = {
   print: (config: Doc, range: number[]) => boolean;
 
   //打印测试也
-  printTest: (printer: string, cartridge: "color" | "black") => boolean;
+  printTest: (printer: string, cartridge: 'color' | 'black') => boolean;
 
   //更新进度
   updateProgress: (percent: number) => boolean;
@@ -44,19 +44,19 @@ export type IpcEvent = {
 };
 
 //主题
-export type Theme = "light" | "dark";
+export type Theme = 'light' | 'dark';
 
 //文档信息
 export type Doc = {
   //状态
   status:
-    | "loading"
-    | "error"
-    | "init"
-    | "prepare"
-    | "upload"
-    | "printing"
-    | "printed";
+    | 'loading'
+    | 'error'
+    | 'init'
+    | 'prepare'
+    | 'upload'
+    | 'printing'
+    | 'printed';
 
   //组合id
   groupId: string;
@@ -92,16 +92,16 @@ export type Doc = {
   count: number;
 
   //模式
-  mode: "simplex" | "duplex" | "mix" | "mixConnect" | "";
+  mode: 'simplex' | 'duplex' | 'mix' | 'mixConnect' | '';
 
   //范围
   range: string;
 
   //墨盒类型
-  cartridge: "black" | "color" | "";
+  cartridge: 'black' | 'color' | '';
 
   //方向
-  orientation: "portrait" | "landscape" | "";
+  orientation: 'portrait' | 'landscape' | '';
 
   //格式化范围
   formatRange?: number[];

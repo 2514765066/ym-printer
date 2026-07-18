@@ -36,7 +36,7 @@
                   class="w-25"
                   @click="async () => (await handleSubmit()) && handleNext()"
                 >
-                  {{ isLast ? "完成" : "下一步" }}
+                  {{ isLast ? '完成' : '下一步' }}
                 </Button>
               </div>
             </component>
@@ -48,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import TitleBar from "./title-bar/index.vue";
-import { Button } from "@/components/ui/button";
+import TitleBar from './title-bar/index.vue';
+import { Button } from '@/components/ui/button';
 import {
   isFirst,
   isLast,
@@ -57,7 +57,7 @@ import {
   preStep,
   currentRoute,
   initRouter,
-} from "./router";
+} from './router';
 
 initRouter();
 
@@ -66,7 +66,7 @@ const router = useRouter();
 //处理下一步
 const handleNext = async () => {
   if (isLast.value) {
-    router.replace("/doc");
+    router.replace('/doc');
     return;
   }
 

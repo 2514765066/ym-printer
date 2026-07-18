@@ -5,7 +5,7 @@
     <footer class="w-full absolute left-0 bottom-0 px-3 pb-2">
       <ButtonGroup class="w-full">
         <Button class="flex-1 border-r" @click="handlePrint">
-          {{ isPrinting ? "正在打印" : "开始打印" }}
+          {{ isPrinting ? '正在打印' : '开始打印' }}
         </Button>
 
         <Button class="flex-1 border-r" @click="handlePrePrint">
@@ -56,37 +56,37 @@
 </template>
 
 <script setup lang="ts">
-import PrintConfig from "./print-config/index.vue";
-import { CheckIcon, MoreHorizontalIcon, PrinterIcon } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
+import PrintConfig from './print-config/index.vue';
+import { CheckIcon, MoreHorizontalIcon, PrinterIcon } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
-import { useDocStore } from "@/stores/useDocStore";
-import { printAuto, printEven, printOdd } from "@/utils/print";
-import eventEmitter from "@/hooks/eventEmitter";
-import { close, Form } from "../index";
-import { parserRange } from "@/utils/range";
-import { printPromise } from "@/stores/usePrintStore";
+} from '@/components/ui/dropdown-menu';
+import { useDocStore } from '@/stores/useDocStore';
+import { printAuto, printEven, printOdd } from '@/utils/print';
+import eventEmitter from '@/hooks/eventEmitter';
+import { close, Form } from '../index';
+import { parserRange } from '@/utils/range';
+import { printPromise } from '@/stores/usePrintStore';
 
 const { selectedDoc, selectedDocID } = storeToRefs(useDocStore());
 const { getDoc } = useDocStore();
 
-const form: Form = inject("form")!;
+const form: Form = inject('form')!;
 
 //是否再打印
 const isPrinting = ref(false);
 
 //是否是单打
-const isSimplex = computed(() => form.values.mode == "simplex");
+const isSimplex = computed(() => form.values.mode == 'simplex');
 
 //打印
-const handlePrint = form.handleSubmit(async values => {
+const handlePrint = form.handleSubmit(async (values) => {
   //关闭弹窗
   close();
 
@@ -96,30 +96,30 @@ const handlePrint = form.handleSubmit(async values => {
 
   doc.formatRange = parserRange(selectedDoc.value);
 
-  doc.status = "printing";
+  doc.status = 'printing';
 
   await printAuto(toRaw(doc), {
     printFinish() {
-      doc.status = "printed";
+      doc.status = 'printed';
 
-      eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
+      eventEmitter.emit('success:show', `打印完成 "${doc.name}"`);
     },
     printCancel() {
-      doc.status = "init";
+      doc.status = 'init';
 
-      eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
+      eventEmitter.emit('error:show', `取消打印 "${doc.name}"`);
     },
     printBefore() {
-      doc.status = "upload";
+      doc.status = 'upload';
     },
     printAfter() {
-      doc.status = "printing";
+      doc.status = 'printing';
     },
   });
 });
 
 //预备打印
-const handlePrePrint = form.handleSubmit(async values => {
+const handlePrePrint = form.handleSubmit(async (values) => {
   //关闭弹窗
   close();
 
@@ -129,39 +129,39 @@ const handlePrePrint = form.handleSubmit(async values => {
 
   doc.formatRange = parserRange(selectedDoc.value);
 
-  doc.status = "prepare";
+  doc.status = 'prepare';
 
   const result = await printPromise(doc);
 
   if (!result) {
-    doc.status = "init";
+    doc.status = 'init';
 
-    eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
+    eventEmitter.emit('error:show', `取消打印 "${doc.name}"`);
     return;
   }
 
   await printAuto(toRaw(doc), {
     printFinish() {
-      doc.status = "printed";
+      doc.status = 'printed';
 
-      eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
+      eventEmitter.emit('success:show', `打印完成 "${doc.name}"`);
     },
     printCancel() {
-      doc.status = "init";
+      doc.status = 'init';
 
-      eventEmitter.emit("error:show", `取消打印 "${doc.name}"`);
+      eventEmitter.emit('error:show', `取消打印 "${doc.name}"`);
     },
     printBefore() {
-      doc.status = "upload";
+      doc.status = 'upload';
     },
     printAfter() {
-      doc.status = "printing";
+      doc.status = 'printing';
     },
   });
 });
 
 //标记为已完成
-const handlePrintFinish = form.handleSubmit(async values => {
+const handlePrintFinish = form.handleSubmit(async (values) => {
   //关闭弹窗
   close();
 
@@ -171,23 +171,23 @@ const handlePrintFinish = form.handleSubmit(async values => {
 
   doc.formatRange = parserRange(selectedDoc.value);
 
-  doc.status = "printed";
+  doc.status = 'printed';
 
-  eventEmitter.emit("success:show", `打印完成 "${doc.name}"`);
+  eventEmitter.emit('success:show', `打印完成 "${doc.name}"`);
 });
 
 //打印单页
-const handlePrintSimplex = form.handleSubmit(async values => {
+const handlePrintSimplex = form.handleSubmit(async (values) => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);
 
   isPrinting.value = true;
 
-  eventEmitter.emit("loading:show", {
-    loadingMsg: "正在打印单页",
+  eventEmitter.emit('loading:show', {
+    loadingMsg: '正在打印单页',
     successMsg: `打印单页完成 "${doc.name}"`,
-    errorMsg: "打印单页失败",
+    errorMsg: '打印单页失败',
     async cb() {
       await printOdd(doc);
     },
@@ -197,17 +197,17 @@ const handlePrintSimplex = form.handleSubmit(async values => {
 });
 
 //打印偶数页
-const handlePrintEven = form.handleSubmit(async values => {
+const handlePrintEven = form.handleSubmit(async (values) => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);
 
   isPrinting.value = true;
 
-  eventEmitter.emit("loading:show", {
-    loadingMsg: "正在打印偶数页",
+  eventEmitter.emit('loading:show', {
+    loadingMsg: '正在打印偶数页',
     successMsg: `打印偶数页完成 "${doc.name}"`,
-    errorMsg: "打印偶数页失败",
+    errorMsg: '打印偶数页失败',
     async cb() {
       await printEven(doc);
     },
@@ -219,17 +219,17 @@ const handlePrintEven = form.handleSubmit(async values => {
 });
 
 //打印奇数页
-const handlePrintOdd = form.handleSubmit(async values => {
+const handlePrintOdd = form.handleSubmit(async (values) => {
   const doc = { ...toRaw(getDoc(selectedDocID.value)!) };
 
   Object.assign(doc, values);
 
   isPrinting.value = true;
 
-  eventEmitter.emit("loading:show", {
-    loadingMsg: "正在打印奇数页",
+  eventEmitter.emit('loading:show', {
+    loadingMsg: '正在打印奇数页',
     successMsg: `打印奇数页完成 "${doc.name}"`,
-    errorMsg: "打印奇数页失败",
+    errorMsg: '打印奇数页失败',
     async cb() {
       await printOdd(doc);
     },

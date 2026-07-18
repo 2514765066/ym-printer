@@ -23,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-vue-next";
-import Tooltip from "@/components/tooltip.vue";
-import { Button } from "@/components/ui/button";
+import { ArrowLeftIcon, ArrowRightIcon } from '@lucide/vue';
+import Tooltip from '@/components/tooltip.vue';
+import { Button } from '@/components/ui/button';
 
 const router = useRouter();
 const route = useRoute();

@@ -1,32 +1,32 @@
-import { Theme } from "@type";
-import { useColorMode } from "@vueuse/core";
+import { Theme } from '@type';
+import { useColorMode } from '@vueuse/core';
 
-export const useThemeStore = defineStore("theme", () => {
+export const useThemeStore = defineStore('theme', () => {
   //系统主题
   const baseTheme = useColorMode();
 
   //文档主题
   const previewThemeRaw = useColorMode({
-    storageKey: "previewTheme",
+    storageKey: 'previewTheme',
     emitAuto: true,
     modes: {
-      light: "preview-light",
-      dark: "preview-dark",
+      light: 'preview-light',
+      dark: 'preview-dark',
     },
   });
 
   const previewTheme = computed(() =>
-    previewThemeRaw.value == "auto" ? baseTheme.value : previewThemeRaw.value,
+    previewThemeRaw.value == 'auto' ? baseTheme.value : previewThemeRaw.value,
   );
 
   //切换主题
   const togglePreviewTheme = () => {
     previewThemeRaw.store.value =
-      previewTheme.value == "dark" ? "light" : "dark";
+      previewTheme.value == 'dark' ? 'light' : 'dark';
   };
 
   watchEffect(() => {
-    ipcRenderer.invoke("toggleTheme", baseTheme.value as Theme);
+    ipcRenderer.invoke('toggleTheme', baseTheme.value as Theme);
   });
 
   return {

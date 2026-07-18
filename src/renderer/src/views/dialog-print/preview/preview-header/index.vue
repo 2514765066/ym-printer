@@ -44,12 +44,12 @@ import {
   NumberFieldDecrement,
   NumberFieldIncrement,
   NumberFieldInput,
-} from "@/components/ui/number-field";
-import { usePdfStore } from "@/stores/usePdfStore";
-import { Button } from "@/components/ui/button";
-import { useDocStore } from "@/stores/useDocStore";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { viewMap } from "@/map";
+} from '@/components/ui/number-field';
+import { usePdfStore } from '@/stores/usePdfStore';
+import { Button } from '@/components/ui/button';
+import { useDocStore } from '@/stores/useDocStore';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
+import { viewMap } from '@/map';
 
 const { selectedDoc } = storeToRefs(useDocStore());
 const { scale } = storeToRefs(usePdfStore());

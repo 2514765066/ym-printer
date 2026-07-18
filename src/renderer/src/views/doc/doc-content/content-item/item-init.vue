@@ -12,15 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import ItemBase from "./item-base/index.vue";
-import { Doc } from "@type";
-import { status } from "../../index";
+import ItemBase from './item-base/index.vue';
+import { Doc } from '@type';
+import { status } from '../../index';
 
 defineProps<{
   data: Doc;
 }>();
 
-const handlePrint: (id: string) => void = inject("handlePrint")!;
+const handlePrint: (id: string) => void = inject('handlePrint')!;
 </script>
 
 <style scoped lang="scss"></style>

@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePrinterStore } from "@/stores/usePrinterStore";
+import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { selectedPrinter } = storeToRefs(usePrinterStore());
 

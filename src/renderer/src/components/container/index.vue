@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 defineProps<{
   isEmpty?: boolean;

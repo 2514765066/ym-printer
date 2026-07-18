@@ -35,28 +35,24 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   Item,
   ItemContent,
   ItemDescription,
   ItemTitle,
   ItemActions,
-} from "@/components/ui/item";
-import eventEmitter from "@/hooks/eventEmitter";
-import { Preset, usePresetStore } from "@/stores/usePresetStore";
-import {
-  MoreHorizontalIcon,
-  PencilLineIcon,
-  Trash2Icon,
-} from "lucide-vue-next";
+} from '@/components/ui/item';
+import eventEmitter from '@/hooks/eventEmitter';
+import { Preset, usePresetStore } from '@/stores/usePresetStore';
+import { MoreHorizontalIcon, PencilLineIcon, Trash2Icon } from '@lucide/vue';
 
 const { removePreset } = usePresetStore();
 
@@ -66,8 +62,8 @@ const props = defineProps<{
 
 //编辑预设
 const handleEdit = () => {
-  eventEmitter.emit("dialog-preset:show", {
-    type: "edit",
+  eventEmitter.emit('dialog-preset:show', {
+    type: 'edit',
     data: props.data,
   });
 };
@@ -76,7 +72,7 @@ const handleEdit = () => {
 const handleRemove = () => {
   removePreset(props.data.id);
 
-  eventEmitter.emit("success:show", `已删除 "${props.data.name}"`);
+  eventEmitter.emit('success:show', `已删除 "${props.data.name}"`);
 };
 </script>
 

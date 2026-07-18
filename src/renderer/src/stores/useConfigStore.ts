@@ -1,4 +1,4 @@
-import { useStorage } from "@vueuse/core";
+import { useStorage } from '@vueuse/core';
 
 //创建配置
 const createConfig = () => {
@@ -22,12 +22,12 @@ const createConfig = () => {
     autoUpdate: false,
 
     //选中的仓库
-    repo: "gitee",
+    repo: 'gitee',
   };
 };
 
-export const useConfigStore = defineStore("config", () => {
-  const config = useStorage("settings", createConfig(), localStorage, {
+export const useConfigStore = defineStore('config', () => {
+  const config = useStorage('settings', createConfig(), localStorage, {
     mergeDefaults: true,
   });
 

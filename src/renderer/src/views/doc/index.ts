@@ -1,7 +1,7 @@
-type Status = "default" | "price" | "check";
+type Status = 'default' | 'price' | 'check';
 
-export const status = ref<Status>("default");
+export const status = ref<Status>('default');
 
-export const setStatus = (s: Status = "default") => {
+export const setStatus = (s: Status = 'default') => {
   status.value = s;
 };

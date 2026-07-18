@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { usePrinterStore } from "@/stores/usePrinterStore";
-import Item from "./item.vue";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { usePrinterStore } from '@/stores/usePrinterStore';
+import Item from './item.vue';
 
 const { printers } = storeToRefs(usePrinterStore());
 </script>

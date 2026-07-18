@@ -35,16 +35,16 @@
 </template>
 
 <script setup lang="ts">
-import ContentItem from "./content-item/index.vue";
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
-import { useDocStore } from "@/stores/useDocStore";
-import { VueDraggable } from "vue-draggable-plus";
-import { status } from "../index";
-import eventEmitter from "@/hooks/eventEmitter";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { Doc } from "@type";
-import ContextMenuDefault from "./context-menu/context-menu-default.vue";
-import ContextMenuCheck from "./context-menu/context-menu-check.vue";
+import ContentItem from './content-item/index.vue';
+import { ContextMenu, ContextMenuTrigger } from '@/components/ui/context-menu';
+import { useDocStore } from '@/stores/useDocStore';
+import { VueDraggable } from 'vue-draggable-plus';
+import { status } from '../index';
+import eventEmitter from '@/hooks/eventEmitter';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { Doc } from '@type';
+import ContextMenuDefault from './context-menu/context-menu-default.vue';
+import ContextMenuCheck from './context-menu/context-menu-check.vue';
 
 const contextmeunMap = {
   default: ContextMenuDefault,
@@ -64,7 +64,7 @@ const handleContextmenu = (item: Doc) => {
 
 const filterDocs = computed(() => {
   const workspaceDocs = docs.value.filter(
-    item => item.workspaceId == selectedWorkspaceID.value,
+    (item) => item.workspaceId == selectedWorkspaceID.value,
   );
 
   const res = workspaceDocs.reduce(
@@ -86,7 +86,7 @@ const filterDocs = computed(() => {
 //排序
 const handleSort = (data: Doc[][]) => {
   const order = docs.value.filter(
-    item => item.workspaceId != selectedWorkspaceID.value,
+    (item) => item.workspaceId != selectedWorkspaceID.value,
   );
 
   docs.value = [...order, ...data.flat()];
@@ -94,16 +94,16 @@ const handleSort = (data: Doc[][]) => {
 
 //打印文档
 const handlePrint = (id: string) => {
-  if (status.value != "default") {
+  if (status.value != 'default') {
     return;
   }
 
   selectDoc(id);
 
-  eventEmitter.emit("dialog-print:show");
+  eventEmitter.emit('dialog-print:show');
 };
 
-provide("handlePrint", handlePrint);
+provide('handlePrint', handlePrint);
 </script>
 
 <style scoped lang="scss"></style>

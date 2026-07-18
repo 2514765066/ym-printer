@@ -1,6 +1,6 @@
-import { Doc } from "@type";
-import { parserRange } from "./range";
-import { printPromise } from "@/stores/usePrintStore";
+import { Doc } from '@type';
+import { parserRange } from './range';
+import { printPromise } from '@/stores/usePrintStore';
 
 let printQueue = Promise.resolve();
 
@@ -16,12 +16,12 @@ const print = async (config: Doc, range: number[]) => {
   return new Promise<void>((resolve, reject) => {
     printQueue = printQueue
       .then(async () => {
-        await ipcRenderer.invoke("print", config, range);
+        await ipcRenderer.invoke('print', config, range);
       })
       .then(() => {
         resolve();
       })
-      .catch(error => {
+      .catch((error) => {
         reject(error);
       });
   });

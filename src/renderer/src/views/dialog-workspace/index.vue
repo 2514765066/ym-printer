@@ -20,22 +20,22 @@
 </template>
 
 <script setup lang="ts">
-import Form from "./form/index.vue";
-import { Button } from "@/components/ui/button";
+import Form from './form/index.vue';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogHeader,
   DialogFooter,
-} from "@/components/ui/dialog";
-import eventEmitter from "@/hooks/eventEmitter";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { useForm } from "vee-validate";
-import * as z from "zod";
-import { toTypedSchema } from "@vee-validate/zod";
-import { usePrinterStore } from "@/stores/usePrinterStore";
-import { workspaceTypeMap } from "@/map/index";
+} from '@/components/ui/dialog';
+import eventEmitter from '@/hooks/eventEmitter';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { useForm } from 'vee-validate';
+import * as z from 'zod';
+import { toTypedSchema } from '@vee-validate/zod';
+import { usePrinterStore } from '@/stores/usePrinterStore';
+import { workspaceTypeMap } from '@/map/index';
 
 const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { selectedWorkspace } = storeToRefs(useWorkspaceStore());
@@ -44,7 +44,7 @@ const { addWorkspace, editWorkspace } = useWorkspaceStore();
 const open = ref(false);
 
 //dialog类型
-const dialogType = ref<"add" | "edit">("add");
+const dialogType = ref<'add' | 'edit'>('add');
 
 const { handleSubmit, setValues } = useForm({
   validationSchema: toTypedSchema(
@@ -52,20 +52,20 @@ const { handleSubmit, setValues } = useForm({
       id: z.string(),
       name: z
         .string({
-          message: "请输入名称",
+          message: '请输入名称',
         })
-        .min(1, "请输入名称"),
+        .min(1, '请输入名称'),
       printer: z
         .string({
-          message: "请选择打印机",
+          message: '请选择打印机',
         })
-        .min(1, "请选择打印机"),
+        .min(1, '请选择打印机'),
     }),
   ),
   initialValues: {
-    id: "",
-    name: "",
-    printer: "",
+    id: '',
+    name: '',
+    printer: '',
   },
 });
 
@@ -75,12 +75,12 @@ const handleClose = () => {
 };
 
 //处理提交
-const handleClick = handleSubmit(values => {
+const handleClick = handleSubmit((values) => {
   switch (dialogType.value) {
-    case "add":
+    case 'add':
       addWorkspace(values);
       break;
-    case "edit":
+    case 'edit':
       editWorkspace(values);
       break;
   }
@@ -88,16 +88,16 @@ const handleClick = handleSubmit(values => {
   handleClose();
 });
 
-eventEmitter.on("dialog-workspace:show", option => {
+eventEmitter.on('dialog-workspace:show', (option) => {
   dialogType.value = option.type;
 
   switch (dialogType.value) {
-    case "add":
+    case 'add':
       setValues({
         printer: selectedPrinter.value,
       });
       break;
-    case "edit":
+    case 'edit':
       if (!option.data) {
         setValues(selectedWorkspace.value);
         break;

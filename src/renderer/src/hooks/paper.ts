@@ -1,4 +1,4 @@
-import { Doc } from "@type";
+import { Doc } from '@type';
 
 export const usePaper = (doc: Doc) => {
   return computed(() => {

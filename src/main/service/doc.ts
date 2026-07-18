@@ -1,20 +1,20 @@
-import workerPath from "./worker?nodeWorker";
+import workerPath from './worker?nodeWorker';
 
 const worker = workerPath({
-  workerData: "worker",
+  workerData: 'worker',
 });
 
 //创建word实例
 export const createWord = () => {
   worker.postMessage({
-    action: "open",
+    action: 'open',
   });
 };
 
 //删除word实例
 export const exitWord = async () => {
   worker.postMessage({
-    action: "exit",
+    action: 'exit',
   });
 };
 
@@ -28,16 +28,16 @@ export const toPdf = async (
 
   const handle = ({ type, data }) => {
     if (md5 == data) {
-      type == "error" ? reject(false) : resolve(true);
+      type == 'error' ? reject(false) : resolve(true);
 
-      worker.removeListener("message", handle);
+      worker.removeListener('message', handle);
     }
   };
 
-  worker.addListener("message", handle);
+  worker.addListener('message', handle);
 
   worker.postMessage({
-    action: "save",
+    action: 'save',
     params: {
       inputPath,
       outputPath,

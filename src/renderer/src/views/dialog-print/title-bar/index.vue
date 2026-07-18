@@ -32,13 +32,13 @@
 </template>
 
 <script setup lang="ts">
-import { SheetClose } from "@/components/ui/sheet";
-import FileIcon from "@/components/file-icon.vue";
-import { useDocStore } from "@/stores/useDocStore";
-import { Button } from "@/components/ui/button";
-import { MoonIcon, SunIcon, XIcon } from "lucide-vue-next";
-import Tooltip from "@/components/tooltip.vue";
-import { useThemeStore } from "@/stores/useThemeStore";
+import { SheetClose } from '@/components/ui/sheet';
+import FileIcon from '@/components/file-icon.vue';
+import { useDocStore } from '@/stores/useDocStore';
+import { Button } from '@/components/ui/button';
+import { MoonIcon, SunIcon, XIcon } from '@lucide/vue';
+import Tooltip from '@/components/tooltip.vue';
+import { useThemeStore } from '@/stores/useThemeStore';
 
 const { selectedDoc } = storeToRefs(useDocStore());
 const { previewTheme } = storeToRefs(useThemeStore());

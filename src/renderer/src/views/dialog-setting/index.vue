@@ -40,17 +40,17 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import TitleBar from "./title-bar/index.vue";
-import SideBar from "./side-bar/index.vue";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import eventEmitter from "@/hooks/eventEmitter";
-import { VisuallyHidden } from "reka-ui";
-import { selectedRoute, selectRouteID } from "./router";
+} from '@/components/ui/resizable';
+import TitleBar from './title-bar/index.vue';
+import SideBar from './side-bar/index.vue';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import eventEmitter from '@/hooks/eventEmitter';
+import { VisuallyHidden } from 'reka-ui';
+import { selectedRoute, selectRouteID } from './router';
 
 const open = ref(false);
 
-eventEmitter.on("dialog-setting:show", id => {
+eventEmitter.on('dialog-setting:show', (id) => {
   if (id) {
     selectRouteID(id);
   }

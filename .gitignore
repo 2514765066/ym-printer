@@ -5,3 +5,6 @@ out
 
 resources/cache
 auto-imports.d.ts
+
+.agents
+.codegraph

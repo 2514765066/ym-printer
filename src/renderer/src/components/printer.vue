@@ -33,25 +33,25 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Spinner } from "@/components/ui/spinner";
-import { usePrinterStore } from "@/stores/usePrinterStore";
-import { PrinterIcon, RotateCwIcon } from "lucide-vue-next";
-import { Button } from "./ui/button";
-import { useLockFn } from "@/hooks/useLock";
-import { ClassValue } from "clsx";
+} from '@/components/ui/select';
+import { Spinner } from '@/components/ui/spinner';
+import { usePrinterStore } from '@/stores/usePrinterStore';
+import { PrinterIcon, RotateCwIcon } from '@lucide/vue';
+import { Button } from './ui/button';
+import { useLockFn } from '@/hooks/useLock';
+import { ClassValue } from 'clsx';
 
 const { printers } = storeToRefs(usePrinterStore());
 const { getPrinters } = usePrinterStore();
 
 withDefaults(
   defineProps<{
-    variant?: "default" | "outline";
+    variant?: 'default' | 'outline';
     class?: ClassValue;
     iconVisible?: boolean;
   }>(),
   {
-    variant: "default",
+    variant: 'default',
     iconVisible: true,
   },
 );

@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import Item from "./item.vue";
-import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
+import Item from './item.vue';
+import { usePrinterTaskStore } from '@/stores/usePrinterTaskStore';
 
 const { printerTasks } = storeToRefs(usePrinterTaskStore());
 </script>

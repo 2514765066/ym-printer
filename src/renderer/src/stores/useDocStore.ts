@@ -1,44 +1,44 @@
-import eventEmitter from "@/hooks/eventEmitter";
-import { Doc } from "@type";
-import { useWorkspaceStore } from "./useWorkspaceStore";
-import { nanoid } from "nanoid";
+import eventEmitter from '@/hooks/eventEmitter';
+import { Doc } from '@type';
+import { useWorkspaceStore } from './useWorkspaceStore';
+import { nanoid } from 'nanoid';
 
-export const useDocStore = defineStore("doc", () => {
+export const useDocStore = defineStore('doc', () => {
   const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
   //所有文件
   const docs = ref<Doc[]>([]);
 
   //当前选中的文件id
-  const selectedDocID = ref("");
+  const selectedDocID = ref('');
 
   //当前选中的文件
   const selectedDoc = computed<Doc>(() => {
     return (
       getDoc(selectedDocID.value) || {
-        status: "init",
-        workspaceId: "",
-        groupId: "",
-        id: "",
-        name: "",
-        path: "",
-        md5: "",
-        ext: "",
+        status: 'init',
+        workspaceId: '',
+        groupId: '',
+        id: '',
+        name: '',
+        path: '',
+        md5: '',
+        ext: '',
         pageCount: 0,
-        remark: "",
-        printer: "",
+        remark: '',
+        printer: '',
         count: 0,
-        mode: "",
-        range: "",
-        cartridge: "",
-        orientation: "",
+        mode: '',
+        range: '',
+        cartridge: '',
+        orientation: '',
       }
     );
   });
 
   //获取文档
   const getDoc = (id: string) => {
-    return docs.value.find(item => item.id == id);
+    return docs.value.find((item) => item.id == id);
   };
 
   //选中文件
@@ -50,7 +50,7 @@ export const useDocStore = defineStore("doc", () => {
   const removeDoc = (ids: string | string[]) => {
     ids = Array.isArray(ids) ? ids : [ids];
 
-    docs.value = docs.value.filter(doc => !ids.includes(doc.id));
+    docs.value = docs.value.filter((doc) => !ids.includes(doc.id));
   };
 
   //添加文件
@@ -61,7 +61,7 @@ export const useDocStore = defineStore("doc", () => {
       return;
     }
 
-    ipcRenderer.invoke("addDoc", {
+    ipcRenderer.invoke('addDoc', {
       workspaceId: selectedWorkspaceID.value,
       paths,
     });
@@ -69,14 +69,14 @@ export const useDocStore = defineStore("doc", () => {
 
   //清空
   const clearDoc = (workspaceId: string) => {
-    docs.value = docs.value.filter(doc => doc.workspaceId !== workspaceId);
+    docs.value = docs.value.filter((doc) => doc.workspaceId !== workspaceId);
   };
 
   //设置工作空间id
   const setDocWorkspaceId = (ids: string | string[], workspaceId: string) => {
     ids = Array.isArray(ids) ? ids : [ids];
 
-    docs.value.forEach(doc => {
+    docs.value.forEach((doc) => {
       if (!ids.includes(doc.id)) {
         return;
       }
@@ -92,7 +92,7 @@ export const useDocStore = defineStore("doc", () => {
   ) => {
     ids = Array.isArray(ids) ? ids : [ids];
 
-    docs.value.forEach(doc => {
+    docs.value.forEach((doc) => {
       if (!ids.includes(doc.id)) {
         return;
       }
@@ -102,12 +102,12 @@ export const useDocStore = defineStore("doc", () => {
   };
 
   //文件获取完成
-  ipcRenderer.on("addDocFinish", (_, data) => {
-    const paths = docs.value.map(item => item.path);
+  ipcRenderer.on('addDocFinish', (_, data) => {
+    const paths = docs.value.map((item) => item.path);
 
     for (const item of data) {
       if (paths.includes(item.path)) {
-        eventEmitter.emit("error:show", `${item.name} 已存在`);
+        eventEmitter.emit('error:show', `${item.name} 已存在`);
         continue;
       }
 
@@ -116,12 +116,12 @@ export const useDocStore = defineStore("doc", () => {
       const doc = getDoc(item.id)!;
 
       ipcRenderer
-        .invoke("parserDoc", item)
+        .invoke('parserDoc', item)
         .then(() => {
-          doc.status = "init";
+          doc.status = 'init';
         })
         .catch(() => {
-          doc.status = "error";
+          doc.status = 'error';
         });
     }
   });

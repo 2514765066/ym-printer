@@ -18,7 +18,7 @@
 
       <ContextMenuSubContent class="min-w-40">
         <ContextMenuRadioGroup
-          @update:model-value="val => handleMoveChecked(val as string)"
+          @update:model-value="(val) => handleMoveChecked(val as string)"
         >
           <ContextMenuRadioItem
             v-for="item in workspace"
@@ -56,13 +56,13 @@ import {
   ContextMenuSubContent,
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
-} from "@/components/ui/context-menu";
-import eventEmitter from "@/hooks/eventEmitter";
-import { useDocStore } from "@/stores/useDocStore";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { CornerUpRightIcon, LayersIcon, Trash2Icon } from "lucide-vue-next";
-import { cancelCheckAll, checked } from "../../check";
-import { setStatus } from "../../index";
+} from '@/components/ui/context-menu';
+import eventEmitter from '@/hooks/eventEmitter';
+import { useDocStore } from '@/stores/useDocStore';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { CornerUpRightIcon, LayersIcon, Trash2Icon } from '@lucide/vue';
+import { cancelCheckAll, checked } from '../../check';
+import { setStatus } from '../../index';
 
 const { workspace } = storeToRefs(useWorkspaceStore());
 const { removeDoc, setDocWorkspaceId, setDocGroupId } = useDocStore();
@@ -93,7 +93,7 @@ const handleRemoveChecked = () => {
 
   removeDoc(ids);
 
-  eventEmitter.emit("success:show", `已删除 "${ids.length} 个文档"`);
+  eventEmitter.emit('success:show', `已删除 "${ids.length} 个文档"`);
 
   setStatus();
   cancelCheckAll();

@@ -32,28 +32,28 @@ import {
   ClipboardListIcon,
   PrinterIcon,
   SettingsIcon,
-} from "lucide-vue-next";
-import NavItem from "./nav-item.vue";
-import eventEmitter from "@/hooks/eventEmitter";
+} from '@lucide/vue';
+import NavItem from './nav-item.vue';
+import eventEmitter from '@/hooks/eventEmitter';
 
 //打开打印机任务队列
 const handlePrintTask = () => {
-  eventEmitter.emit("dialog-print-task:show");
+  eventEmitter.emit('dialog-print-task:show');
 };
 
 //打开打印范围预设
 const handlePreset = () => {
-  eventEmitter.emit("dialog-setting:show", "preset");
+  eventEmitter.emit('dialog-setting:show', 'preset');
 };
 
 //打开打印范围预设
 const handlePrice = () => {
-  eventEmitter.emit("dialog-setting:show", "price");
+  eventEmitter.emit('dialog-setting:show', 'price');
 };
 
 //打开设置
 const handleSettings = () => {
-  eventEmitter.emit("dialog-setting:show");
+  eventEmitter.emit('dialog-setting:show');
 };
 </script>
 

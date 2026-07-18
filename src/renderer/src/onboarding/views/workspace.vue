@@ -40,14 +40,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Printer from "@/components/printer.vue";
-import { useForm } from "vee-validate";
-import * as z from "zod";
-import { toTypedSchema } from "@vee-validate/zod";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { usePrinterStore } from "@/stores/usePrinterStore";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import Printer from '@/components/printer.vue';
+import { useForm } from 'vee-validate';
+import * as z from 'zod';
+import { toTypedSchema } from '@vee-validate/zod';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { selectedPrinter } = storeToRefs(usePrinterStore());
 const { firstAddWorkspace } = useWorkspaceStore();
@@ -57,23 +57,23 @@ const form = useForm({
     z.object({
       workspaceName: z
         .string({
-          message: "请输入名称",
+          message: '请输入名称',
         })
-        .min(1, "请输入名称"),
+        .min(1, '请输入名称'),
       workspacePrinter: z
         .string({
-          message: "请选择打印机",
+          message: '请选择打印机',
         })
-        .min(1, "请选择打印机"),
+        .min(1, '请选择打印机'),
     }),
   ),
   initialValues: {
-    workspaceName: "默认工作空间",
-    workspacePrinter: selectedPrinter.value || "",
+    workspaceName: '默认工作空间',
+    workspacePrinter: selectedPrinter.value || '',
   },
 });
 
-const handleSubmit = form.handleSubmit(values => {
+const handleSubmit = form.handleSubmit((values) => {
   firstAddWorkspace({
     name: values.workspaceName!,
     printer: values.workspacePrinter!,

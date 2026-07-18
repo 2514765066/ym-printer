@@ -8,7 +8,7 @@
       <ItemTitle> {{ data.name }}</ItemTitle>
 
       <ItemDescription>
-        {{ statusLabel || "未知状态" }}
+        {{ statusLabel || '未知状态' }}
       </ItemDescription>
     </ItemContent>
 
@@ -30,14 +30,14 @@ import {
   ItemMedia,
   ItemTitle,
   ItemActions,
-} from "@/components/ui/item";
-import { PrinterTask } from "@type";
-import { printStatusMap } from "@/map/index";
-import { FileTextIcon, Trash2Icon } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
-import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
-import eventEmitter from "@/hooks/eventEmitter";
-import Tooltip from "@/components/tooltip.vue";
+} from '@/components/ui/item';
+import { PrinterTask } from '@type';
+import { printStatusMap } from '@/map/index';
+import { FileTextIcon, Trash2Icon } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
+import { usePrinterTaskStore } from '@/stores/usePrinterTaskStore';
+import eventEmitter from '@/hooks/eventEmitter';
+import Tooltip from '@/components/tooltip.vue';
 
 const { removePrinterTask } = usePrinterTaskStore();
 
@@ -47,12 +47,12 @@ const props = defineProps<{
 
 //状态标题
 const statusLabel = computed(() => {
-  return props.data.status.map(item => printStatusMap[item]).join("，");
+  return props.data.status.map((item) => printStatusMap[item]).join('，');
 });
 
 //删除
 const handleRemove = async () => {
-  eventEmitter.emit("loading:show", {
+  eventEmitter.emit('loading:show', {
     loadingMsg: `正在删除 "${props.data.name}"`,
     successMsg: `已删除 "${props.data.name}"`,
     errorMsg: `"${props.data.name}" 删除失败`,

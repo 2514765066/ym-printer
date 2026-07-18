@@ -1,7 +1,7 @@
-import { basename, extname } from "path";
-import { getMd5 } from "./md5";
-import { Doc } from "@type";
-import { nanoid } from "nanoid";
+import { basename, extname } from 'path';
+import { getMd5 } from './md5';
+import { Doc } from '@type';
+import { nanoid } from 'nanoid';
 
 //解析文档
 export const parseDoc = async (option: {
@@ -29,14 +29,14 @@ export const parseDoc = async (option: {
     md5,
     ext,
     pageCount: 0,
-    status: "loading",
-    remark: "",
-    printer: "",
+    status: 'loading',
+    remark: '',
+    printer: '',
     count: 1,
-    mode: "",
-    range: "",
-    cartridge: "",
-    orientation: "",
+    mode: '',
+    range: '',
+    cartridge: '',
+    orientation: '',
     workspaceId,
     groupId: id,
   };

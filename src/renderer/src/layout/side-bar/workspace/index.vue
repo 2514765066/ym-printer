@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import WorkspaceHeader from "./workspace-header.vue";
-import WorkspaceContent from "./workspace-content/index.vue";
+import WorkspaceHeader from './workspace-header.vue';
+import WorkspaceContent from './workspace-content/index.vue';
 </script>
 
 <style scoped lang="scss"></style>

@@ -1,6 +1,6 @@
-import { contextBridge, shell, webUtils } from "electron";
-import { ipcRenderer } from "../main/ipc/ipcRenderer";
-import { extname } from "path";
+import { contextBridge, shell, webUtils } from 'electron';
+import { ipcRenderer } from '../main/ipc/ipcRenderer';
+import { extname } from 'path';
 
 const api = {
   //打开网页
@@ -22,7 +22,7 @@ const api = {
 
       const ext = extname(path).slice(1);
 
-      if (!["docx", "doc", "pdf", "wps"].includes(ext)) {
+      if (!['docx', 'doc', 'pdf', 'wps'].includes(ext)) {
         continue;
       }
 
@@ -35,8 +35,8 @@ const api = {
 
 export type Api = typeof api;
 
-contextBridge.exposeInMainWorld("api", api);
-contextBridge.exposeInMainWorld("ipcRenderer", {
+contextBridge.exposeInMainWorld('api', api);
+contextBridge.exposeInMainWorld('ipcRenderer', {
   send: ipcRenderer.send,
   on: ipcRenderer.on,
   invoke: ipcRenderer.invoke,

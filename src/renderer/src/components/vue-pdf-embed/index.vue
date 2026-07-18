@@ -4,10 +4,10 @@ import type {
   PDFDocumentProxy,
   PDFPageProxy,
   PageViewport,
-} from "pdfjs-dist";
-import type { PasswordRequestParams, Source } from "./types";
-import { releaseChildCanvases } from "./utils";
-import { useVuePdfEmbed } from "./composables";
+} from 'pdfjs-dist';
+import type { PasswordRequestParams, Source } from './types';
+import { releaseChildCanvases } from './utils';
+import { useVuePdfEmbed } from './composables';
 
 const props = withDefaults(
   defineProps<{
@@ -25,13 +25,13 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-  (e: "internal-link-clicked", value: number): void;
-  (e: "loaded", value: PDFDocumentProxy): void;
-  (e: "loading-failed", value: Error): void;
-  (e: "password-requested", value: PasswordRequestParams): void;
-  (e: "progress", value: OnProgressParameters): void;
-  (e: "rendered"): void;
-  (e: "rendering-failed", value: Error): void;
+  (e: 'internal-link-clicked', value: number): void;
+  (e: 'loaded', value: PDFDocumentProxy): void;
+  (e: 'loading-failed', value: Error): void;
+  (e: 'password-requested', value: PasswordRequestParams): void;
+  (e: 'progress', value: OnProgressParameters): void;
+  (e: 'rendered'): void;
+  (e: 'rendering-failed', value: Error): void;
 }>();
 
 const pageNums = shallowRef<number[]>([]);
@@ -42,17 +42,17 @@ let renderingController: { isAborted: boolean; promise: Promise<void> } | null =
   null;
 
 const { doc } = useVuePdfEmbed({
-  onError: e => {
+  onError: (e) => {
     pageNums.value = [];
-    emit("loading-failed", e);
+    emit('loading-failed', e);
   },
   onPasswordRequest({ callback, isWrongPassword }) {
-    emit("password-requested", { callback, isWrongPassword });
+    emit('password-requested', { callback, isWrongPassword });
   },
-  onProgress: progressParams => {
-    emit("progress", progressParams);
+  onProgress: (progressParams) => {
+    emit('progress', progressParams);
   },
-  source: toRef(props, "source"),
+  source: toRef(props, 'source'),
 });
 
 const getPageNums = () => {
@@ -113,7 +113,7 @@ const render = async () => {
           360;
 
         const [canvas] = Array.from(
-          root.value!.getElementsByClassName("vue-pdf-embed__page")[i].children,
+          root.value!.getElementsByClassName('vue-pdf-embed__page')[i].children,
         ) as [HTMLCanvasElement];
 
         const isTransposed = !!((pageRotation / 90) % 2);
@@ -141,7 +141,7 @@ const render = async () => {
 
         pageScales.value[i] = pageScale;
 
-        canvas.style.display = "block";
+        canvas.style.display = 'block';
         canvas.style.width = cssWidth;
         canvas.style.height = cssHeight;
 
@@ -152,14 +152,14 @@ const render = async () => {
     );
 
     if (!renderingController?.isAborted) {
-      emit("rendered");
+      emit('rendered');
     }
   } catch (e) {
     pageNums.value = [];
     pageScales.value = [];
 
     if (!renderingController?.isAborted) {
-      emit("rendering-failed", e as Error);
+      emit('rendering-failed', e as Error);
     }
   }
 };
@@ -172,16 +172,16 @@ const renderPage = async (
   canvas.width = viewport.width;
   canvas.height = viewport.height;
   await page.render({
-    canvasContext: canvas.getContext("2d")!,
+    canvasContext: canvas.getContext('2d')!,
     viewport,
   }).promise;
 };
 
 watch(
   doc,
-  newDoc => {
+  (newDoc) => {
     if (newDoc) {
-      emit("loaded", newDoc);
+      emit('loaded', newDoc);
     }
   },
   { immediate: true },

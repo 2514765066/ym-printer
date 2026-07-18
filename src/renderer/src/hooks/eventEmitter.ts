@@ -1,28 +1,28 @@
-import { presetTypeMap, workspaceTypeMap } from "@/map";
-import { Preset } from "@/stores/usePresetStore";
-import { Workspace } from "@/stores/useWorkspaceStore";
+import { presetTypeMap, workspaceTypeMap } from '@/map';
+import { Preset } from '@/stores/usePresetStore';
+import { Workspace } from '@/stores/useWorkspaceStore';
 
 // 定义事件到函数类型的映射
 type EventMap = {
-  "success:show": (msg: string) => void;
-  "loading:show": (option: {
+  'success:show': (msg: string) => void;
+  'loading:show': (option: {
     successMsg?: string;
     errorMsg?: string;
     loadingMsg?: string;
     cb: () => Promise<void>;
   }) => void;
-  "error:show": (msg: string) => void;
+  'error:show': (msg: string) => void;
 
-  "dialog-print:show": () => void;
-  "dialog-print-task:show": () => void;
-  "dialog-setting:show": (id?: string) => void;
+  'dialog-print:show': () => void;
+  'dialog-print-task:show': () => void;
+  'dialog-setting:show': (id?: string) => void;
 
-  "dialog-workspace:show": (option: {
+  'dialog-workspace:show': (option: {
     type: keyof typeof workspaceTypeMap;
     data?: Workspace;
   }) => void;
 
-  "dialog-preset:show": (option: {
+  'dialog-preset:show': (option: {
     type: keyof typeof presetTypeMap;
     data?: Preset;
   }) => void;
@@ -54,7 +54,7 @@ class EventEmitter {
       return;
     }
 
-    this.listeners[eventName].forEach(listener => listener(...args));
+    this.listeners[eventName].forEach((listener) => listener(...args));
   }
 }
 

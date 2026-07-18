@@ -25,21 +25,21 @@
 </template>
 
 <script setup lang="ts">
-import PresetItem from "./preset-item.vue";
-import { ItemSeparator, ItemGroup } from "@/components/ui/item";
-import Container from "@/components/container/index.vue";
-import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-vue-next";
-import { usePresetStore } from "@/stores/usePresetStore";
-import eventEmitter from "@/hooks/eventEmitter";
-import PresetEmpty from "./preset-empty.vue";
+import PresetItem from './preset-item.vue';
+import { ItemSeparator, ItemGroup } from '@/components/ui/item';
+import Container from '@/components/container/index.vue';
+import { Button } from '@/components/ui/button';
+import { PlusIcon } from '@lucide/vue';
+import { usePresetStore } from '@/stores/usePresetStore';
+import eventEmitter from '@/hooks/eventEmitter';
+import PresetEmpty from './preset-empty.vue';
 
 const { presets } = storeToRefs(usePresetStore());
 
 //新建预设
 const handleAdd = () => {
-  eventEmitter.emit("dialog-preset:show", {
-    type: "add",
+  eventEmitter.emit('dialog-preset:show', {
+    type: 'add',
   });
 };
 </script>

@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import Tooltip from "@/components/tooltip.vue";
-import { Button } from "@/components/ui/button";
-import { PanelLeftCloseIcon, PanelLeftIcon } from "lucide-vue-next";
-import { panelRef, toggleSilderbar } from "../index";
-import TitleBarNav from "./title-bar-nav.vue";
-import TitleBarUpdate from "./title-bar-update.vue";
+import Tooltip from '@/components/tooltip.vue';
+import { Button } from '@/components/ui/button';
+import { PanelLeftCloseIcon, PanelLeftIcon } from '@lucide/vue';
+import { panelRef, toggleSilderbar } from '../index';
+import TitleBarNav from './title-bar-nav.vue';
+import TitleBarUpdate from './title-bar-update.vue';
 </script>
 
 <style scoped lang="scss">

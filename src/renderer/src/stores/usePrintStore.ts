@@ -1,4 +1,4 @@
-import { Doc } from "@type";
+import { Doc } from '@type';
 
 const map = new Map<string, { next: () => void; cancel: () => void }>();
 

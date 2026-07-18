@@ -15,11 +15,11 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
 defineProps<{
   label?: string;
-  side?: "right" | "left" | "top" | "bottom";
+  side?: 'right' | 'left' | 'top' | 'bottom';
   disabled?: boolean;
 }>();
 </script>

@@ -1,12 +1,12 @@
-import { join } from "path";
-import { BrowserWindow } from "electron";
-import { load } from "./index";
-import Store from "electron-store";
-import { is } from "@electron-toolkit/utils";
+import { join } from 'path';
+import { BrowserWindow } from 'electron';
+import { load } from './index';
+import Store from 'electron-store';
+import { is } from '@electron-toolkit/utils';
 
 const store = new Store();
 
-let lastSize = store.get("window-size", {
+let lastSize = store.get('window-size', {
   width: 1024,
   height: 768,
 }) as Electron.Size;
@@ -20,33 +20,33 @@ export const createMainWindow = () => {
     minWidth: 520,
     minHeight: 400,
 
-    titleBarStyle: "hidden",
+    titleBarStyle: 'hidden',
     titleBarOverlay: {
-      symbolColor: "#d4d4d4",
-      color: "rgba(0,0,0,0)",
+      symbolColor: '#d4d4d4',
+      color: 'rgba(0,0,0,0)',
       height: 40,
     },
 
     webPreferences: {
-      preload: join(__dirname, "../preload/index.mjs"),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false,
     },
   });
 
   //准备就绪打开窗口和开发者选项
-  mainWindow.on("ready-to-show", () => {
+  mainWindow.on('ready-to-show', () => {
     mainWindow.show();
 
     if (is.dev) {
-      mainWindow.webContents.openDevTools({ mode: "detach" });
+      mainWindow.webContents.openDevTools({ mode: 'detach' });
     }
   });
 
   //处理窗口调整大小
-  mainWindow.on("resized", () => {
+  mainWindow.on('resized', () => {
     const [width, height] = mainWindow.getSize();
 
-    store.set("window-size", {
+    store.set('window-size', {
       width,
       height,
     });

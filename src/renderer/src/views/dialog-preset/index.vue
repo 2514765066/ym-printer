@@ -20,28 +20,28 @@
 </template>
 
 <script setup lang="ts">
-import Form from "./form/index.vue";
-import { Button } from "@/components/ui/button";
+import Form from './form/index.vue';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogHeader,
   DialogFooter,
-} from "@/components/ui/dialog";
-import eventEmitter from "@/hooks/eventEmitter";
-import { useForm } from "vee-validate";
-import * as z from "zod";
-import { toTypedSchema } from "@vee-validate/zod";
-import { usePresetStore } from "@/stores/usePresetStore";
-import { presetTypeMap } from "@/map/index";
+} from '@/components/ui/dialog';
+import eventEmitter from '@/hooks/eventEmitter';
+import { useForm } from 'vee-validate';
+import * as z from 'zod';
+import { toTypedSchema } from '@vee-validate/zod';
+import { usePresetStore } from '@/stores/usePresetStore';
+import { presetTypeMap } from '@/map/index';
 
 const { addPreset, editPreset } = usePresetStore();
 
 const open = ref(false);
 
 //dialog类型
-const dialogType = ref<"add" | "edit">("add");
+const dialogType = ref<'add' | 'edit'>('add');
 
 const { handleSubmit, setValues } = useForm({
   validationSchema: toTypedSchema(
@@ -49,15 +49,15 @@ const { handleSubmit, setValues } = useForm({
       id: z.string(),
       name: z
         .string({
-          message: "请输入名称",
+          message: '请输入名称',
         })
-        .min(1, "请输入名称"),
+        .min(1, '请输入名称'),
       value: z
         .string()
-        .min(1, "请输入打印范围")
+        .min(1, '请输入打印范围')
         .superRefine((value, ctx) => {
           //允许空值
-          if (value === "") {
+          if (value === '') {
             return;
           }
 
@@ -66,8 +66,8 @@ const { handleSubmit, setValues } = useForm({
 
           if (!reg.test(value)) {
             ctx.addIssue({
-              code: "custom",
-              message: "格式有误",
+              code: 'custom',
+              message: '格式有误',
             });
             return;
           }
@@ -75,9 +75,9 @@ const { handleSubmit, setValues } = useForm({
     }),
   ),
   initialValues: {
-    id: "",
-    name: "",
-    value: "",
+    id: '',
+    name: '',
+    value: '',
   },
 });
 
@@ -87,12 +87,12 @@ const handleClose = () => {
 };
 
 //处理提交
-const handleClick = handleSubmit(values => {
+const handleClick = handleSubmit((values) => {
   switch (dialogType.value) {
-    case "add":
+    case 'add':
       addPreset(values);
       break;
-    case "edit":
+    case 'edit':
       editPreset(values);
       break;
   }
@@ -100,11 +100,11 @@ const handleClick = handleSubmit(values => {
   handleClose();
 });
 
-eventEmitter.on("dialog-preset:show", option => {
+eventEmitter.on('dialog-preset:show', (option) => {
   dialogType.value = option.type;
 
   switch (dialogType.value) {
-    case "edit":
+    case 'edit':
       setValues(option.data!);
       break;
   }

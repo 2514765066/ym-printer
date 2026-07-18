@@ -7,19 +7,19 @@ import {
   type ComputedRef,
   type MaybeRef,
   type ShallowRef,
-} from "vue";
+} from 'vue';
 import {
   PasswordResponses,
   getDocument,
-} from "pdfjs-dist/legacy/build/pdf.mjs";
+} from 'pdfjs-dist/legacy/build/pdf.mjs';
 import type {
   OnProgressParameters,
   PDFDocumentLoadingTask,
   PDFDocumentProxy,
-} from "pdfjs-dist";
+} from 'pdfjs-dist';
 
-import type { PasswordRequestParams, Source } from "./types";
-import { isDocument } from "./utils";
+import type { PasswordRequestParams, Source } from './types';
+import { isDocument } from './utils';
 
 export function useVuePdfEmbed({
   onError,

@@ -149,14 +149,14 @@
 </template>
 
 <script setup lang="ts">
-import { Switch } from "@/components/ui/switch";
+import { Switch } from '@/components/ui/switch';
 import {
   NumberField,
   NumberFieldContent,
   NumberFieldDecrement,
   NumberFieldIncrement,
   NumberFieldInput,
-} from "@/components/ui/number-field";
+} from '@/components/ui/number-field';
 import {
   Item,
   ItemContent,
@@ -165,9 +165,9 @@ import {
   ItemTitle,
   ItemActions,
   ItemGroup,
-} from "@/components/ui/item";
-import Container from "@/components/container/index.vue";
-import { useConfigStore } from "@/stores/useConfigStore";
+} from '@/components/ui/item';
+import Container from '@/components/container/index.vue';
+import { useConfigStore } from '@/stores/useConfigStore';
 
 const { config } = storeToRefs(useConfigStore());
 </script>

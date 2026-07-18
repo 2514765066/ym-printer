@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { Button } from "@/components/ui/button";
-import { SquareCheckIcon, SquareIcon } from "lucide-vue-next";
-import { cancelCheck, checkAll } from "../check";
-import { useDocStore } from "@/stores/useDocStore";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+import { Button } from '@/components/ui/button';
+import { SquareCheckIcon, SquareIcon } from '@lucide/vue';
+import { cancelCheck, checkAll } from '../check';
+import { useDocStore } from '@/stores/useDocStore';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
 
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { docs } = storeToRefs(useDocStore());
@@ -29,8 +29,8 @@ const handleCheckAll = () => {
   handleCancelCheckAll();
 
   const ids = docs.value
-    .filter(item => item.workspaceId == selectedWorkspaceID.value)
-    .map(item => item.id);
+    .filter((item) => item.workspaceId == selectedWorkspaceID.value)
+    .map((item) => item.id);
 
   checkAll(ids);
 };
@@ -38,8 +38,8 @@ const handleCheckAll = () => {
 //取消全选
 const handleCancelCheckAll = () => {
   const ids = docs.value
-    .filter(item => item.workspaceId == selectedWorkspaceID.value)
-    .map(item => item.id);
+    .filter((item) => item.workspaceId == selectedWorkspaceID.value)
+    .map((item) => item.id);
 
   cancelCheck(ids);
 };

@@ -1,5 +1,5 @@
-import { useConfigStore } from "@/stores/useConfigStore";
-import { Doc } from "@type";
+import { useConfigStore } from '@/stores/useConfigStore';
+import { Doc } from '@type';
 
 //获取价格
 export const getPrice = (doc: Doc) => {
@@ -12,7 +12,7 @@ export const getPrice = (doc: Doc) => {
   let simplexPrice = 0;
   let duplexPrice = 0;
 
-  if (doc.cartridge == "black") {
+  if (doc.cartridge == 'black') {
     simplexPrice = config.value.blackSimplexPrice * 100;
     duplexPrice = config.value.blackDuplexPrice * 100;
   } else {

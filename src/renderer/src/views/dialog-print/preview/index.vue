@@ -7,8 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import PreviewHeader from "./preview-header/index.vue";
-import PreviewContent from "./preview-content/index.vue";
+import PreviewHeader from './preview-header/index.vue';
+import PreviewContent from './preview-content/index.vue';
 </script>
 
 <style scoped lang="scss"></style>

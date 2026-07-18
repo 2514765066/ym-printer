@@ -1,5 +1,5 @@
-import { parentPort } from "worker_threads";
-import winax from "winax";
+import { parentPort } from 'worker_threads';
+import winax from 'winax';
 
 interface SaveOption {
   md5: string;
@@ -8,17 +8,17 @@ interface SaveOption {
 }
 
 interface MessageOption {
-  action: "open" | "exit" | "save";
+  action: 'open' | 'exit' | 'save';
   params: Record<string, any>;
 }
 
 const port = parentPort!;
 
-if (!port) throw new Error("IllegalState");
+if (!port) throw new Error('IllegalState');
 
 let word: winax.Object | null = null;
 
-const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 //转pdf
 const toPdf = (option: SaveOption) => {
@@ -31,7 +31,7 @@ const toPdf = (option: SaveOption) => {
   doc.Close(false);
 
   port.postMessage({
-    type: "success",
+    type: 'success',
     data: md5,
   });
 };
@@ -43,7 +43,7 @@ const exit = () => {
   try {
     word.Quit();
   } catch (e) {
-    console.error("退出Word失败:", e);
+    console.error('退出Word失败:', e);
   } finally {
     word = null; // 释放引用
   }
@@ -56,13 +56,13 @@ const open = () => {
       exit();
     }
 
-    word = new winax.Object("Word.Application");
+    word = new winax.Object('Word.Application');
 
     //关闭一些占用启动速度的配置
     word.Visible = false;
     word.DisplayAlerts = 0;
   } catch (e) {
-    console.error("创建 Word 实例失败:", e);
+    console.error('创建 Word 实例失败:', e);
 
     // 此时通常说明底层 COM 被锁死
     throw e;
@@ -74,7 +74,7 @@ const save = async (option: SaveOption) => {
   try {
     toPdf(option);
   } catch (e) {
-    console.error("尝试重启 Word 服务...", e);
+    console.error('尝试重启 Word 服务...', e);
 
     try {
       open();
@@ -82,27 +82,27 @@ const save = async (option: SaveOption) => {
 
       toPdf(option);
     } catch (e) {
-      console.error("重试失败", e);
+      console.error('重试失败', e);
 
       port.postMessage({
-        type: "error",
+        type: 'error',
         data: option.md5,
       });
     }
   }
 };
 
-port.on("message", (option: MessageOption) => {
+port.on('message', (option: MessageOption) => {
   const { action, params } = option;
 
   switch (action) {
-    case "open":
+    case 'open':
       open();
       break;
-    case "exit":
+    case 'exit':
       exit();
       break;
-    case "save":
+    case 'save':
       save(params as SaveOption);
       break;
   }

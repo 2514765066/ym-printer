@@ -40,17 +40,17 @@
 </template>
 
 <script setup lang="ts">
-import ItemBase from "./item-base/index.vue";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Doc } from "@type";
-import { Spinner } from "@/components/ui/spinner";
-import { Button } from "@/components/ui/button";
-import { ArrowRightIcon, XIcon } from "lucide-vue-next";
-import Tooltip from "@/components/tooltip.vue";
-import { printNext, printCancel } from "@/stores/usePrintStore";
-import { ButtonGroup } from "@/components/ui/button-group";
-import { checked, toggleCheck } from "../../check.js";
-import { status } from "../../index";
+import ItemBase from './item-base/index.vue';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Doc } from '@type';
+import { Spinner } from '@/components/ui/spinner';
+import { Button } from '@/components/ui/button';
+import { ArrowRightIcon, XIcon } from '@lucide/vue';
+import Tooltip from '@/components/tooltip.vue';
+import { printNext, printCancel } from '@/stores/usePrintStore';
+import { ButtonGroup } from '@/components/ui/button-group';
+import { checked, toggleCheck } from '../../check.js';
+import { status } from '../../index';
 
 const props = defineProps<{
   data: Doc;
@@ -64,7 +64,7 @@ const handleCancel = () => {
   printCancel(props.data.id);
 };
 
-const handlePrint: (id: string) => void = inject("handlePrint")!;
+const handlePrint: (id: string) => void = inject('handlePrint')!;
 </script>
 
 <style scoped lang="scss"></style>

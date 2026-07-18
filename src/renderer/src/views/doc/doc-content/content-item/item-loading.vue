@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import ItemBase from "./item-base/index.vue";
-import { Spinner } from "@/components/ui/spinner";
-import { Doc } from "@type";
-import { status } from "../../index";
+import ItemBase from './item-base/index.vue';
+import { Spinner } from '@/components/ui/spinner';
+import { Doc } from '@type';
+import { status } from '../../index';
 
 defineProps<{
   data: Doc;

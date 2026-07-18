@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import ItemBase from "./item-base/index.vue";
-import { Doc } from "@type";
-import { CircleXIcon } from "lucide-vue-next";
-import { status } from "../../index";
+import ItemBase from './item-base/index.vue';
+import { Doc } from '@type';
+import { CircleXIcon } from '@lucide/vue';
+import { status } from '../../index';
 
 defineProps<{
   data: Doc;

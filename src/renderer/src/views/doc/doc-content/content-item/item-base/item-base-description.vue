@@ -25,7 +25,7 @@
 
     <Tooltip label="打印范围">
       <Badge class="rounded" variant="secondary">
-        {{ data.range || "1-" }}
+        {{ data.range || '1-' }}
       </Badge>
     </Tooltip>
 
@@ -44,14 +44,14 @@
 </template>
 
 <script setup lang="ts">
-import Tooltip from "@/components/tooltip.vue";
-import { Badge } from "@/components/ui/badge";
-import { usePaper } from "@/hooks/paper";
-import { usePrice } from "@/hooks/usePrice";
-import { cartridgeMap, modeMap, orientationMap } from "@/map";
-import { useConfigStore } from "@/stores/useConfigStore";
-import { status } from "@/views/doc";
-import { Doc } from "@type";
+import Tooltip from '@/components/tooltip.vue';
+import { Badge } from '@/components/ui/badge';
+import { usePaper } from '@/hooks/paper';
+import { usePrice } from '@/hooks/usePrice';
+import { cartridgeMap, modeMap, orientationMap } from '@/map';
+import { useConfigStore } from '@/stores/useConfigStore';
+import { status } from '@/views/doc';
+import { Doc } from '@type';
 
 const { config } = storeToRefs(useConfigStore());
 

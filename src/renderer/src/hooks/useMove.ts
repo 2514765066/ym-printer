@@ -20,10 +20,10 @@ export default (cb: () => HTMLDivElement | undefined) => {
     startTop = containerRef.scrollTop;
 
     //鼠标移动
-    containerRef.addEventListener("mousemove", handleMousemove);
+    containerRef.addEventListener('mousemove', handleMousemove);
 
     //鼠标抬起结束
-    window.addEventListener("mouseup", handleMouseup);
+    window.addEventListener('mouseup', handleMouseup);
   };
 
   //处理鼠标松开
@@ -37,10 +37,10 @@ export default (cb: () => HTMLDivElement | undefined) => {
     panning.value = false;
 
     //移除鼠标移动
-    containerRef.removeEventListener("mousemove", handleMousemove);
+    containerRef.removeEventListener('mousemove', handleMousemove);
 
     //移除抬起
-    window.removeEventListener("mouseup", handleMouseup);
+    window.removeEventListener('mouseup', handleMouseup);
   };
 
   //处理鼠标移动

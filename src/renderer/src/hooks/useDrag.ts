@@ -1,4 +1,4 @@
-import { DirectiveBinding } from "vue";
+import { DirectiveBinding } from 'vue';
 
 interface DragOptions {
   onEnter?: (e: DragEvent) => void;
@@ -59,10 +59,10 @@ export default {
     };
 
     // 绑定事件
-    el.addEventListener("dragenter", handleDragEnter);
-    el.addEventListener("dragover", handleDragOver);
-    el.addEventListener("dragleave", handleDragLeave);
-    el.addEventListener("drop", handleDrop);
+    el.addEventListener('dragenter', handleDragEnter);
+    el.addEventListener('dragover', handleDragOver);
+    el.addEventListener('dragleave', handleDragLeave);
+    el.addEventListener('drop', handleDrop);
 
     // 存储引用以便卸载
     (el as any)._dragHandlers = {
@@ -76,10 +76,10 @@ export default {
   unmounted(el: HTMLElement) {
     const handlers = (el as any)._dragHandlers;
     if (handlers) {
-      el.removeEventListener("dragenter", handlers.handleDragEnter);
-      el.removeEventListener("dragover", handlers.handleDragOver);
-      el.removeEventListener("dragleave", handlers.handleDragLeave);
-      el.removeEventListener("drop", handlers.handleDrop);
+      el.removeEventListener('dragenter', handlers.handleDragEnter);
+      el.removeEventListener('dragover', handlers.handleDragOver);
+      el.removeEventListener('dragleave', handlers.handleDragLeave);
+      el.removeEventListener('drop', handlers.handleDrop);
       delete (el as any)._dragHandlers;
     }
   },

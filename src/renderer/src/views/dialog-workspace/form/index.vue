@@ -36,9 +36,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import Printer from "@/components/printer.vue";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import Printer from '@/components/printer.vue';
 </script>
 
 <style scoped lang="scss"></style>

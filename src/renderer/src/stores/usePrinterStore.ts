@@ -1,11 +1,11 @@
-import { useStorage } from "@vueuse/core";
+import { useStorage } from '@vueuse/core';
 
-export const usePrinterStore = defineStore("printer", () => {
+export const usePrinterStore = defineStore('printer', () => {
   //所有打印机
   const printers = ref<string[]>([]);
 
   //选中的打印机
-  const selectedPrinter = useStorage("printer", "");
+  const selectedPrinter = useStorage('printer', '');
 
   //设置打印机
   const selectPrinter = (value: string) => {
@@ -14,7 +14,7 @@ export const usePrinterStore = defineStore("printer", () => {
 
   //获取打印机
   const getPrinters = async () => {
-    const res = await ipcRenderer.invoke("getPrinters");
+    const res = await ipcRenderer.invoke('getPrinters');
 
     printers.value = res.sort();
   };

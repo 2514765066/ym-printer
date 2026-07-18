@@ -13,17 +13,17 @@
 </template>
 
 <script setup lang="ts">
-import { usePdfStore } from "@/stores/usePdfStore";
-import { useDocStore } from "@/stores/useDocStore";
-import VuePdfEmbed, { useVuePdfEmbed } from "@/components/vue-pdf-embed";
-import { PDFDocumentProxy } from "pdfjs-dist";
-import { Form } from "../../index";
-import { parserRange } from "@/utils/range";
+import { usePdfStore } from '@/stores/usePdfStore';
+import { useDocStore } from '@/stores/useDocStore';
+import VuePdfEmbed, { useVuePdfEmbed } from '@/components/vue-pdf-embed';
+import { PDFDocumentProxy } from 'pdfjs-dist';
+import { Form } from '../../index';
+import { parserRange } from '@/utils/range';
 
 const { scale, viewMode } = storeToRefs(usePdfStore());
 const { selectedDoc } = storeToRefs(useDocStore());
 
-const form: Form = inject("form")!;
+const form: Form = inject('form')!;
 
 const visible = ref(false);
 
@@ -36,7 +36,7 @@ const { doc } = useVuePdfEmbed({
 
 //显示的页面
 const page = computed(() => {
-  if (viewMode.value == "raw") {
+  if (viewMode.value == 'raw') {
     return undefined;
   }
 
@@ -66,7 +66,7 @@ onMounted(async () => {
     return;
   }
 
-  buffer.value = await ipcRenderer.invoke("getPdf", selectedDoc.value.md5);
+  buffer.value = await ipcRenderer.invoke('getPdf', selectedDoc.value.md5);
 
   //等待400ms在渲染防止动画卡顿
   setTimeout(() => {
@@ -77,6 +77,6 @@ onMounted(async () => {
 
 <style scoped lang="scss">
 .pdf-view {
-  zoom: v-bind("scale");
+  zoom: v-bind('scale');
 }
 </style>

@@ -24,11 +24,11 @@
 </template>
 
 <script setup lang="ts">
-import { Workspace } from "@/stores/useWorkspaceStore";
-import { FolderClosedIcon, FolderOpenIcon } from "lucide-vue-next";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { useDocStore } from "@/stores/useDocStore";
-import { totalCount } from "@/utils/total";
+import { Workspace } from '@/stores/useWorkspaceStore';
+import { FolderClosedIcon, FolderOpenIcon } from '@lucide/vue';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { useDocStore } from '@/stores/useDocStore';
+import { totalCount } from '@/utils/total';
 
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 const { selectWorkspace } = useWorkspaceStore();
@@ -42,20 +42,20 @@ const props = defineProps<{
 }>();
 
 const docCount = computed(() => {
-  return totalCount(docs.value, item => item.workspaceId === props.data.id);
+  return totalCount(docs.value, (item) => item.workspaceId === props.data.id);
 });
 
 //是否选中
 const isSelected = computed(() => {
   return (
-    route.path.includes("doc") && selectedWorkspaceID.value == props.data.id
+    route.path.includes('doc') && selectedWorkspaceID.value == props.data.id
   );
 });
 
 //处理点击
 const handleClick = () => {
   selectWorkspace(props.data.id);
-  router.push("/doc");
+  router.push('/doc');
 };
 </script>
 

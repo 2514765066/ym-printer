@@ -1,4 +1,4 @@
-import { SplitterPanel } from "reka-ui";
+import { SplitterPanel } from 'reka-ui';
 
 export const panelRef = ref<InstanceType<typeof SplitterPanel>>();
 

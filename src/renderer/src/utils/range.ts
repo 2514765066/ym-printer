@@ -1,13 +1,13 @@
-import { Doc } from "@type";
+import { Doc } from '@type';
 
 //解析单独的范围
 const formatRange = (range: string, max: number) => {
   //纯数字
-  if (!range.includes("-")) {
+  if (!range.includes('-')) {
     return [Number(range)];
   }
 
-  let [start, end] = range.split("-").map(Number);
+  let [start, end] = range.split('-').map(Number);
 
   if (start == 0) {
     start = 1;
@@ -42,7 +42,7 @@ const modeMap = {
   simplex: (parts: number[][]) => {
     const flat = parts.flat();
 
-    return flat.flatMap(n => [n, 0]);
+    return flat.flatMap((n) => [n, 0]);
   },
 
   //全双模式
@@ -108,11 +108,11 @@ export const parserRange = (config: Doc) => {
     return cache.get(key);
   }
 
-  const range = config.range || "-";
+  const range = config.range || '-';
 
   const parts = range
     .split(/[,，]/)
-    .map(item => formatRange(item, config.pageCount));
+    .map((item) => formatRange(item, config.pageCount));
 
   const result = modeMap[config.mode](parts);
 

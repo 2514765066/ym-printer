@@ -52,22 +52,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuLabel,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/components/ui/input-group";
+} from '@/components/ui/input-group';
 import {
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { ClipboardListIcon } from "lucide-vue-next";
-import { usePresetStore } from "@/stores/usePresetStore";
+} from '@/components/ui/form';
+import { ClipboardListIcon } from '@lucide/vue';
+import { usePresetStore } from '@/stores/usePresetStore';
 
 const { presets } = storeToRefs(usePresetStore());
 </script>

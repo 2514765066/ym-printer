@@ -71,7 +71,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 import {
   Item,
   ItemContent,
@@ -80,11 +80,11 @@ import {
   ItemTitle,
   ItemActions,
   ItemGroup,
-} from "@/components/ui/item";
-import Container from "@/components/container/index.vue";
-import { previewThemeMap, baseThemeMap } from "@/map";
-import { productName } from "@/services/info";
-import { useThemeStore } from "@/stores/useThemeStore";
+} from '@/components/ui/item';
+import Container from '@/components/container/index.vue';
+import { previewThemeMap, baseThemeMap } from '@/map';
+import { productName } from '@/services/info';
+import { useThemeStore } from '@/stores/useThemeStore';
 
 const { baseTheme, previewThemeRaw } = storeToRefs(useThemeStore());
 </script>

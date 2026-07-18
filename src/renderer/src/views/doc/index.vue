@@ -18,28 +18,28 @@
 </template>
 
 <script setup lang="ts">
-import { ScrollArea } from "@/components/ui/scroll-area";
-import DocHeader from "./doc-header/index.vue";
-import DocContent from "./doc-content/index.vue";
-import DocEmpty from "./doc-empty.vue";
-import DocFooter from "./doc-footer/index.vue";
-import { useDocStore } from "@/stores/useDocStore";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { useConfigStore } from "@/stores/useConfigStore";
-import { setStatus } from "./index";
+import { ScrollArea } from '@/components/ui/scroll-area';
+import DocHeader from './doc-header/index.vue';
+import DocContent from './doc-content/index.vue';
+import DocEmpty from './doc-empty.vue';
+import DocFooter from './doc-footer/index.vue';
+import { useDocStore } from '@/stores/useDocStore';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { useConfigStore } from '@/stores/useConfigStore';
+import { setStatus } from './index';
 
 const { config } = storeToRefs(useConfigStore());
 const { docs } = storeToRefs(useDocStore());
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 const hasDocs = computed(() =>
-  docs.value.some(item => item.workspaceId == selectedWorkspaceID.value),
+  docs.value.some((item) => item.workspaceId == selectedWorkspaceID.value),
 );
 
 //防止进入计价后关闭计价模式
 watch(
   () => config.value.price,
-  value => {
+  (value) => {
     if (!value) {
       setStatus();
     }

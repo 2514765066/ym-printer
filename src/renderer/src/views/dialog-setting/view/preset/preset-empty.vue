@@ -23,8 +23,8 @@
 </template>
 
 <script setup lang="ts">
-import { FilesIcon, PlusIcon } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
+import { FilesIcon, PlusIcon } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
 import {
   Empty,
   EmptyContent,
@@ -32,12 +32,12 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
-import eventEmitter from "@/hooks/eventEmitter";
+} from '@/components/ui/empty';
+import eventEmitter from '@/hooks/eventEmitter';
 
 const handleAdd = () => {
-  eventEmitter.emit("dialog-preset:show", {
-    type: "add",
+  eventEmitter.emit('dialog-preset:show', {
+    type: 'add',
   });
 };
 </script>

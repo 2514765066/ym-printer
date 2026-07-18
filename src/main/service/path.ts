@@ -1,24 +1,24 @@
-import { app } from "electron";
-import { join } from "path";
+import { app } from 'electron';
+import { join } from 'path';
 
 //userData
-export const userDataPath = app.getPath("userData");
+export const userDataPath = app.getPath('userData');
 
 //资源文件夹
-export const resources = join(__dirname, "../../resources");
+export const resources = join(__dirname, '../../resources');
 
 //测试页路径
-export const testBlackPath = join(resources, "test-black.pdf");
-export const testColorPath = join(resources, "test-color.pdf");
+export const testBlackPath = join(resources, 'test-black.pdf');
+export const testColorPath = join(resources, 'test-color.pdf');
 
 //缓存路径
-export const cachePath = join(resources, "cache");
+export const cachePath = join(resources, 'cache');
 
 //打印程序路径
-export const printerPath = join(resources, "printer.exe");
+export const printerPath = join(resources, 'printer.exe');
 
 //下载更新目录
-export const update = join(userDataPath, "update");
+export const update = join(userDataPath, 'update');
 
 //更新文件
-export const updatePath = join(update, "ym-printer-update.exe");
+export const updatePath = join(update, 'ym-printer-update.exe');

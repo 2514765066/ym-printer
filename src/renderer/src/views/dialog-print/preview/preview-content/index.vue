@@ -9,16 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { ElScrollbar } from "element-plus";
-import PdfView from "./pdg-view.vue";
-import { usePdfStore } from "@/stores/usePdfStore";
-import { useEventListener } from "@vueuse/core";
-import useMove from "@/hooks/useMove";
+import { ElScrollbar } from 'element-plus';
+import PdfView from './pdg-view.vue';
+import { usePdfStore } from '@/stores/usePdfStore';
+import { useEventListener } from '@vueuse/core';
+import useMove from '@/hooks/useMove';
 
 const { addScale, subScale } = usePdfStore();
 
 //组件实例
-const scrollbarRef = useTemplateRef("scrollbarRef");
+const scrollbarRef = useTemplateRef('scrollbarRef');
 
 const { panning, handleMousedown, handleMousemove } = useMove(
   () => scrollbarRef.value?.wrapRef,
@@ -26,7 +26,7 @@ const { panning, handleMousedown, handleMousemove } = useMove(
 
 //处理鼠标滚轮
 useEventListener(
-  "wheel",
+  'wheel',
   (e: WheelEvent) => {
     if (!e.ctrlKey) {
       return;

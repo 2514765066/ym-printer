@@ -22,7 +22,9 @@
       <ContextMenuSubContent class="min-w-40">
         <ContextMenuRadioGroup
           :model-value="data.workspaceId"
-          @update:model-value="val => setDocWorkspaceId(data.id, val as string)"
+          @update:model-value="
+            (val) => setDocWorkspaceId(data.id, val as string)
+          "
         >
           <ContextMenuRadioItem
             v-for="item in workspace"
@@ -55,18 +57,18 @@ import {
   ContextMenuSubContent,
   ContextMenuRadioGroup,
   ContextMenuRadioItem,
-} from "@/components/ui/context-menu";
-import eventEmitter from "@/hooks/eventEmitter";
-import { useDocStore } from "@/stores/useDocStore";
-import { Doc } from "@type";
+} from '@/components/ui/context-menu';
+import eventEmitter from '@/hooks/eventEmitter';
+import { useDocStore } from '@/stores/useDocStore';
+import { Doc } from '@type';
 import {
   CornerUpRightIcon,
   Trash2Icon,
   PlayIcon,
   LayersIcon,
-} from "lucide-vue-next";
-import { status } from "../../index";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
+} from '@lucide/vue';
+import { status } from '../../index';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
 
 const { workspace } = storeToRefs(useWorkspaceStore());
 const { setDocWorkspaceId, setDocGroupId } = useDocStore();
@@ -91,7 +93,7 @@ const handleOpen = () => {
 const handleRemove = () => {
   removeDoc(props.data.id);
 
-  eventEmitter.emit("success:show", `已删除 "${props.data.name}"`);
+  eventEmitter.emit('success:show', `已删除 "${props.data.name}"`);
 };
 </script>
 

@@ -13,14 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import Tooltip from "@/components/tooltip.vue";
-import { Button } from "@/components/ui/button";
-import eventEmitter from "@/hooks/eventEmitter";
-import { PlusIcon } from "lucide-vue-next";
+import Tooltip from '@/components/tooltip.vue';
+import { Button } from '@/components/ui/button';
+import eventEmitter from '@/hooks/eventEmitter';
+import { PlusIcon } from '@lucide/vue';
 
 const handleAdd = () => {
-  eventEmitter.emit("dialog-workspace:show", {
-    type: "add",
+  eventEmitter.emit('dialog-workspace:show', {
+    type: 'add',
   });
 };
 </script>

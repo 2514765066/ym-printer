@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { PrinterIcon } from "lucide-vue-next";
+import { PrinterIcon } from '@lucide/vue';
 </script>
 
 <style scoped lang="scss"></style>

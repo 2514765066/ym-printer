@@ -40,10 +40,10 @@ import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/components/ui/hover-card";
-import { Button } from "@/components/ui/button";
-import { productName, appVersion } from "@/services/info";
-import { useUpdateStore } from "@/stores/useUpdateStore";
+} from '@/components/ui/hover-card';
+import { Button } from '@/components/ui/button';
+import { productName, appVersion } from '@/services/info';
+import { useUpdateStore } from '@/stores/useUpdateStore';
 
 const { latestVersion, status } = storeToRefs(useUpdateStore());
 const { installUpdate } = useUpdateStore();

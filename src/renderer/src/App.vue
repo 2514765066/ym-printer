@@ -17,21 +17,21 @@
 </template>
 
 <script setup lang="ts">
-import DialogPrint from "@/views/dialog-print/index.vue";
-import DialogSetting from "@/views/dialog-setting/index.vue";
-import DialogWorkspace from "@/views/dialog-workspace/index.vue";
-import DialogPreset from "@/views/dialog-preset/index.vue";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import eventEmitter from "@/hooks/eventEmitter";
-import { Toaster } from "@/components/ui/sonner";
-import { toast } from "vue-sonner";
-import { useUpdateStore } from "@/stores/useUpdateStore";
-import { usePrinterStore } from "@/stores/usePrinterStore";
-import { useThemeStore } from "@/stores/useThemeStore";
-import { useEventListener } from "@vueuse/core";
-import "vue-sonner/style.css";
-import { useWorkspaceStore } from "./stores/useWorkspaceStore";
-import DialogPrintTask from "@/views/dialog-print-task/index.vue";
+import DialogPrint from '@/views/dialog-print/index.vue';
+import DialogSetting from '@/views/dialog-setting/index.vue';
+import DialogWorkspace from '@/views/dialog-workspace/index.vue';
+import DialogPreset from '@/views/dialog-preset/index.vue';
+import { TooltipProvider } from '@/components/ui/tooltip';
+import eventEmitter from '@/hooks/eventEmitter';
+import { Toaster } from '@/components/ui/sonner';
+import { toast } from 'vue-sonner';
+import { useUpdateStore } from '@/stores/useUpdateStore';
+import { usePrinterStore } from '@/stores/usePrinterStore';
+import { useThemeStore } from '@/stores/useThemeStore';
+import { useEventListener } from '@vueuse/core';
+import 'vue-sonner/style.css';
+import { useWorkspaceStore } from './stores/useWorkspaceStore';
+import DialogPrintTask from '@/views/dialog-print-task/index.vue';
 
 //初始化pinia
 useUpdateStore();
@@ -39,59 +39,59 @@ usePrinterStore();
 useThemeStore();
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
-eventEmitter.on("success:show", message => {
+eventEmitter.on('success:show', (message) => {
   toast.success(message, {
     duration: 1500,
-    position: "top-center",
+    position: 'top-center',
   });
 });
 
-eventEmitter.on("loading:show", option => {
+eventEmitter.on('loading:show', (option) => {
   toast.promise(option.cb, {
-    loading: option.loadingMsg || "加载中...",
-    success: option.successMsg || "操作成功",
-    error: option.errorMsg || "操作失败",
+    loading: option.loadingMsg || '加载中...',
+    success: option.successMsg || '操作成功',
+    error: option.errorMsg || '操作失败',
     duration: 1500,
-    position: "top-center",
+    position: 'top-center',
   });
 });
 
-eventEmitter.on("error:show", message => {
+eventEmitter.on('error:show', (message) => {
   toast.error(message, {
     duration: 1500,
-    position: "top-center",
+    position: 'top-center',
   });
 });
 
 //快捷键
-useEventListener("keydown", e => {
+useEventListener('keydown', (e) => {
   //添加工作区
-  if (e.ctrlKey && e.key == "n") {
-    eventEmitter.emit("dialog-workspace:show", {
-      type: "add",
+  if (e.ctrlKey && e.key == 'n') {
+    eventEmitter.emit('dialog-workspace:show', {
+      type: 'add',
     });
 
     return;
   }
 
   //打开设置
-  if (e.ctrlKey && e.key == ",") {
-    eventEmitter.emit("dialog-setting:show");
+  if (e.ctrlKey && e.key == ',') {
+    eventEmitter.emit('dialog-setting:show');
     return;
   }
 
   //添加文档
-  if (e.ctrlKey && e.key == "o") {
-    ipcRenderer.invoke("addDoc", {
+  if (e.ctrlKey && e.key == 'o') {
+    ipcRenderer.invoke('addDoc', {
       workspaceId: selectedWorkspaceID.value,
     });
     return;
   }
 
   //添加文档
-  if (e.ctrlKey && e.key == "e") {
-    eventEmitter.emit("dialog-workspace:show", {
-      type: "edit",
+  if (e.ctrlKey && e.key == 'e') {
+    eventEmitter.emit('dialog-workspace:show', {
+      type: 'edit',
     });
     return;
   }

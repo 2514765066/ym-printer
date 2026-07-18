@@ -1,9 +1,9 @@
-import { PrinterTask } from "@type";
-import { usePrinterStore } from "./usePrinterStore";
+import { PrinterTask } from '@type';
+import { usePrinterStore } from './usePrinterStore';
 
 let timer: number;
 
-export const usePrinterTaskStore = defineStore("printer-task", () => {
+export const usePrinterTaskStore = defineStore('printer-task', () => {
   const { selectedPrinter } = storeToRefs(usePrinterStore());
 
   //当前打印机打印机任务
@@ -16,7 +16,7 @@ export const usePrinterTaskStore = defineStore("printer-task", () => {
     }
 
     printerTasks.value = await ipcRenderer.invoke(
-      "getPrinterTask",
+      'getPrinterTask',
       selectedPrinter.value,
     );
   };
@@ -37,7 +37,7 @@ export const usePrinterTaskStore = defineStore("printer-task", () => {
 
   //删除打印任务
   const removePrinterTask = async (id: number) => {
-    await ipcRenderer.invoke("removePrinterTask", {
+    await ipcRenderer.invoke('removePrinterTask', {
       printer: selectedPrinter.value,
       id,
     });
@@ -47,7 +47,7 @@ export const usePrinterTaskStore = defineStore("printer-task", () => {
 
   //删除全部的打印任务
   const removeAllPrinterTasks = async () => {
-    await ipcRenderer.invoke("removePrinterTask", {
+    await ipcRenderer.invoke('removePrinterTask', {
       printer: selectedPrinter.value,
     });
 

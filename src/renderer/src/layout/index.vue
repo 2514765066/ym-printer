@@ -42,15 +42,15 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import SideBar from "./side-bar/index.vue";
-import TitleBar from "./title-bar/index.vue";
-import vDrag from "@/hooks/useDrag";
-import { useDocStore } from "@/stores/useDocStore";
-import DragOverlay from "./drag-overlay .vue";
+} from '@/components/ui/resizable';
+import SideBar from './side-bar/index.vue';
+import TitleBar from './title-bar/index.vue';
+import vDrag from '@/hooks/useDrag';
+import { useDocStore } from '@/stores/useDocStore';
+import DragOverlay from './drag-overlay .vue';
 //@ts-ignore
-import { panelRef } from ".";
-import { useEventListener } from "@vueuse/core";
+import { panelRef } from '.';
+import { useEventListener } from '@vueuse/core';
 
 const { addDoc } = useDocStore();
 
@@ -72,7 +72,7 @@ const dragOption = {
 };
 
 //监控粘贴文档
-useEventListener("paste", async e => {
+useEventListener('paste', async (e) => {
   const files = e.clipboardData?.files;
 
   if (!files || files.length === 0) return;
@@ -86,7 +86,7 @@ useEventListener("paste", async e => {
   grid-template-rows: 40px calc(100vh - 40px);
 
   grid-template-areas:
-    "title-bar"
-    "content";
+    'title-bar'
+    'content';
 }
 </style>

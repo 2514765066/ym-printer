@@ -40,15 +40,15 @@
 </template>
 
 <script setup lang="ts">
-import { DollarSignIcon, XIcon, SquareCheckIcon } from "lucide-vue-next";
-import { setStatus, status } from "../index";
-import { cancelCheckAll } from "../check";
-import { useDocStore } from "@/stores/useDocStore";
-import { Button } from "@/components/ui/button";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import { totalCount } from "@/utils/total";
-import { useConfigStore } from "@/stores/useConfigStore";
-import { ButtonGroup } from "@/components/ui/button-group";
+import { DollarSignIcon, XIcon, SquareCheckIcon } from '@lucide/vue';
+import { setStatus, status } from '../index';
+import { cancelCheckAll } from '../check';
+import { useDocStore } from '@/stores/useDocStore';
+import { Button } from '@/components/ui/button';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import { totalCount } from '@/utils/total';
+import { useConfigStore } from '@/stores/useConfigStore';
+import { ButtonGroup } from '@/components/ui/button-group';
 
 const { config } = storeToRefs(useConfigStore());
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
@@ -57,15 +57,15 @@ const { docs } = storeToRefs(useDocStore());
 const selectedWorkspaceDocsCount = computed(() => {
   return totalCount(
     docs.value,
-    item => item.workspaceId == selectedWorkspaceID.value,
+    (item) => item.workspaceId == selectedWorkspaceID.value,
   );
 });
 
 const selectedWorkspaceFinishDocsCount = computed(() => {
   return totalCount(
     docs.value,
-    item =>
-      item.workspaceId == selectedWorkspaceID.value && item.status == "printed",
+    (item) =>
+      item.workspaceId == selectedWorkspaceID.value && item.status == 'printed',
   );
 });
 

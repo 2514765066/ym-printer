@@ -1,18 +1,17 @@
-import { resolve } from "path";
-import { defineConfig, externalizeDepsPlugin } from "electron-vite";
-import vue from "@vitejs/plugin-vue";
-import { version, name, productName } from "./package.json";
-import AutoImport from "unplugin-auto-import/vite";
-import ElementPlus from "unplugin-element-plus/vite";
-import tailwindcss from "@tailwindcss/vite";
+import { resolve } from 'path';
+import { defineConfig } from 'electron-vite';
+import vue from '@vitejs/plugin-vue';
+import { version, name, productName } from './package.json';
+import AutoImport from 'unplugin-auto-import/vite';
+import ElementPlus from 'unplugin-element-plus/vite';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   main: {
-    plugins: [externalizeDepsPlugin()],
     resolve: {
       alias: {
-        "@": resolve("src/main"),
-        "@type": resolve("src/type/index"),
+        '@': resolve('src/main'),
+        '@type': resolve('src/type/index'),
       },
     },
     define: {
@@ -28,8 +27,8 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        "@": resolve("src/renderer/src"),
-        "@type": resolve("src/type/index"),
+        '@': resolve('src/renderer/src'),
+        '@type': resolve('src/type/index'),
       },
     },
 
@@ -38,7 +37,7 @@ export default defineConfig({
       ElementPlus({}),
       tailwindcss(),
       AutoImport({
-        imports: ["vue", "pinia", "vue-router"],
+        imports: ['vue', 'pinia', 'vue-router'],
         dts: true,
       }),
     ],

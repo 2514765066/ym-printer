@@ -59,9 +59,9 @@
 </template>
 
 <script setup lang="ts">
-import { Checkbox } from "@/components/ui/checkbox";
-import ItemBaseDescription from "./item-base-description.vue";
-import FileIcon from "@/components/file-icon.vue";
+import { Checkbox } from '@/components/ui/checkbox';
+import ItemBaseDescription from './item-base-description.vue';
+import FileIcon from '@/components/file-icon.vue';
 import {
   Item,
   ItemContent,
@@ -69,15 +69,15 @@ import {
   ItemMedia,
   ItemTitle,
   ItemActions,
-} from "@/components/ui/item";
-import { Doc } from "@type";
-import { checked, toggleCheck } from "@/views/doc/check";
-import { status } from "@/views/doc/index.js";
+} from '@/components/ui/item';
+import { Doc } from '@type';
+import { checked, toggleCheck } from '@/views/doc/check';
+import { status } from '@/views/doc/index.js';
 
 defineProps<{
   data: Doc;
   disabled?: boolean;
-  variant?: "destructive";
+  variant?: 'destructive';
   disabledCheck?: boolean;
 }>();
 </script>

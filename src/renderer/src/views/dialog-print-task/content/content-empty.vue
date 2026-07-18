@@ -29,8 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import { PrinterIcon, RotateCwIcon } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
+import { PrinterIcon, RotateCwIcon } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
 import {
   Empty,
   EmptyContent,
@@ -38,11 +38,11 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
-import { usePrinterTaskStore } from "@/stores/usePrinterTaskStore";
-import { useLockFn } from "@/hooks/useLock";
-import { Spinner } from "@/components/ui/spinner";
-import { usePrinterStore } from "@/stores/usePrinterStore";
+} from '@/components/ui/empty';
+import { usePrinterTaskStore } from '@/stores/usePrinterTaskStore';
+import { useLockFn } from '@/hooks/useLock';
+import { Spinner } from '@/components/ui/spinner';
+import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { startPrinterTasks } = usePrinterTaskStore();
 const { selectedPrinter } = storeToRefs(usePrinterStore());

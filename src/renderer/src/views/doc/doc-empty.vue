@@ -26,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { FilesIcon, PlusIcon } from "lucide-vue-next";
-import { Button } from "@/components/ui/button";
+import { FilesIcon, PlusIcon } from '@lucide/vue';
+import { Button } from '@/components/ui/button';
 import {
   Empty,
   EmptyContent,
@@ -35,14 +35,14 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/components/ui/empty";
-import { useWorkspaceStore } from "@/stores/useWorkspaceStore";
-import Tooltip from "@/components/tooltip.vue";
+} from '@/components/ui/empty';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
+import Tooltip from '@/components/tooltip.vue';
 
 const { selectedWorkspaceID } = storeToRefs(useWorkspaceStore());
 
 const handleAdd = () => {
-  ipcRenderer.invoke("addDoc", {
+  ipcRenderer.invoke('addDoc', {
     workspaceId: selectedWorkspaceID.value,
   });
 };

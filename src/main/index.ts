@@ -1,11 +1,11 @@
-import { isSecondeInstanceStart } from "ym-electron.js";
-import { createMainWindow } from "@/browser-windows/main";
-import "@/ipc/index";
-import { createWord, exitWord } from "./service/doc";
-import { app } from "electron";
-import { optimizer } from "@electron-toolkit/utils";
-import { rm } from "fs/promises";
-import { cachePath } from "./service/path";
+import { isSecondeInstanceStart } from 'ym-electron.js';
+import { createMainWindow } from '@/browser-windows/main';
+import '@/ipc/index';
+import { createWord, exitWord } from './service/doc';
+import { app } from 'electron';
+import { optimizer } from '@electron-toolkit/utils';
+import { rm } from 'fs/promises';
+import { cachePath } from './service/path';
 
 //禁止多开
 if (isSecondeInstanceStart()) {
@@ -18,17 +18,17 @@ app.whenReady().then(async () => {
   const mainWindow = createMainWindow();
 
   //多开窗口
-  app.on("second-instance", () => {
+  app.on('second-instance', () => {
     mainWindow.show();
   });
 
   //创建快捷键
-  app.on("browser-window-created", (_, window) => {
+  app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
 
   //退出软件关闭word和缓存
-  app.on("before-quit", () => {
+  app.on('before-quit', () => {
     rm(cachePath, { recursive: true });
 
     exitWord();

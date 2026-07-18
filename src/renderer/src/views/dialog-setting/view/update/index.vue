@@ -99,8 +99,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
+} from '@/components/ui/select';
+import { Switch } from '@/components/ui/switch';
 import {
   Item,
   ItemContent,
@@ -109,12 +109,12 @@ import {
   ItemTitle,
   ItemActions,
   ItemGroup,
-} from "@/components/ui/item";
-import Container from "@/components/container/index.vue";
-import { useConfigStore } from "@/stores/useConfigStore";
-import { Button } from "@/components/ui/button";
-import { repoMap, updateMap } from "@/map";
-import { useUpdateStore } from "@/stores/useUpdateStore";
+} from '@/components/ui/item';
+import Container from '@/components/container/index.vue';
+import { useConfigStore } from '@/stores/useConfigStore';
+import { Button } from '@/components/ui/button';
+import { repoMap, updateMap } from '@/map';
+import { useUpdateStore } from '@/stores/useUpdateStore';
 
 const { config } = storeToRefs(useConfigStore());
 const { status, downloadProgress } = storeToRefs(useUpdateStore());
@@ -124,7 +124,7 @@ const { checkUpdate, installUpdate } = useUpdateStore();
 const updateLabel = computed(() => {
   const res = updateMap[status.value];
 
-  if (typeof res == "function") {
+  if (typeof res == 'function') {
     return res(downloadProgress.value);
   }
 

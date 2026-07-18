@@ -29,15 +29,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { usePrinterStore } from "@/stores/usePrinterStore";
+} from '@/components/ui/select';
+import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { printers } = storeToRefs(usePrinterStore());
 </script>
