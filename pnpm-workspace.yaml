@@ -1,0 +1,6 @@
+allowBuilds:
+  "@parcel/watcher": false
+  electron: true
+  esbuild: true
+  vue-demi: false
+  winax: false
