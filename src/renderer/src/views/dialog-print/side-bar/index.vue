@@ -213,8 +213,6 @@ const handlePrintEven = form.handleSubmit(async (values) => {
     },
   });
 
-  await printEven(doc);
-
   isPrinting.value = false;
 });
 
