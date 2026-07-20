@@ -10,7 +10,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': resolve('src/main'),
-        '@type': resolve('src/type/index'),
+        '@type': resolve('src/shared/type.ts'),
       },
     },
     define: {
@@ -27,7 +27,7 @@ export default defineConfig({
     resolve: {
       alias: {
         '@': resolve('src/renderer/src'),
-        '@type': resolve('src/type/index'),
+        '@type': resolve('src/shared/type.ts'),
       },
     },
 

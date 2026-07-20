@@ -2,7 +2,7 @@
   <TooltipProvider>
     <RouterView />
 
-    <DialogPrint />
+    <SheetPrint />
 
     <DialogSetting />
 
@@ -17,10 +17,11 @@
 </template>
 
 <script setup lang="ts">
-import DialogPrint from '@/views/dialog-print/index.vue';
-import DialogSetting from '@/views/dialog-setting/index.vue';
-import DialogWorkspace from '@/views/dialog-workspace/index.vue';
-import DialogPreset from '@/views/dialog-preset/index.vue';
+import SheetPrint from '@/features/sheet-print/index.vue';
+import DialogSetting from '@/features/dialog/setting/index.vue';
+import DialogWorkspace from '@/features/dialog/workspace/index.vue';
+import DialogPreset from '@/features/dialog/preset/index.vue';
+import DialogPrintTask from '@/features/dialog/print-task/index.vue';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import eventEmitter from '@/hooks/eventEmitter';
 import { Toaster } from '@/components/ui/sonner';
@@ -30,8 +31,7 @@ import { usePrinterStore } from '@/stores/usePrinterStore';
 import { useThemeStore } from '@/stores/useThemeStore';
 import { useEventListener } from '@vueuse/core';
 import 'vue-sonner/style.css';
-import { useWorkspaceStore } from './stores/useWorkspaceStore';
-import DialogPrintTask from '@/views/dialog-print-task/index.vue';
+import { useWorkspaceStore } from '@/stores/useWorkspaceStore';
 
 //初始化pinia
 useUpdateStore();

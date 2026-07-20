@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import Doc from '@/views/doc/index.vue';
 import Layout from '@/layout/index.vue';
+import Onboarding from '@/features/onboarding/index.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -11,7 +12,7 @@ const router = createRouter({
     },
     {
       path: '/onboarding',
-      component: () => import('@/onboarding/index.vue'),
+      component: Onboarding,
     },
     {
       path: '/',

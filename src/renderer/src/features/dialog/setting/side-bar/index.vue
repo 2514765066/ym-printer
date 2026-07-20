@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import Item from './item.vue';
-import router from '../router';
+import router from '../router.js';
 </script>
 
 <style scoped lang="scss"></style>

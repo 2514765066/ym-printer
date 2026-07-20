@@ -34,7 +34,7 @@
     </ResizablePanelGroup>
   </div>
 
-  <DragOverlay v-if="isDragging" />
+  <Overlay label="导入pdf、doc、docx、wps文件" v-if="isDragging" />
 </template>
 
 <script setup lang="ts">
@@ -47,7 +47,7 @@ import SideBar from './side-bar/index.vue';
 import TitleBar from './title-bar/index.vue';
 import vDrag from '@/hooks/useDrag';
 import { useDocStore } from '@/stores/useDocStore';
-import DragOverlay from './drag-overlay .vue';
+import Overlay from '@/components/overlay.vue';
 //@ts-ignore
 import { panelRef } from '.';
 import { useEventListener } from '@vueuse/core';
