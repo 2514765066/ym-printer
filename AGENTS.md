@@ -66,4 +66,3 @@ pnpm release           # 执行发布脚本
 - 涉及 TypeScript 或 Vue 代码时，至少运行与改动相关的类型检查；交付前优先执行 `pnpm typecheck`。
 - 涉及打包、原生依赖或 Electron 行为时，根据影响范围执行对应构建或在开发环境验证。
 - 遵循 `.prettierrc` 的格式化配置；提交前不要混入无关格式化改动。
-
