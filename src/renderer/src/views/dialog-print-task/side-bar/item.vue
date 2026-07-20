@@ -5,7 +5,7 @@
       'bg-accent dark:bg-accent/50': selectedPrinter == data,
     }"
     :title="data"
-    @click=""
+    @click="selectPrinter(data)"
   >
     <span class="text-sm truncate">{{ data }}</span>
   </section>
@@ -15,6 +15,7 @@
 import { usePrinterStore } from '@/stores/usePrinterStore';
 
 const { selectedPrinter } = storeToRefs(usePrinterStore());
+const { selectPrinter } = usePrinterStore();
 
 defineProps<{
   data: string;
