@@ -30,6 +30,4 @@ module.exports = {
     uninstallDisplayName: 'Ym Printer',
     deleteAppDataOnUninstall: true,
   },
-
-  generateUpdatesFilesForAllChannels: false,
 };

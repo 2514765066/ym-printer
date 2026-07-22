@@ -4,8 +4,8 @@ import '@/ipc/index';
 import { createWord, exitWord } from './service/doc';
 import { app } from 'electron';
 import { optimizer } from '@electron-toolkit/utils';
-import { rm } from 'fs/promises';
 import { cachePath } from './service/path';
+import { existsSync, rmSync } from 'fs';
 
 //禁止多开
 if (isSecondeInstanceStart()) {
@@ -29,8 +29,13 @@ app.whenReady().then(async () => {
 
   //退出软件关闭word和缓存
   app.on('before-quit', () => {
-    rm(cachePath, { recursive: true });
-
     exitWord();
+
+    //文件夹存在就删除
+    if (existsSync(cachePath)) {
+      rmSync(cachePath, {
+        recursive: true,
+      });
+    }
   });
 });
